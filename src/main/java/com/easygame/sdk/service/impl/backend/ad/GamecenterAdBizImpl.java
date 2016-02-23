@@ -3,7 +3,6 @@ package com.easygame.sdk.service.impl.backend.ad;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
