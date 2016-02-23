@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easygame.sdk.repository.mapper.backend.general.LoginAndLogoutMapper">
+
+	<resultMap id="AccountSessionVO" type="com.easygame.sdk.repository.model.vo.backend.general.AccountSessionVO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="isinternal" property="isInternal" jdbcType="BIT" />
+		<collection property="permissions" javaType="list" ofType="com.easygame.sdk.repository.model.vo.backend.general.PremissionShowVO">
+			<result column="page_mark" property="pageMark" jdbcType="VARCHAR"></result>
+			<result column="permission_level" property="permissionLevel" jdbcType="INTEGER"></result>
+		</collection>
+	</resultMap>
+	<select id="selectByLoginDTO" resultMap="AccountSessionVO" parameterType="com.easygame.sdk.repository.model.dto.backend.general.LoginDTO">
+		SELECT
+		t_accounts.id,
+		t_accounts.`name`,
+		t_roles.is_internal as isinternal,
+		t_permissions.page_mark,
+		t_roles_permissions.permission_level
+		FROM
+		t_accounts,
+		t_roles,
+		t_roles_permissions,
+		t_permissions
+		WHERE
+		t_accounts.role_id = t_roles.id
+		AND t_roles.id = t_roles_permissions.role_id
+		AND t_roles_permissions.permission_id = t_permissions.id
+		AND t_accounts.account = #{account,jdbcType=VARCHAR}
+		AND t_accounts.password = #{password,jdbcType=VARCHAR}
+	</select>
+	
+</mapper>

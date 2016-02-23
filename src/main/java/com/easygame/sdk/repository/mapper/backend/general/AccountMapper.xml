@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.easygame.sdk.repository.mapper.backend.general.AccountMapper">
+
+	<select id="checkIfAccountExist" resultType="java.lang.Integer">
+		SELECT
+		count(t_accounts.id)
+		FROM
+		t_accounts
+		WHERE t_accounts.account = #{account,jdbcType=VARCHAR}
+		<if test="id != 0">
+			AND t_accounts.id != #{id,jdbcType=INTEGER}
+		</if>
+	</select>
+
+	<insert id="insertAccount" parameterType="com.easygame.sdk.repository.model.dto.backend.general.AccountModifyDTO">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT @@IDENTITY
+		</selectKey>
+		insert into t_accounts
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="account != null">
+				account,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="roleId != null">
+				role_id,
+			</if>
+			<if test="creationDate != null">
+				creation_date,
+			</if>
+			<if test="lastUpdateDate != null">
+				last_update_date,
+			</if>
+			<if test="lastUpdateLogin != null">
+				last_update_login,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="account != null">
+				#{account,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="roleId != null">
+				#{roleId,jdbcType=INTEGER},
+			</if>
+			<if test="creationDate != null">
+				#{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateDate != null">
+				#{lastUpdateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateLogin != null">
+				#{lastUpdateLogin,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<insert id="insertAccountInformation" parameterType="com.easygame.sdk.repository.model.dto.backend.general.AccountModifyDTO">
+		insert into t_accounts_informations
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				account_id,
+			</if>
+			<if test="accountInformation.email != null">
+				email,
+			</if>
+			<if test="accountInformation.mobilePhone != null">
+				mobile_phone,
+			</if>
+			<if test="accountInformation.qqNumber != null">
+				qq_number,
+			</if>
+			<if test="accountInformation.companyId != null">
+				company_id,
+			</if>
+			<if test="accountInformation.remarks != null">
+				remarks,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="accountInformation.email != null">
+				#{accountInformation.email,jdbcType=VARCHAR},
+			</if>
+			<if test="accountInformation.mobilePhone != null">
+				#{accountInformation.mobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="accountInformation.qqNumber != null">
+				#{accountInformation.qqNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="accountInformation.companyId != null">
+				#{accountInformation.companyId,jdbcType=INTEGER},
+			</if>
+			<if test="accountInformation.remarks != null">
+				#{accountInformation.remarks,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<resultMap id="CompanyShowVO" type="com.easygame.sdk.repository.model.vo.backend.general.CompanyShowVO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectAllCompany" resultMap="CompanyShowVO">
+		SELECT
+		id,
+		NAME
+		FROM
+		t_companies
+		ORDER BY id DESC
+	</select>
+
+	<resultMap id="AccountShowVO" type="com.easygame.sdk.repository.model.vo.backend.general.AccountShowVO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="roleName" property="roleName" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="mobilePhone" property="mobilePhone" jdbcType="VARCHAR" />
+		<result column="companyName" property="companyName" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectAccountListByCriteria" resultMap="AccountShowVO"
+		parameterType="com.easygame.sdk.repository.model.dto.backend.general.AccountSearchCriteriaDTO">
+		SELECT
+		t_accounts.id,
+		t_accounts.account,
+		t_accounts.`name`,
+		t_roles.`name` as roleName,
+		t_accounts_informations.email,
+		t_accounts_informations.mobile_phone as
+		mobilePhone,
+		t_companies.`name` as companyName
+		FROM
+		t_accounts
+		INNER JOIN
+		(
+		SELECT
+		t_accounts.id
+		FROM
+		t_accounts
+		WHERE 1=1
+		<if test="searchAccount != null">
+			AND t_accounts.account LIKE '%${searchAccount}%'
+		</if>
+		<if test="searchName != null">
+			AND t_accounts.`name` LIKE '%${searchName}%'
+		</if>
+		ORDER BY t_accounts.id DESC
+		LIMIT #{pagination.startRow,jdbcType=INTEGER}, #{pagination.pageSize,jdbcType=INTEGER}
+		) AS selectedData ON selectedData.id = t_accounts.id
+		LEFT JOIN t_accounts_informations ON t_accounts_informations.account_id = t_accounts.id
+		LEFT JOIN t_companies ON t_companies.id = t_accounts_informations.company_id
+		LEFT JOIN t_roles ON t_roles.id = t_accounts.role_id
+		WHERE 1=1
+		<if test="searchCompanyName != null">
+			AND t_companies.`name` LIKE '%${searchCompanyName}%'
+		</if>
+	</select>
+
+	<select id="getAccountListTotalCountByCriteria" resultType="int" parameterType="com.easygame.sdk.repository.model.dto.backend.general.AccountSearchCriteriaDTO">
+		SELECT count(t_accounts.id)
+		FROM
+		t_accounts
+		INNER JOIN (
+		SELECT
+		t_accounts.id
+		FROM
+		t_accounts
+		WHERE 1=1
+		<if test="searchAccount != null">
+			AND t_accounts.account LIKE '%${searchAccount}%'
+		</if>
+		<if test="searchName != null">
+			AND t_accounts.`name` LIKE '%${searchName}%'
+		</if>
+		ORDER BY
+		t_accounts.id DESC
+		) AS selectedData ON selectedData.id = t_accounts.id
+		LEFT JOIN t_accounts_informations ON t_accounts_informations.account_id = t_accounts.id
+		LEFT JOIN t_companies ON t_companies.id = t_accounts_informations.company_id
+		WHERE 1=1
+		<if test="searchCompanyName != null">
+			AND t_companies.`name` LIKE '%${searchCompanyName}%'
+		</if>
+	</select>
+
+	<resultMap id="AccountModifyDTO" type="com.easygame.sdk.repository.model.dto.backend.general.AccountModifyDTO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="role_id" property="roleId" jdbcType="INTEGER" />
+		<result column="company_id" property="accountInformation.companyId" jdbcType="INTEGER" />
+		<result column="email" property="accountInformation.email" jdbcType="VARCHAR" />
+		<result column="qq_number" property="accountInformation.qqNumber" jdbcType="VARCHAR" />
+		<result column="mobile_phone" property="accountInformation.mobilePhone" jdbcType="VARCHAR" />
+		<result column="remarks" property="accountInformation.remarks" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectAccountByPrimaryKey" resultMap="AccountModifyDTO" parameterType="java.lang.Integer">
+		SELECT
+		t_accounts.id,
+		t_accounts.account,
+		t_accounts.`name`,
+		t_accounts.role_id,
+		t_accounts_informations.company_id,
+		t_accounts_informations.email,
+		t_accounts_informations.qq_number,
+		t_accounts_informations.mobile_phone,
+		t_accounts_informations.remarks
+		FROM
+		t_accounts,
+		t_accounts_informations
+		WHERE t_accounts.id = t_accounts_informations.account_id
+		AND t_accounts.id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<update id="updateAccount" parameterType="com.easygame.sdk.repository.model.dto.backend.general.AccountModifyDTO">
+		update t_accounts
+		<set>
+			<if test="account != null">
+				account = #{account,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="roleId != null">
+				role_id = #{roleId,jdbcType=INTEGER},
+			</if>
+			<if test="creationDate != null">
+				creation_date = #{creationDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateDate != null">
+				last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdateLogin != null">
+				last_update_login = #{lastUpdateLogin,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateAccountInformation" parameterType="com.easygame.sdk.repository.model.dto.backend.general.AccountModifyDTO">
+		update t_accounts_informations
+		<set>
+			<if test="accountInformation.email != null">
+				email = #{accountInformation.email,jdbcType=VARCHAR},
+			</if>
+			<if test="accountInformation.mobilePhone != null">
+				mobile_phone = #{accountInformation.mobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="accountInformation.qqNumber != null">
+				qq_number = #{accountInformation.qqNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="accountInformation.companyId != null">
+				company_id = #{accountInformation.companyId,jdbcType=INTEGER},
+			</if>
+			<if test="accountInformation.remarks != null">
+				remarks = #{accountInformation.remarks,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where account_id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="checkAccountDeleteSecurity" resultType="java.lang.Integer"
+		parameterType="java.lang.Integer">
+		SELECT
+		count(t_channels.id)
+		FROM
+		t_channels,
+		t_accounts
+		WHERE t_channels.linkman_id = t_accounts.id
+		AND t_accounts.id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteAccountByPrimaryKey" parameterType="java.lang.Integer">
+		DELETE
+		FROM
+		t_accounts
+		WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<delete id="deleteAccountInformationByAccountId" parameterType="java.lang.Integer">
+		DELETE
+		FROM
+		t_accounts_informations
+		WHERE
+		t_accounts_informations.account_id =
+		#{accountId,jdbcType=INTEGER}
+	</delete>
+
+</mapper>

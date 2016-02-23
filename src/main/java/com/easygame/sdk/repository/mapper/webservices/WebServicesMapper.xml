@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.easygame.sdk.repository.mapper.webservices.WebServicesMapper">
+
+	<select id="checkIpCountByCriteria" resultType="java.lang.Integer">
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.ip =
+		#{ip,jdbcType=VARCHAR}
+		AND t_active_table.app_key =
+		#{appKey,jdbcType=VARCHAR}
+	</select>
+
+	<resultMap id="ActiveRecordS"
+		type="com.easygame.sdk.repository.model.vo.webservices.ActiveRecordVO">
+		<result column="imei" property="imei" jdbcType="VARCHAR" />
+		<result column="app_key" property="appKey" jdbcType="VARCHAR" />
+		<result column="time" property="time" jdbcType="INTEGER" />
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
+		<result column="creation_date_biginttype" property="creationDateBiginttype"
+			jdbcType="BIGINT" />
+		<result column="day_type" property="dayType" jdbcType="BIT" />
+		<result column="creation_date_datetype" property="creationDateDatetype"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<select id="getActiveRecordListByCriteria" resultMap="ActiveRecordS">
+		SELECT
+		t_active_table.imei,
+		t_active_table.app_key,
+		t_active_table.time,
+		t_active_table.ip,
+		t_active_table.creation_date_biginttype,
+		t_active_table.day_type,
+		t_active_table.creation_date_datetype
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.imei =
+		#{imei,jdbcType=VARCHAR}
+		AND
+		t_active_table.app_key =
+		#{appKey,jdbcType=VARCHAR}
+	</select>
+
+	<insert id="insertActiveRecord" parameterType="com.easygame.sdk.repository.model.po.ActiveRecord">
+		insert into t_active_table
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="imei != null">
+				imei,
+			</if>
+			<if test="appKey != null">
+				app_key,
+			</if>
+			<if test="time != null">
+				time,
+			</if>
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="creationDateBiginttype != null">
+				creation_date_biginttype,
+			</if>
+			<if test="dayType != null">
+				day_type,
+			</if>
+			<if test="creationDateDatetype != null">
+				creation_date_datetype,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="imei != null">
+				#{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="appKey != null">
+				#{appKey,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				#{time,jdbcType=INTEGER},
+			</if>
+			<if test="ip != null">
+				#{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="creationDateBiginttype != null">
+				#{creationDateBiginttype,jdbcType=BIGINT},
+			</if>
+			<if test="dayType != null">
+				#{dayType,jdbcType=BIT},
+			</if>
+			<if test="creationDateDatetype != null">
+				#{creationDateDatetype,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="checkisSuccessActive" resultType="java.lang.Integer">
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.time =
+		(
+		SELECT
+		(
+		t_cpa_promotions.active_same_day_time + 1
+		) * 5
+		FROM
+		t_cpa_promotions
+		WHERE
+		t_cpa_promotions.app_key = #{appKey,jdbcType=VARCHAR}
+		)
+		AND
+		t_active_table.app_key = #{appKey,jdbcType=VARCHAR}
+		AND
+		t_active_table.imei = #{imei,jdbcType=VARCHAR}
+	</select>
+
+	<resultMap id="ActiveCountInOneDayResultDTO"
+		type="com.easygame.sdk.repository.model.dto.webservices.ActiveCountInOneDayResultDTO">
+		<result column="today" property="today" jdbcType="VARCHAR" />
+		<result column="active_count" property="activeCount" jdbcType="INTEGER" />
+		<result column="second_active_count" property="secondActiveCount"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<select id="getOneDayStatisticsCountByAccount" resultMap="ActiveCountInOneDayResultDTO">
+		SELECT
+		DATE_FORMAT(now(), '%Y-%m-%d') AS today,
+		IFNULL(
+		sum(selectedData.active_count),
+		0
+		) AS active_count,
+		IFNULL(
+		sum(
+		selectedData.second_active_count
+		),
+		0
+		) AS second_active_count
+		FROM
+		(
+		SELECT
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.time = (
+		SELECT
+		(
+		t_cpa_promotions.active_same_day_time + 1
+		) *
+		5
+		FROM
+		t_cpa_promotions
+		WHERE
+		t_cpa_promotions.id = p.id
+		)
+		AND
+		t_active_table.day_type = 0
+		AND t_active_table.app_key = p.app_key
+		AND
+		DATE_FORMAT(
+		t_active_table.creation_date_datetype,
+		'%Y-%m-%d'
+		) =
+		DATE_FORMAT(now(), '%Y-%m-%d')
+		) AS active_count,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.time =
+		(
+		SELECT
+		(
+		t_cpa_promotions.active_next_day_time + 1
+		) * 5
+		FROM
+		t_cpa_promotions
+		WHERE
+		t_cpa_promotions.id = p.id
+		)
+		AND t_active_table.day_type = 1
+		AND
+		t_active_table.app_key = p.app_key
+		AND dATE_FORMAT(
+		t_active_table.creation_date_datetype,
+		'%Y-%m-%d'
+		) = dATE_FORMAT(now(),
+		'%Y-%m-%d')
+		) AS second_active_count
+		FROM
+		t_cpa_promotions AS p
+		LEFT
+		JOIN t_channels
+		ON p.channel_id = t_channels.id
+		WHERE
+		1 = 1
+		AND
+		t_channels.linkman_id = (
+		SELECT
+		t_accounts.id
+		FROM
+		t_accounts
+		WHERE
+		t_accounts.account = #{account,jdbcType=VARCHAR}
+		AND
+		t_accounts.`password` = #{password,jdbcType=VARCHAR}
+		)
+		) AS selectedData
+	</select>
+
+</mapper>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easygame.sdk.repository.mapper.webservices.NotificationAdServiceMapper">
+
+	<resultMap id="NotificationAdResultVO" type="com.easygame.sdk.repository.model.vo.webservices.NotificationAdResultVO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="appName" jdbcType="VARCHAR" />
+		<result column="promotion_word" property="promotionWord" jdbcType="VARCHAR" />
+		<result column="icon_url" property="iconUrl" jdbcType="VARCHAR" />
+		<result column="download_url" property="downloadUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getNotificationAdInformation" resultMap="NotificationAdResultVO">
+		SELECT
+		t_notification_ads.id,
+		t_notification_ads.`name`,
+		t_notification_ads.promotion_word,
+		t_notification_ads.icon_url,
+		t_notification_ads.download_url
+		FROM
+		(
+		SELECT
+		t_cpa_promotions.id
+		FROM
+		t_cpa_promotions
+		WHERE
+		t_cpa_promotions.app_key = #{appKey,jdbcType=VARCHAR}
+		) AS cpa
+		LEFT JOIN t_batch_apps ON cpa.id = t_batch_apps.cpa_promotion_id
+		LEFT JOIN t_batches ON t_batches.id = t_batch_apps.batch_id
+		LEFT JOIN t_notification_ad_schedule ON
+		t_notification_ad_schedule.batch_id = t_batches.id
+		LEFT JOIN t_notification_ads ON t_notification_ad_schedule.ad_id =
+		t_notification_ads.id
+		WHERE
+		t_notification_ad_schedule.is_used = 1
+	</select>
+	
+ 	<insert id="insertNotificationAdDisplayRecord">
+	    insert into t_notification_ad_display_records
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="param.adId != null" >
+	        ad_id,
+	      </if>
+	      <if test="ip != null" >
+	        ip,
+	      </if>
+	      <if test="param.imei != null" >
+	        imei,
+	      </if>
+	      <if test="param.appKey != null" >
+	        appKey,
+	      </if>
+	      <if test="creationDate != null" >
+	        creation_date,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="param.adId != null" >
+	        #{param.adId,jdbcType=INTEGER},
+	      </if>
+	      <if test="ip != null" >
+	        #{ip,jdbcType=VARCHAR},
+	      </if>
+	      <if test="param.imei != null" >
+	        #{param.imei,jdbcType=VARCHAR},
+	      </if>
+	      <if test="param.appKey != null" >
+	        #{param.appKey,jdbcType=VARCHAR},
+	      </if>
+	      <if test="creationDate != null" >
+	        #{creationDate,jdbcType=DATE},
+	      </if>
+	    </trim>
+	  </insert>
+	
+	<insert id="insertNotificationAdClickRecord">
+	    insert into t_notification_ad_click_records
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="param.adId != null" >
+	        ad_id,
+	      </if>
+	      <if test="ip != null" >
+	        ip,
+	      </if>
+	      <if test="param.imei != null" >
+	        imei,
+	      </if>
+	      <if test="param.appKey != null" >
+	        appKey,
+	      </if>
+	      <if test="creationDate != null" >
+	        creation_date,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="param.adId != null" >
+	        #{param.adId,jdbcType=INTEGER},
+	      </if>
+	      <if test="ip != null" >
+	        #{ip,jdbcType=VARCHAR},
+	      </if>
+	      <if test="param.imei != null" >
+	        #{param.imei,jdbcType=VARCHAR},
+	      </if>
+	      <if test="param.appKey != null" >
+	        #{param.appKey,jdbcType=VARCHAR},
+	      </if>
+	      <if test="creationDate != null" >
+	        #{creationDate,jdbcType=DATE},
+	      </if>
+	    </trim>
+	  </insert>
+	  
+ 	<insert id="insertNotificationAdDownloadRecord">
+	    insert into t_notification_ad_download_records
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="param.adId != null" >
+	        ad_id,
+	      </if>
+	      <if test="ip != null" >
+	        ip,
+	      </if>
+	      <if test="param.imei != null" >
+	        imei,
+	      </if>
+	      <if test="param.appKey != null" >
+	        appKey,
+	      </if>
+	      <if test="creationDate != null" >
+	        creation_date,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="param.adId != null" >
+	        #{param.adId,jdbcType=INTEGER},
+	      </if>
+	      <if test="ip != null" >
+	        #{ip,jdbcType=VARCHAR},
+	      </if>
+	      <if test="param.imei != null" >
+	        #{param.imei,jdbcType=VARCHAR},
+	      </if>
+	      <if test="param.appKey != null" >
+	        #{param.appKey,jdbcType=VARCHAR},
+	      </if>
+	      <if test="creationDate != null" >
+	        #{creationDate,jdbcType=DATE},
+	      </if>
+	    </trim>
+  </insert>
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easygame.sdk.repository.mapper.backend.general.InformationMapper">
+
+	<resultMap id="InformationModifyDTO" type="com.easygame.sdk.repository.model.dto.backend.general.InformationModifyDTO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="email" property="accountInformation.email" jdbcType="VARCHAR" />
+		<result column="qq_number" property="accountInformation.qqNumber" jdbcType="VARCHAR" />
+		<result column="mobile_phone" property="accountInformation.mobilePhone" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectAccountByPrimaryKey" resultMap="InformationModifyDTO" parameterType="java.lang.Integer">
+		SELECT
+		t_accounts.id,
+		t_accounts_informations.email,
+		t_accounts_informations.qq_number,
+		t_accounts_informations.mobile_phone
+		FROM
+		t_accounts,
+		t_accounts_informations
+		WHERE
+		t_accounts.id =
+		t_accounts_informations.account_id
+		AND t_accounts.id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<update id="updateAccount" parameterType="com.easygame.sdk.repository.model.dto.backend.general.InformationModifyDTO">
+		update t_accounts
+		<set>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateDate != null">
+				last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateAccountInformation" parameterType="com.easygame.sdk.repository.model.dto.backend.general.InformationModifyDTO">
+		update t_accounts_informations
+		<set>
+			<if test="accountInformation.email != null">
+				email = #{accountInformation.email,jdbcType=VARCHAR},
+			</if>
+			<if test="accountInformation.mobilePhone != null">
+				mobile_phone = #{accountInformation.mobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="accountInformation.qqNumber != null">
+				qq_number = #{accountInformation.qqNumber,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where account_id = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>

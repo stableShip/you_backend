@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.easygame.sdk.repository.mapper.backend.channel.CPAPromotionStatisticsMapper">
+
+	<resultMap id="CPAPromotionStatisticsShowVO"
+		type="com.easygame.sdk.repository.model.vo.backend.channel.CPAPromotionStatisticsShowVO">
+		<result column="channelName" property="channelName" jdbcType="VARCHAR" />
+		<result column="appName" property="appName" jdbcType="VARCHAR" />
+		<result column="app_nickname" property="appNickName" jdbcType="VARCHAR" />
+		<result column="same_day_price" property="sameDayPrice" jdbcType="DOUBLE" />
+		<result column="active_same_day_time" property="sameDayTime" jdbcType="INTEGER" />
+		<result column="next_day_price" property="nextDayPrice" jdbcType="DOUBLE" />
+		<result column="active_next_day_time" property="nextDayTime" jdbcType="INTEGER" />
+		<result column="same_zero" property="sameZero" jdbcType="INTEGER" />
+		<result column="same_five" property="sameFive" jdbcType="INTEGER" />
+		<result column="same_ten" property="sameTen" jdbcType="INTEGER" />
+		<result column="same_fifteen" property="sameFifteen" jdbcType="INTEGER" />
+		<result column="same_twenty" property="sameTwenty" jdbcType="INTEGER" />
+		<result column="same_twenty_five" property="sameTwentyFive" jdbcType="INTEGER" />
+		<result column="same_thirty" property="sameThirty" jdbcType="INTEGER" />
+		<result column="next_zero" property="nextZero" jdbcType="INTEGER" />
+		<result column="next_five" property="nextFive" jdbcType="INTEGER" />
+		<result column="next_ten" property="nextTen" jdbcType="INTEGER" />
+		<result column="next_fifteen" property="nextFifteen" jdbcType="INTEGER" />
+		<result column="next_twenty" property="nextTwenty" jdbcType="INTEGER" />
+		<result column="next_twenty_five" property="nextTwentyFive" jdbcType="INTEGER" />
+		<result column="next_thirty" property="nextThirty" jdbcType="INTEGER" />
+	</resultMap>
+	<select id="selectPromotionStatisticsCPAListByCriteria"
+		resultMap="CPAPromotionStatisticsShowVO"
+		parameterType="com.easygame.sdk.repository.model.dto.backend.channel.CPAPromotionStatisticsSearchCriteriaDTO">
+		SELECT
+		showData.channelName,
+		showData.same_day_price,
+		showData.active_same_day_time,
+		showData.next_day_price,
+		showData.active_next_day_time,
+		showData.appName,
+		showData.app_nickname,
+		showData.same_zero,
+		showData.same_five,
+		showData.same_ten,
+		showData.same_fifteen,
+		showData.same_twenty,
+		showData.same_twenty_five,
+		showData.same_thirty,
+		showData.next_five,
+		showData.next_ten,
+		showData.next_fifteen,
+		showData.next_twenty,
+		showData.next_twenty_five,
+		showData.next_thirty
+		FROM
+		(
+		SELECT
+		t_channels.`name` AS channelName,
+		t_cpa_promotions.same_day_price,
+		t_cpa_promotions.active_same_day_time,
+		t_cpa_promotions.next_day_price,
+		t_cpa_promotions.active_next_day_time,
+		t_apps.`name` AS appName,
+		t_cpa_promotions.app_nickname,
+		t_channels.id as channelId,
+		t_apps.id as appId,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 0
+		AND t_active_table.day_type = 0
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS same_zero,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 5
+		AND t_active_table.day_type = 0
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS same_five,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 10
+		AND t_active_table.day_type = 0
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS same_ten,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 15
+		AND t_active_table.day_type = 0
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS same_fifteen,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 20
+		AND t_active_table.day_type = 0
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS same_twenty,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 25
+		AND t_active_table.day_type = 0
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS same_twenty_five,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 30
+		AND t_active_table.day_type = 0
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS same_thirty,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 0
+		AND t_active_table.day_type = 1
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS next_zero,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 5
+		AND t_active_table.day_type = 1
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS next_five,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 10
+		AND t_active_table.day_type = 1
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS next_ten,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 15
+		AND t_active_table.day_type = 1
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS next_fifteen,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 20
+		AND t_active_table.day_type = 1
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS next_twenty,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 25
+		AND t_active_table.day_type = 1
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS next_twenty_five,
+		(
+		SELECT
+		count(t_active_table.imei)
+		FROM
+		t_active_table
+		WHERE
+		t_active_table.app_key = t_cpa_promotions.app_key
+		AND t_active_table.time = 30
+		AND t_active_table.day_type = 1
+		<if test="searchDataType == 0">
+			<if test="searchStartDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[>=]]>
+				#{searchStartDay,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndDay != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m-%d') <![CDATA[<=]]>
+				#{searchEndDay,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="searchDataType == 1">
+			<if test="searchStartMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[>=]]>
+				#{searchStartMonth,jdbcType=VARCHAR}
+			</if>
+			<if test="searchEndMonth != null">
+				AND DATE_FORMAT(t_active_table.creation_date_datetype,'%Y-%m') <![CDATA[<=]]>
+				#{searchEndMonth,jdbcType=VARCHAR}
+			</if>
+		</if>
+		) AS next_thirty
+		FROM
+		t_cpa_promotions
+		LEFT JOIN t_channels ON t_cpa_promotions.channel_id = t_channels.id
+		LEFT JOIN t_apps ON t_apps.id = t_cpa_promotions.app_id
+		WHERE 1=1
+		AND t_cpa_promotions.isUsed = 1
+		<if test="searchChannelName != null">
+			AND t_channels.`name` LIKE '%${searchChannelName}%'
+		</if>
+		<if test="searchAppName != null">
+			AND t_apps.`name` =
+			#{searchAppName,jdbcType=VARCHAR}
+		</if>
+		<if test="searchAppNickName != null">
+			AND t_cpa_promotions.app_nickname =
+			#{searchAppNickName,jdbcType=VARCHAR}
+		</if>
+		<if test="isInternal == false">
+			AND t_channels.linkman_id = #{userId}
+		</if>
+		) AS showData
+		ORDER BY 
+		<if test="searchOrderByColumn == 0">
+			showData.same_five DESC
+		</if>
+		<if test="searchOrderByColumn == 1">
+			showData.same_ten DESC
+		</if>
+		<if test="searchOrderByColumn == 2">
+			showData.same_fifteen DESC
+		</if>
+		<if test="searchOrderByColumn == 3">
+			showData.same_twenty DESC
+		</if>
+		<if test="searchOrderByColumn == 4">
+			showData.same_twenty_five DESC
+		</if>
+		<if test="searchOrderByColumn == 5">
+			showData.same_thirty DESC
+		</if>
+		<if test="searchOrderByColumn == 6">
+			showData.next_five DESC
+		</if>
+		<if test="searchOrderByColumn == 7">
+			showData.next_ten DESC
+		</if>
+		<if test="searchOrderByColumn == 8">
+			showData.next_fifteen DESC
+		</if>
+		<if test="searchOrderByColumn == 9">
+			showData.next_twenty DESC
+		</if>
+		<if test="searchOrderByColumn == 10">
+			showData.next_twenty_five DESC
+		</if>
+		<if test="searchOrderByColumn == 11">
+			showData.next_thirty DESC
+		</if>
+		LIMIT
+		#{pagination.startRow,jdbcType=INTEGER},
+		#{pagination.pageSize,jdbcType=INTEGER}
+	</select>
+
+	<select id="getPromotionStatisticsCPAListTotalCountByCriteria"
+		resultType="int"
+		parameterType="com.easygame.sdk.repository.model.dto.backend.channel.CPAPromotionStatisticsSearchCriteriaDTO">
+		SELECT
+		count(t_cpa_promotions.id)
+		FROM
+		t_cpa_promotions
+		LEFT JOIN t_channels ON t_cpa_promotions.channel_id = t_channels.id
+		LEFT JOIN t_apps ON t_apps.id = t_cpa_promotions.app_id
+		WHERE 1 = 1
+		AND t_cpa_promotions.isUsed = 1
+		<if test="searchChannelName != null">
+			AND t_channels.`name` LIKE '%${searchChannelName}%'
+		</if>
+		<if test="searchAppName != null">
+			AND t_apps.`name` =
+			#{searchAppName,jdbcType=VARCHAR}
+		</if>
+		<if test="searchAppNickName != null">
+			AND t_cpa_promotions.app_nickname =
+			#{searchAppNickName,jdbcType=VARCHAR}
+		</if>
+		<if test="isInternal == false">
+			AND t_channels.linkman_id = #{userId}
+		</if>
+	</select>
+
+</mapper>

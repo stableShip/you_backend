@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easygame.sdk.repository.mapper.backend.general.RolePermissionMapper">
+
+	<resultMap id="Permission" type="com.easygame.sdk.repository.model.po.Permission">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="page_mark" property="pageMark" jdbcType="VARCHAR" />
+		<result column="page_desc" property="pageDesc" jdbcType="VARCHAR" />
+		<result column="show_index" property="showIndex" jdbcType="INTEGER" />
+		<result column="isUsed" property="isused" jdbcType="BIT" />
+	</resultMap>
+	<select id="selectAllPermission" resultMap="Permission" parameterType="java.lang.Integer">
+		SELECT
+		t_permissions.id,
+		t_permissions.page_mark,
+		t_permissions.page_desc,
+		t_permissions.show_index,
+		t_permissions.isUsed
+		FROM
+		t_permissions
+		WHERE t_permissions.isUsed = 1
+		ORDER BY t_permissions.show_index
+	</select>
+
+	<resultMap id="RoleShowVO" type="com.easygame.sdk.repository.model.vo.backend.general.RoleShowVO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="is_internal" property="isInternal" jdbcType="BIT" />
+	</resultMap>
+	<select id="selectAllRole" resultMap="RoleShowVO">
+		SELECT
+		t_roles.id,
+		t_roles.`name`,
+		t_roles.is_internal
+		FROM
+		t_roles
+	</select>
+
+	<insert id="insertRole" parameterType="com.easygame.sdk.repository.model.dto.backend.general.RolePermissionModifyDTO">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+			SELECT @@IDENTITY
+		</selectKey>
+		insert into t_roles
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="isInternal != null">
+				is_internal,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="isInternal != null">
+				#{isInternal,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+
+	<insert id="insertRolePermissions" parameterType="java.util.List">
+		insert into t_roles_permissions (role_id, permission_id, permission_level) values
+		<foreach collection="records" item="item" index="index" separator=",">
+			(#{roleId},#{item.permissionId},#{item.permissionLevel})
+		</foreach>
+	</insert>
+
+	<resultMap id="RolePermissionModifyDTO" type="com.easygame.sdk.repository.model.dto.backend.general.RolePermissionModifyDTO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="is_internal" property="isInternal" jdbcType="BIT" />
+		<collection property="permissions" javaType="list" ofType="com.easygame.sdk.repository.model.vo.backend.general.PremissionShowVO">
+			<result column="permissionId" property="id" jdbcType="INTEGER"></result>
+			<result column="page_desc" property="pageDesc" jdbcType="VARCHAR"></result>
+			<result column="permission_level" property="permissionLevel" jdbcType="INTEGER"></result>
+		</collection>
+	</resultMap>
+	<select id="selectRoleByPrimaryKey" resultMap="RolePermissionModifyDTO" parameterType="java.lang.Integer">
+		SELECT
+		t_roles.id,
+		t_roles.`name`,
+		t_roles.is_internal,
+		t_permissions.id AS permissionId,
+		t_permissions.page_desc,
+		t_roles_permissions.permission_level
+		FROM
+		t_roles,
+		t_roles_permissions,
+		t_permissions
+		WHERE t_roles.id = t_roles_permissions.role_id
+		AND t_roles_permissions.permission_id = t_permissions.id
+		AND t_permissions.isUsed = 1
+		AND t_roles.id = #{id,jdbcType=INTEGER}
+		ORDER BY t_permissions.show_index
+	</select>
+
+	<update id="updateRole" parameterType="com.easygame.sdk.repository.model.dto.backend.general.RolePermissionModifyDTO">
+		update t_roles
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="isInternal != null">
+				is_internal = #{isInternal,jdbcType=BIT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateRolePermissions" parameterType="java.util.List">
+		update t_roles_permissions
+		<trim prefix="set" suffixOverrides=",">
+			<trim prefix="permission_level =case" suffix="end,">
+				<foreach collection="records" item="item" index="index">
+					when permission_id=#{item.id} and role_id=#{roleId}
+					then #{item.permissionLevel}
+				</foreach>
+			</trim>
+		</trim>
+		where
+		<foreach collection="records" separator="or" item="item" index="index">
+			permission_id=#{item.id} and role_id=#{roleId}
+		</foreach>
+	</update>
+
+</mapper>

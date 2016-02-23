@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easygame.sdk.repository.mapper.backend.general.CompanyMapper">
+	<select id="checkIfCompanyExist" resultType="java.lang.Integer">
+		SELECT
+		count(t_companies.id)
+		FROM
+		t_companies
+		WHERE
+		t_companies.`name` =
+		#{name,jdbcType=VARCHAR}
+		<if test="id != null">
+			<if test="id != 0">
+				AND t_companies.id != #{id,jdbcType=INTEGER}
+			</if>
+		</if>
+	</select>
+
+	<insert id="insertCompany" parameterType="com.easygame.sdk.repository.model.dto.backend.general.CompanyModifyDTO">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+			SELECT @@IDENTITY
+		</selectKey>
+		insert into t_companies
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="telephone != null">
+				telephone,
+			</if>
+			<if test="fax != null">
+				fax,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="homepage != null">
+				homepage,
+			</if>
+			<if test="segment1 != null">
+				segment1,
+			</if>
+			<if test="lastUpdateDate != null">
+				last_update_date,
+			</if>
+			<if test="creationDate != null">
+				creation_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				#{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="fax != null">
+				#{fax,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="homepage != null">
+				#{homepage,jdbcType=VARCHAR},
+			</if>
+			<if test="segment1 != null">
+				#{segment1,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateDate != null">
+				#{lastUpdateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creationDate != null">
+				#{creationDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<resultMap id="CompanyShowVO" type="com.easygame.sdk.repository.model.vo.backend.general.CompanyShowVO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="fax" property="fax" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="homepage" property="homepage" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectCompanyListByCriteria" resultMap="CompanyShowVO"
+		parameterType="com.easygame.sdk.repository.model.dto.backend.general.CompanySearchCriteriaDTO">
+		SELECT id, name, fax, address, homepage
+		FROM t_companies
+		WHERE 1=1
+		<if test="searchName != null">
+			AND name LIKE '%${searchName}%'
+		</if>
+		order by t_companies.creation_date desc
+		LIMIT
+		#{pagination.startRow,jdbcType=INTEGER},
+		#{pagination.pageSize,jdbcType=INTEGER}
+	</select>
+
+	<select id="getCompanyListTotalCountByCriteria" resultType="int"
+		parameterType="com.easygame.sdk.repository.model.dto.backend.general.CompanySearchCriteriaDTO">
+		SELECT count(id)
+		FROM t_companies
+		WHERE 1=1
+		<if test="searchName != null">
+			AND name LIKE '%${searchName}%'
+		</if>
+	</select>
+
+	<resultMap id="CompanyModifyDTO" type="com.easygame.sdk.repository.model.dto.backend.general.CompanyModifyDTO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone" jdbcType="VARCHAR" />
+		<result column="fax" property="fax" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="homepage" property="homepage" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectCompanyForUpdateByPrimaryKey" resultMap="CompanyModifyDTO"
+		parameterType="java.lang.Integer">
+		SELECT id, name, fax, address, telephone,
+		homepage,
+		description
+		FROM t_companies
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteCompanyByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_companies
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<update id="updateCompany" parameterType="com.easygame.sdk.repository.model.dto.backend.general.CompanyModifyDTO">
+		update t_companies
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				telephone = #{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="fax != null">
+				fax = #{fax,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="homepage != null">
+				homepage = #{homepage,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateDate != null">
+				last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="checkCompanyDeleteSecurity" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		SELECT
+		count(t_accounts.id)
+		FROM
+		t_accounts,
+		t_accounts_informations
+		WHERE
+		t_accounts.id = t_accounts_informations.account_id
+		AND t_accounts_informations.company_id = #{id,jdbcType=INTEGER}
+	</select>
+
+</mapper>
