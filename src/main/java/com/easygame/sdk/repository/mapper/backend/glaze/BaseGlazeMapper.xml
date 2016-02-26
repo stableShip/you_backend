@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easygame.sdk.repository.mapper.backend.glaze.BaseGlazeMapper">
+
+	<resultMap id="BaseGlazeShowVO" type="com.easygame.sdk.repository.model.vo.backend.glaze.BaseGlazeShowVO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="water_content" property="water_content" jdbcType="INTEGER" />
+		<result column="comment" property="comment" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectBaseGlazeListByCriteria" resultMap="BaseGlazeShowVO" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.BaseGlazeSearchCriteriaDTO">
+		SELECT
+		t_base_glaze.id,
+		t_base_glaze.`name`,
+		t_base_glaze.water_content,
+		t_base_glaze.`comment`
+		FROM
+		(
+		SELECT
+		t_base_glaze.id
+		FROM
+		t_base_glaze
+		WHERE
+		1 = 1
+		<if test="searchName != null">
+			AND t_base_glaze.`name` LIKE '%${searchName}%'
+		</if>
+		LIMIT
+		#{pagination.startRow,jdbcType=INTEGER},
+		#{pagination.pageSize,jdbcType=INTEGER}
+		) AS selectedData
+		LEFT JOIN
+		t_base_glaze ON selectedData.id = t_base_glaze.id
+		order by
+		t_base_glaze.id desc
+	</select>
+
+	<select id="getBaseGlazeListTotalCountByCriteria" resultType="int" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.BaseGlazeSearchCriteriaDTO">
+		SELECT
+		count(t_base_glaze.id)
+		FROM
+		t_base_glaze
+		WHERE 1 = 1
+		<if test="searchName != null">
+			AND t_base_glaze.`name` LIKE '%${searchName}%'
+		</if>
+	</select>
+
+	<select id="checkIfBaseGlazeExist" resultType="int">
+		SELECT
+		count(t_base_glaze.id)
+		FROM
+		t_base_glaze
+		WHERE
+		t_base_glaze.`name` =
+		#{name,jdbcType=VARCHAR}
+		<if test="id != null">
+			<if test="id != 0">
+				AND t_base_glaze.id != #{id,jdbcType=INTEGER}
+			</if>
+		</if>
+	</select>
+
+	<delete id="deleteBaseGlazeByPrimaryKey" parameterType="java.lang.Integer">
+		delete
+		from
+		t_base_glaze
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="checkBaseGlazeDeleteSecurity" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		SELECT
+		count(t_promotions.id)
+		FROM
+		t_promotions
+		WHERE
+		t_promotions.channel_id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<insert id="insertBaseGlaze" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.BaseGlazeModifyDTO">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT @@IDENTITY
+		</selectKey>
+		insert into t_base_glaze
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				`name`,
+			</if>
+			<if test="water_content != null">
+				water_content,
+			</if>
+			<if test="comment != null">
+				comment,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="water_content != null">
+				#{water_content,jdbcType=VARCHAR},
+			</if>
+			<if test="comment != null">
+				#{comment,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<resultMap id="BaseGlazeModifyDTO" type="com.easygame.sdk.repository.model.dto.backend.glaze.BaseGlazeModifyDTO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="water_content" property="water_content" jdbcType="INTEGER" />
+		<result column="comment" property="comment" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectBaseGlazeByPrimaryKey" resultMap="BaseGlazeModifyDTO" parameterType="java.lang.Integer">
+		SELECT
+		t_base_glaze.id,
+		t_base_glaze.`name`,
+		t_base_glaze.water_content,
+		t_base_glaze.`comment`,
+		FROM
+		(
+		SELECT
+		t_base_glaze.id
+		FROM
+		t_base_glaze
+		WHERE
+		id = #{id,jdbcType=INTEGER}
+		) AS selectedData
+		LEFT
+		JOIN t_base_glaze ON selectedData.id = t_base_glaze.id
+	</select>
+
+	<select id="selectBaseGlazeMaxId" resultType="int">
+		SELECT
+		IFNULL(MAX(id),0)
+		FROM t_base_glaze
+	</select>
+
+	<update id="updateBaseGlaze" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.BaseGlazeModifyDTO">
+		update t_base_glaze
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="water_content != null">
+				water_content = #{water_content,jdbcType=INTEGER},
+			</if>
+			<if test="comment != null">
+				comment = #{comment,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="selectAllBaseGlaze" resultMap="BaseGlazeShowVO">
+		SELECT
+		t_base_glaze.id,
+		t_base_glaze.`name`,
+		t_base_glaze.water_content,
+		t_base_glaze.comment
+		FROM
+		t_base_glaze
+		ORDER
+		BY
+		t_base_glaze.id DESC
+	</select>
+
+</mapper>
