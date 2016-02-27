@@ -124,7 +124,7 @@
 		t_base_glaze.id,
 		t_base_glaze.`name`,
 		t_base_glaze.water_content,
-		t_base_glaze.`comment`,
+		t_base_glaze.`comment`
 		FROM
 		(
 		SELECT

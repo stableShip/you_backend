@@ -52,13 +52,7 @@ public class BaseGlazeController extends BaseController {
 
 	@RequestMapping(value = "/baseGlazeAddPage", method = RequestMethod.GET)
 	public String baseGlazeAddPage(ModelMap modelMap) {
-
-		List<BaseGlazeShowVO> baseGlazeList = baseGlazeBiz.selectAllBaseGlaze();
-
-		modelMap.addAttribute("baseGlazeList", baseGlazeList);
-
 		return "/backend/glaze/baseGlazeAdd";
-
 	}
 
 	@RequestMapping(value = "/baseGlazeAdd", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
@@ -77,7 +71,7 @@ public class BaseGlazeController extends BaseController {
 
 		if (baseGlazeBiz.checkBaseGlazeDuplication(baseGlaze.getName(), 0) > 0) {
 
-			bindingResult.rejectValue("name", null, "渠道已经存在");
+			bindingResult.rejectValue("name", null, "该名称已经被使用");
 
 		}
 
@@ -116,7 +110,7 @@ public class BaseGlazeController extends BaseController {
 
 		if (baseGlazeBiz.checkBaseGlazeDuplication(baseGlaze.getName(), baseGlaze.getId()) > 0) {
 
-			bindingResult.rejectValue("name", null, "渠道已经存在");
+			bindingResult.rejectValue("name", null, "该釉已经存在");
 
 		}
 

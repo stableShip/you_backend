@@ -10,18 +10,18 @@
 </head>
 <body>
 	<div id="successDialog">
-		<form id="successForm" action="<%=request.getContextPath()%>/backend/channel/channelController/findChannel.do" method="post">
+		<form id="successForm" action="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findBaseGlaze.do" method="post">
 			<fieldset>
 				<p>
-					<strong><spring:message code="backend.channel.update.label.code" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultChannelCode" class="text-input medium-input" readonly="readonly" /><br /> 
-					<strong><spring:message code="backend.channel.update.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultChannelName" class="text-input medium-input" readonly="readonly" /><br /> 
-					<strong><spring:message code="backend.channel.update.label.linkman" /> </strong><input type="text" id="resultLinkman" class="text-input medium-input" readonly="readonly" />
+					<strong><spring:message code="backend.glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultName" class="text-input medium-input" readonly="readonly" /><br />
+					<strong><spring:message code="backend.glaze.add.label.water_content" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultWaterContent" class="text-input medium-input" readonly="readonly" /><br />
+					<strong><spring:message code="backend.glaze.add.label.comment" /> </strong><input type="text" id="resultComment" class="text-input medium-input" readonly="readonly" />
 				</p>
 			</fieldset>
 		</form>
 	</div>
 	<div id="failureDialog">
-		<form id="failureForm" action="<%=request.getContextPath()%>/backend/channel/channelController/findChannel.do" method="post">
+		<form id="failureForm" action="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findbaseGlaze.do" method="post">
 			<fieldset>
 				<p>
 					<strong id="theErrorMessage"></strong>
@@ -39,14 +39,14 @@
 			<div class="clear"></div>
 			<div class="content-box">
 				<div class="content-box-header">
-					<h3><spring:message code="backend.channel.update.title" /></h3>
+					<h3>修改基础釉</h3>
 					<div class="clear"></div>
 				</div>
 				<div class="content-box-content">
 					<div class="tab-content default-tab" id="tab1">
 						<div class="notification attention png_bg">
 							<a href="#" class="close"><img src="<%=request.getContextPath()%>/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-							<div><spring:message code="backend.channel.update.alert" /></div>
+							<div><spring:message code="backend.glaze.update.alert" /></div>
 						</div>
 						<c:if test="${errors != null}">
 							<div class="notification error png_bg">
@@ -57,33 +57,28 @@
 								</div>
 							</div>
 						</c:if>
-						<form name="channel" id="form" method="post">
+						<form name="baseGlaze" id="form" method="post">
 							<fieldset>
-								<input type="hidden" name="id" value="${channel.id}" />
+								<input type="hidden" name="id" value="${baseGlaze.id}" />
 								<p>
-									<label><spring:message code="backend.channel.update.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="name" value="${channel.name}" /> <br />
+									<label><spring:message code="backend.glaze.update.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
+									<input class="text-input small-input" type="text" name="name" value="${baseGlaze.name}"
+                                    data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.name" />"/> <br />
+
+                                </p>
+								<p>
+									<label><spring:message code="backend.glaze.add.label.water_content" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
+									<input class="text-input small-input" type="text" name="water_content" value="${baseGlaze.water_content}"
+                                    data-validation="number" data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.water_content" />"/> <br />
+
+                                </p>
+								<p>
+									<label><spring:message code="backend.glaze.add.label.comment" /> </label>
+									<input class="text-input small-input" type="text" name="comment" value="${baseGlaze.comment}" /> <br />
 								</p>
+
 								<p>
-									<label><spring:message code="backend.channel.update.label.linkman" /></label>
-									<select name="linkmanId" class="small-input">
-										<option value="0">--</option>
-										<c:forEach var="a" items="${adminList}">
-											<option value="${a.id}" <c:if test="${channel.linkmanId == a.id}">selected="selected"</c:if> >${a.companyName}-${a.name}</option>
-										</c:forEach>
-									</select> <br />
-								</p>
-								<p>
-									<label>父渠道</label>
-									<select name="parentChannelId" class="small-input">
-										<option value="0">--</option>
-										<c:forEach var="c" items="${channelList}">
-											<option value="${c.id}" <c:if test="${channel.parentChannelId == c.id}">selected="selected"</c:if> >${c.name}</option>
-										</c:forEach>
-									</select> <br />
-								</p>
-								<p>
-									<input class="button" type="button" onclick="updateChannel()" value="<spring:message code="backend.form.button.update" />" />
+									<input class="button" type="button" onclick="updateBaseGlaze()" value="<spring:message code="backend.form.button.update" />" />
 								</p>
 							</fieldset>
 						</form>
@@ -131,11 +126,11 @@
 		         }
 		      });
 			
-			$('#noChannelDialog').dialog({
+			$('#nobaseGlazeDialog').dialog({
 		        width: 460,
 		        autoOpen: false,
 		        modal: true,
-		        title: '<spring:message code="backend.dialog.title.noChannel" />',
+		        title: '<spring:message code="backend.dialog.title.noglaze" />',
 		        buttons: {
 		            '<spring:message code="backend.dialog.button.confirm" />': function() { 
 		            	$(this).dialog("close"); 
@@ -144,32 +139,29 @@
 		      });
 		});
 		
-		function updateChannel() {
+		function updateBaseGlaze() {
 			var data = $('#form').serialize();
 			$.ajax({
-				url:"<%=request.getContextPath()%>/backend/channel/channelController/channelUpdate.do",
+				url:"<%=request.getContextPath()%>/backend/glaze/baseGlazeController/baseGlazeUpdate.do",
 				type : "post",
 				data : data,
 				datatype : "json",
 				success : function(data) {
 					if (data.errors != null) {
 						var errorMessage = '';
-						for(var i=0; i< data.errors.length; i++) {
+						for(var i=0; i < data.errors.length; i++) {
 							errorMessage = errorMessage + data.errors[i].defaultMessage + '<br/>';
 						}
 						$("#theErrorMessage").html(errorMessage);
 						$('#failureDialog').dialog('open');
-					} else if (data.channel.code == null) {
-						$('#failureDialog').dialog('open');
 					} else {
-						$('#resultChannelCode').attr('value',
-								data.channel.code);
-						$('#resultChannelName').attr('value',
-								data.channel.name);
-						$('#resultLinkman').attr(
+						$('#resultName').attr('value',
+								data.baseGlaze.name);
+						$('#resultWaterContent').attr('value',
+								data.baseGlaze.water_content);
+						$('#resultComment').attr(
 								'value',
-								data.channel.linkmanName + '--'
-										+ data.channel.companyName);
+								data.baseGlaze.comment);
 						$('#successDialog').dialog('open');
 					}
 				}

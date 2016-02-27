@@ -32,8 +32,8 @@ public class BaseGlazeBizImpl extends BaseBizImpl implements IBaseGlazeBiz {
 
     @Override
     public int checkBaseGlazeDuplication(String name, Integer id) {
-        return 0;
-    }
+        return baseGlazeMapper.checkIfBaseGlazeExist(name, id);
+    };
 
     @Override
     public int deleteBaseGlaze(int id) {

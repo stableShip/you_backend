@@ -4,11 +4,23 @@ import com.easygame.sdk.common.util.Page;
 
 public class BaseGlazeSearchCriteriaDTO {
 
+    private Integer id;
+
+
+
     private String searchName;
     /**
      * 分页信息
      */
     private Page pagination;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getSearchName() {
         return searchName;
