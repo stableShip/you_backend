@@ -10,11 +10,10 @@
 </head>
 <body>
 	<div id="searchDialog">
-		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/channel/channelController/findChannel.do" method="post">
+		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/glaze/glazeController/findglaze.do" method="post">
 			<fieldset>
 				<p>
-					<spring:message code="backend.channel.list.search.label.code" /> <input class="text-input small-input" type="text" name="searchChannelCode" value="${criteria.searchChannelCode}" /><br /> 
-					<spring:message code="backend.channel.list.search.label.name" /> <input class="text-input small-input" type="text" name="searchChannelName" value="${criteria.searchChannelName}" />
+					<spring:message code="backend.glaze.list.search.label.name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
 					<input name="pagination.pageSize" type="hidden" id="pageSize" value="${criteria.pagination.pageSize}" />
 					<input name="pagination.currentPage" type="hidden" id="page" value="${criteria.pagination.currentPage}" />
 				</p>
@@ -25,8 +24,8 @@
 		<form>
 			<fieldset>
 				<p>
-					<strong><spring:message code="backend.channel.list.column.name" /></strong>
-					<input class="text-input medium-input" type="text" id="dChannel" readonly="readonly" /><br /> 
+					<strong><spring:message code="backend.glaze.list.column.name" /></strong>
+					<input class="text-input medium-input" type="text" id="dglaze" readonly="readonly" /><br /> 
 				</p>
 				<p>
 					<strong><spring:message code="backend.dialog.message.deleteAlert" /></strong> <br /> 
@@ -62,21 +61,21 @@
 			<div class="clear"></div>
 			<div class="content-box">
 				<div class="content-box-header">
-					<h3><spring:message code="backend.channel.list.title" /></h3>
+					<h3><spring:message code="backend.glaze.list.title" /></h3>
 					<div class="clear"></div>
 				</div>
 				<div class="content-box-content">
 					<div class="tab-content default-tab" id="tab1">
 						<div class="notification attention png_bg">
 							<a href="#" class="close"><img src="<%=request.getContextPath()%>/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-							<div><spring:message code="backend.channel.list.alert" /></div>
+							<div><spring:message code="backend.glaze.list.alert" /></div>
 						</div>
 						<form>
 							<fieldset>
 								<p>
 									<a class="button" href="#" onclick="javascript:$('#searchDialog').dialog('open');">搜索条件</a>
-									<c:if test="${channelPermission == 2}">
-										<a class="button" href="<%=request.getContextPath()%>/backend/channel/channelController/channelAddPage.do"><spring:message code="backend.channel.list.button.addChannel" /></a>
+									<c:if test="${glazePermission == 2}">
+										<a class="button" href="<%=request.getContextPath()%>/backend/glaze/glazeController/glazeAddPage.do"><spring:message code="backend.glaze.list.button.addglaze" /></a>
 									</c:if>
 								</p>
 							</fieldset>
@@ -84,11 +83,11 @@
 						<table>
 							<thead>
 								<tr>
-									<th><spring:message code="backend.channel.list.column.code" /></th>
-									<th><spring:message code="backend.channel.list.column.name" /></th>
-									<th><spring:message code="backend.channel.list.column.linkman" /></th>
-									<th><spring:message code="backend.channel.list.column.email" /></th>
-									<c:if test="${channelPermission == 2}"><th><spring:message code="backend.channel.list.column.operation" /></th></c:if>
+									<th><spring:message code="backend.glaze.list.column.code" /></th>
+									<th><spring:message code="backend.glaze.list.column.name" /></th>
+									<th><spring:message code="backend.glaze.list.column.linkman" /></th>
+									<th><spring:message code="backend.glaze.list.column.email" /></th>
+									<c:if test="${glazePermission == 2}"><th><spring:message code="backend.glaze.list.column.operation" /></th></c:if>
 								</tr>
 							</thead>
 							<tfoot>
@@ -101,7 +100,7 @@
 									</td>
 								</tr>
 							</tfoot>
-							<input type="hidden" id="chooseId" value="0"></input>
+							<input type="hidden" id="chooseId" value="0"/>
 							<tbody>
 								<c:forEach var="baseGlaze" items="${baseGlazeList}">
 									<tr>
@@ -109,9 +108,9 @@
 										<td>${baseGlaze.name}</td>
 										<td>${baseGlaze.water_content}</td>
 										<td>${baseGlaze.comment}</td>
-										<c:if test="${channelPermission == 2}"><td>
+										<c:if test="${glazePermission == 2}"><td>
 											<a href="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/baseGlazeUpdate.do?id=${baseGlaze.id}" title="<spring:message code="backend.operation.button.modify" />"><img src="<%=request.getContextPath()%>/images/icons/pencil.png" alt="<spring:message code="backend.operation.button.modify" />" /></a>
-											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${c.code}', '${c.name}', '${c.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
+											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${c.name}', '${c.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
 										</td></c:if>
 									</tr>
 								</c:forEach>
@@ -132,7 +131,7 @@
 		        modal: true,
 		        title: '<spring:message code="backend.dialog.title.information" />',
 		        buttons: {
-		        	'<spring:message code="backend.dialog.button.cancel" />':function(){ 
+		        	'<spring:message code="backend.dialog.button.cancel" />':function(){
 	        			$(this).dialog("close"); 
 	        		},
 	        		'<spring:message code="backend.form.button.search" />':function(){
@@ -178,8 +177,8 @@
 		      });
 		});
 	
-		function showDeleteConfirm(channelCode, channelName, id) {
-			$('#dChannel').attr("value", channelCode+'-'+channelName);
+		function showDeleteConfirm(glazeName, id) {
+			$('#dglaze').attr("value", glazeName);
 			$('#chooseId').attr("value", id);
 			$('#deleteConfirmDialog').dialog('open');
 		}
@@ -188,7 +187,7 @@
 			$('#deleteConfirmDialog').dialog('close');
 			var recordId = $('#chooseId').val();
 			$.ajax({
-				url:"<%=request.getContextPath()%>/backend/channel/channelController/channelDelete.do",
+				url:"<%=request.getContextPath()%>/backend/glaze/glazeController/glazeDelete.do",
 				type:"post",
 				data:{id:recordId},
 				datatype:"json",

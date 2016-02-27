@@ -172,6 +172,24 @@
 							</resources>
 						</configuration>
 					</execution>
+					<execution>
+						<id>copy-glaze-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/classes/com/easygame/sdk/repository/mapper/backend/glaze</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/src/main/java/com/easygame/sdk/repository/mapper/backend/glaze</directory>
+									<includes>
+										<include>*.xml</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 
@@ -203,6 +221,17 @@
 					<!-- <packagingExcludes>WEB-INF/lib/batik*.jar,WEB-INF/lib/commons*.jar,WEB-INF/lib/ETMS*.jar,WEB-INF/lib/richfaces*.jar</packagingExcludes> -->
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.2</version>
+				<configuration>
+					<verbose>true</verbose>
+					<overwrite>true</overwrite>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
