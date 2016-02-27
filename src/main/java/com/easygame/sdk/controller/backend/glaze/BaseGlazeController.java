@@ -31,7 +31,7 @@ public class BaseGlazeController extends BaseController {
 	private IBaseGlazeBiz baseGlazeBiz;
 
 	@RequestMapping(value = "/findBaseGlaze", method = { RequestMethod.GET, RequestMethod.POST })
-	public String findChannel(BaseGlazeSearchCriteriaDTO criteria, HttpServletRequest request, ModelMap modelMap) {
+	public String findBaseGlaze(BaseGlazeSearchCriteriaDTO criteria, HttpServletRequest request, ModelMap modelMap) {
 
 		request.getSession().setAttribute("currentPage", "baseGlazePermission");
 
