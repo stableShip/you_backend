@@ -13,7 +13,7 @@
 		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findBaseGlaze.do" method="post">
 			<fieldset>
 				<p>
-					<spring:message code="backend.glaze.list.search.label.name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
+					<spring:message code="backend.glaze.list.search.label.base_glaze_name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
 					<input name="pagination.pageSize" type="hidden" id="pageSize" value="${criteria.pagination.pageSize}" />
 					<input name="pagination.currentPage" type="hidden" id="page" value="${criteria.pagination.currentPage}" />
 				</p>
@@ -75,7 +75,7 @@
 								<p>
 									<a class="button" href="#" onclick="javascript:$('#searchDialog').dialog('open');">搜索条件</a>
 									<%--<c:if test="${glazePermission == 2}">--%>
-										<a class="button" href="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/baseGlazeAddPage.do"><spring:message code="backend.glaze.list.button.addglaze" /></a>
+										<a class="button" href="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/baseGlazeAddPage.do"><spring:message code="backend.glaze.list.button.add_base_glaze" /></a>
 									<%--</c:if>--%>
 								</p>
 							</fieldset>

@@ -13,8 +13,8 @@
 		<form id="successForm" action="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findBaseGlaze.do" method="post">
 			<fieldset>
 				<p>
-					<strong><spring:message code="backend.glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultName" class="text-input medium-input" readonly="readonly" /><br />
-					<strong><spring:message code="backend.glaze.add.label.water_content" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultWaterContent" class="text-input medium-input" readonly="readonly" /><br />
+					<strong><spring:message code="backend.base_glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultName" class="text-input medium-input" readonly="readonly" /><br />
+					<strong><spring:message code="backend.base_glaze.add.label.water_content" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultWaterContent" class="text-input medium-input" readonly="readonly" /><br />
 					<strong><spring:message code="backend.glaze.add.label.comment" /> </strong><input type="text" id="resultComment" class="text-input medium-input" readonly="readonly" />
 				</p>
 			</fieldset>
@@ -46,7 +46,7 @@
 					<div class="tab-content default-tab" id="tab1">
 						<div class="notification attention png_bg">
 							<a href="#" class="close"><img src="<%=request.getContextPath()%>/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-							<div><spring:message code="backend.glaze.update.alert" /></div>
+							<div><spring:message code="backend.base_glaze.update.alert" /></div>
 						</div>
 						<c:if test="${errors != null}">
 							<div class="notification error png_bg">
@@ -61,13 +61,13 @@
 							<fieldset>
 								<input type="hidden" name="id" value="${baseGlaze.id}" />
 								<p>
-									<label><spring:message code="backend.glaze.update.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
+									<label><spring:message code="backend.base_glaze.update.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
 									<input class="text-input small-input" type="text" name="name" value="${baseGlaze.name}"
-                                    data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.name" />"/> <br />
+                                    data-validation="required" data-validation-error-msg="<spring:message code="backend.base_glaze.add.err-message.name" />"/> <br />
 
                                 </p>
 								<p>
-									<label><spring:message code="backend.glaze.add.label.water_content" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
+									<label><spring:message code="backend.base_glaze.add.label.water_content" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
 									<input class="text-input small-input" type="text" name="water_content" value="${baseGlaze.water_content}"
                                     data-validation="number" data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.water_content" />"/> <br />
 
@@ -130,7 +130,7 @@
 		        width: 460,
 		        autoOpen: false,
 		        modal: true,
-		        title: '<spring:message code="backend.dialog.title.noglaze" />',
+		        title: '<spring:message code="backend.dialog.title.no_base_glaze" />',
 		        buttons: {
 		            '<spring:message code="backend.dialog.button.confirm" />': function() { 
 		            	$(this).dialog("close"); 
