@@ -5,12 +5,14 @@ import java.io.Serializable;
 public class CompanyShowVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer id;
 
     private String name;
 
-    private String fax;
+	private String telephone;
+
+	private String fax;
 
     private String address;
 
@@ -30,6 +32,14 @@ public class CompanyShowVO implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
 	public String getFax() {

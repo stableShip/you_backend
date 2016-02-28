@@ -27,8 +27,6 @@ public class CompanyBizImpl extends BaseBizImpl implements ICompanyBiz {
 		
 		companyDto.setLastUpdateDate(new Date());
 		companyDto.setCreationDate(new Date());
-		companyMapper.insertCompany(companyDto);
-		
 		return companyMapper.insertCompany(companyDto);
 		
 	}

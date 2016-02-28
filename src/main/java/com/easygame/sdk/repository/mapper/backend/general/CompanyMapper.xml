@@ -22,9 +22,6 @@
 		</selectKey>
 		insert into t_companies
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
-			</if>
 			<if test="name != null">
 				name,
 			</if>
@@ -57,9 +54,6 @@
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=INTEGER},
-			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
@@ -96,13 +90,14 @@
 	<resultMap id="CompanyShowVO" type="com.easygame.sdk.repository.model.vo.backend.general.CompanyShowVO">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone" jdbcType="VARCHAR" />
 		<result column="fax" property="fax" jdbcType="VARCHAR" />
 		<result column="address" property="address" jdbcType="VARCHAR" />
 		<result column="homepage" property="homepage" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="selectCompanyListByCriteria" resultMap="CompanyShowVO"
 		parameterType="com.easygame.sdk.repository.model.dto.backend.general.CompanySearchCriteriaDTO">
-		SELECT id, name, fax, address, homepage
+		SELECT id, name, fax, address, homepage,telephone
 		FROM t_companies
 		WHERE 1=1
 		<if test="searchName != null">

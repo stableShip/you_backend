@@ -97,6 +97,7 @@
 							<thead>
 								<tr>
 									<th><spring:message code="backend.company.list.column.name" /></th>
+									<th><spring:message code="backend.company.list.column.phone" /></th>
 									<th><spring:message code="backend.company.list.column.fex" /></th>
 									<th><spring:message code="backend.company.list.column.address" /></th>
 									<th><spring:message code="backend.company.list.column.homepage" /></th>
@@ -118,7 +119,8 @@
 								<c:forEach var="c" items="${companyList}">
 									<tr>
 										<td><c:out value="${c.name}" /></td>
-										<td><c:out value="${c.fax}" /></td>
+                                        <td><c:out value="${c.telephone}" /></td>
+                                        <td><c:out value="${c.fax}" /></td>
 										<td><c:out value="${c.address}" /></td>
 										<td><c:out value="${c.homepage}" /></td>
 										<td><a href="#" title="<spring:message code="backend.operation.button.viewDetail" />" onclick="viewInfomation(${c.id})"><img src="<%=request.getContextPath()%>/images/icons/text.png" alt="<spring:message code="backend.operation.button.viewDetail" />" /></a> 
@@ -156,7 +158,7 @@
 		         }
 		      });
 			$('#informationDialog').dialog({
-		        width: 500,
+                width: 500,
 		        autoOpen: false,
 		        modal: true,
 		        title: '<spring:message code="backend.dialog.title.information" />',
