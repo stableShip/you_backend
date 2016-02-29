@@ -106,4 +106,15 @@
         </li>
     </c:if>
 
+	<c:if test="${glazePermission != 0}">
+		<li>
+			<a href="#" class="nav-top-item <c:if test="${currentPage eq 'tonerPermission'}">current</c:if>">色料管理</a>
+			<ul>
+				<c:if test="${companyPermission != 0}">
+					<li><a href="<%=request.getContextPath()%>/backend/toner/tonerController/findToner.do?pagination.currentPage=1" <c:if test="${currentPage eq 'tonerPermission'}">class="current"</c:if>>色料设置</a></li>
+				</c:if>
+			</ul>
+		</li>
+	</c:if>
+
 </ul>

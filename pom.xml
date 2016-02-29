@@ -190,7 +190,25 @@
 							</resources>
 						</configuration>
 					</execution>
-				</executions>
+				<execution>
+					<id>copy-toner-resources</id>
+					<phase>validate</phase>
+					<goals>
+						<goal>copy-resources</goal>
+					</goals>
+					<configuration>
+						<outputDirectory>${basedir}/target/classes/com/easygame/sdk/repository/mapper/backend/toner</outputDirectory>
+						<resources>
+							<resource>
+								<directory>${basedir}/src/main/java/com/easygame/sdk/repository/mapper/backend/toner</directory>
+								<includes>
+									<include>*.xml</include>
+								</includes>
+							</resource>
+						</resources>
+					</configuration>
+				</execution>
+			</executions>
 			</plugin>
 
 			<plugin>

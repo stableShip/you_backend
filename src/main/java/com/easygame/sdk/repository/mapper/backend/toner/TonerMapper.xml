@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easygame.sdk.repository.mapper.backend.toner.TonerMapper">
+
+	<resultMap id="TonerShowVO" type="com.easygame.sdk.repository.model.vo.backend.toner.TonerShowVO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectTonerListByCriteria" resultMap="TonerShowVO" parameterType="com.easygame.sdk.repository.model.dto.backend.toner.TonerSearchCriteriaDTO">
+		SELECT
+		t_toner.id,
+		t_toner.`name`
+		FROM
+		(
+		SELECT
+		t_toner.id
+		FROM
+		t_toner
+		WHERE
+		1 = 1
+		<if test="searchName != null">
+			AND t_toner.`name` LIKE '%${searchName}%'
+		</if>
+		LIMIT
+		#{pagination.startRow,jdbcType=INTEGER},
+		#{pagination.pageSize,jdbcType=INTEGER}
+		) AS selectedData
+		LEFT JOIN
+		t_toner ON selectedData.id = t_toner.id
+		order by
+		t_toner.id desc
+	</select>
+
+	<select id="getTonerListTotalCountByCriteria" resultType="int" parameterType="com.easygame.sdk.repository.model.dto.backend.toner.TonerSearchCriteriaDTO">
+		SELECT
+		count(t_toner.id)
+		FROM
+		t_toner
+		WHERE 1 = 1
+		<if test="searchName != null">
+			AND t_toner.`name` LIKE '%${searchName}%'
+		</if>
+	</select>
+
+	<select id="checkIfTonerExist" resultType="int">
+		SELECT
+		count(t_toner.id)
+		FROM
+		t_toner
+		WHERE
+		t_toner.`name` =
+		#{name,jdbcType=VARCHAR}
+		<if test="id != null">
+			<if test="id != 0">
+				AND t_toner.id != #{id,jdbcType=INTEGER}
+			</if>
+		</if>
+	</select>
+
+	<delete id="deleteTonerByPrimaryKey" parameterType="java.lang.Integer">
+		delete
+		from
+		t_toner
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="checkTonerDeleteSecurity" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		SELECT
+		count(t_promotions.id)
+		FROM
+		t_promotions
+		WHERE
+		t_promotions.channel_id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<insert id="insertToner" parameterType="com.easygame.sdk.repository.model.dto.backend.toner.TonerModifyDTO">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT @@IDENTITY
+		</selectKey>
+		insert into t_toner
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				`name`
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<resultMap id="TonerModifyDTO" type="com.easygame.sdk.repository.model.dto.backend.toner.TonerModifyDTO">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectTonerByPrimaryKey" resultMap="TonerModifyDTO" parameterType="java.lang.Integer">
+		SELECT
+		t_toner.id,
+		t_toner.`name`
+		FROM
+		(
+		SELECT
+		t_toner.id
+		FROM
+		t_toner
+		WHERE
+		id = #{id,jdbcType=INTEGER}
+		) AS selectedData
+		LEFT
+		JOIN t_toner ON selectedData.id = t_toner.id
+	</select>
+
+	<select id="selectTonerMaxId" resultType="int">
+		SELECT
+		IFNULL(MAX(id),0)
+		FROM t_toner
+	</select>
+
+	<update id="updateToner" parameterType="com.easygame.sdk.repository.model.dto.backend.toner.TonerModifyDTO">
+		update t_toner
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="selectAllToner" resultMap="TonerShowVO">
+		SELECT
+		t_toner.id,
+		t_toner.`name`
+		FROM
+		t_toner
+		ORDER
+		BY
+		t_toner.id DESC
+	</select>
+
+</mapper>
