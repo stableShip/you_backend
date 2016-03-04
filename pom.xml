@@ -489,19 +489,7 @@
 			<version>${memcached.session.version}</version>
 		</dependency> -->
 		
-		<!-- redis begin -->
-		<dependency>  
-	        <groupId>org.springframework.data</groupId>  
-	        <artifactId>spring-data-redis</artifactId>  
-	        <version>1.1.0.RELEASE</version>  
-	    </dependency> 
-	    
-	    <dependency>
-		    <groupId>redis.clients</groupId>
-		    <artifactId>jedis</artifactId>
-		    <version>2.2.1</version>
-		</dependency>
-		<!-- redis end -->
+
 		
 	</dependencies>
 
