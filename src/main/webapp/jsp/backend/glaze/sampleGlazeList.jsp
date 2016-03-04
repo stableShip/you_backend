@@ -10,10 +10,12 @@
 </head>
 <body>
 	<div id="searchDialog">
-		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findBaseGlaze.do" method="post">
+		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findBaseGlaze.do" method="post">
 			<fieldset>
 				<p>
-					<spring:message code="backend.glaze.list.search.label.base_glaze_name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
+					<spring:message code="backend.sample_glaze.list.column.name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
+					<spring:message code="backend.company.add.label.name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
+
 					<input name="pagination.pageSize" type="hidden" id="pageSize" value="${criteria.pagination.pageSize}" />
 					<input name="pagination.currentPage" type="hidden" id="page" value="${criteria.pagination.currentPage}" />
 				</p>
@@ -75,7 +77,7 @@
 								<p>
 									<a class="button" href="#" onclick="javascript:$('#searchDialog').dialog('open');">搜索条件</a>
 									<%--<c:if test="${glazePermission == 2}">--%>
-										<a class="button" href="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/baseGlazeAddPage.do"><spring:message code="backend.glaze.list.button.add_base_glaze" /></a>
+										<a class="button" href="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/sampleGlazeAddPage.do"><spring:message code="backend.sample_glaze.add.title" /></a>
 									<%--</c:if>--%>
 								</p>
 							</fieldset>
@@ -83,10 +85,11 @@
 						<table>
 							<thead>
 								<tr>
-									<th><spring:message code="backend.base_glaze.list.column.id" /></th>
-									<th><spring:message code="backend.base_glaze.list.column.name" /></th>
-									<th><spring:message code="backend.base_glaze.list.column.water_content" /></th>
-									<th><spring:message code="backend.base_glaze.list.column.content" /></th>
+									<th><spring:message code="backend.sample_glaze.list.column.id" /></th>
+									<th><spring:message code="backend.company.add.label.name" /></th>
+									<th><spring:message code="backend.sample_glaze.list.column.name" /></th>
+									<th><spring:message code="backend.sample_glaze.list.column.fineness" /></th>
+									<th><spring:message code="backend.sample_glaze.list.column.creation_date" /></th>
 									<%--<c:if test="${glazePermission == 2}">--%>
 										<th><spring:message code="backend.glaze.list.column.operation" /></th>
 									<%--</c:if>--%>
@@ -104,16 +107,17 @@
 							</tfoot>
 							<input type="hidden" id="chooseId" value="0"/>
 							<tbody>
-								<c:forEach var="baseGlaze" items="${baseGlazeList}">
+								<c:forEach var="sampleGlaze" items="${sampleGlazeList}">
 									<tr>
-										<td>${baseGlaze.id}</td>
-										<td>${baseGlaze.name}</td>
-										<td>${baseGlaze.water_content}</td>
-										<td>${baseGlaze.comment}</td>
+										<td>${sampleGlaze.id}</td>
+										<td>${sampleGlaze.customer_name}</td>
+										<td>${sampleGlaze.sample_glaze_name}</td>
+										<td>${sampleGlaze.fineness}</td>
+										<td>${sampleGlaze.creation_date}</td>
 										<%--<c:if test="${glazePermission == 2}">--%>
 										<td>
-											<a href="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/baseGlazeUpdatePage.do?id=${baseGlaze.id}" title="<spring:message code="backend.operation.button.modify" />"><img src="<%=request.getContextPath()%>/images/icons/pencil.png" alt="<spring:message code="backend.operation.button.modify" />" /></a>
-											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${baseGlaze.name}', '${baseGlaze.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
+											<a href="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/sampleGlazeUpdatePage.do?id=${sampleGlaze.id}" title="<spring:message code="backend.operation.button.modify" />"><img src="<%=request.getContextPath()%>/images/icons/pencil.png" alt="<spring:message code="backend.operation.button.modify" />" /></a>
+											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${sampleGlaze.sample_glaze_name}', '${sampleGlaze.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
 										</td>
 										<%--</c:if>--%>
 									</tr>
@@ -191,7 +195,7 @@
 			$('#deleteConfirmDialog').dialog('close');
 			var recordId = $('#chooseId').val();
 			$.ajax({
-				url:"<%=request.getContextPath()%>/backend/glaze/baseGlazeController/baseGlazeDelete.do",
+				url:"<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/sampleGlazeDelete.do",
 				type:"post",
 				data:{id:recordId},
 				datatype:"json",

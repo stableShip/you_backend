@@ -89,7 +89,7 @@
 					<li><a href="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findBaseGlaze.do?pagination.currentPage=1" <c:if test="${currentPage eq 'glazePermission'}">class="current"</c:if>><spring:message code="backend.leftmenu.settings.glaze.base_glaze" /></a></li>
 				</c:if>
 				<c:if test="${glazePermission != 0}">
-					<li><a href="<%=request.getContextPath()%>/backend/market/appController/appList.do?pagination.currentPage=1" <c:if test="${currentPage eq 'glazePermission'}">class="current"</c:if>><spring:message code="backend.leftmenu.settings.glaze.sample_glaze" /></a></li>
+					<li><a href="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findSampleGlaze.do?pagination.currentPage=1" <c:if test="${currentPage eq 'glazePermission'}">class="current"</c:if>><spring:message code="backend.leftmenu.settings.glaze.sample_glaze" /></a></li>
 				</c:if>
 			</ul>
 		</li>
