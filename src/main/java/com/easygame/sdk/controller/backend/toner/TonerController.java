@@ -140,4 +140,12 @@ public class TonerController extends BaseController {
 
 	}
 
+	@RequestMapping(value = "/getTonerById", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+	public @ResponseBody String getTonerById(Integer id) {
+
+		TonerModifyDTO toner  = tonerBiz.selectTonerForUpdate(id);
+
+		return JSON.toJSONString(toner);
+
+	}
 }

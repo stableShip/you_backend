@@ -140,4 +140,13 @@ public class BaseGlazeController extends BaseController {
 
 	}
 
+	@RequestMapping(value = "/getBaseGlazeById", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+	public @ResponseBody String getBaseGlazeById(Integer id) {
+
+		BaseGlazeModifyDTO baseGlaze  = baseGlazeBiz.selectBaseGlazeForUpdate(id);
+
+		return JSON.toJSONString(baseGlaze);
+
+	}
+
 }

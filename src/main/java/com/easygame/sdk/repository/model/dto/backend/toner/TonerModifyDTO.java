@@ -8,17 +8,23 @@ public class TonerModifyDTO extends Toner implements Serializable {
 
     private static final long serialVersionUID = -4124330501835134622L;
 
-    private String name;
+    private Integer content;
 
-    @Override
-    public String getName() {
-        return name;
+    private Integer sampleGlazeId;
+
+    public Integer getSampleGlazeId() {
+        return sampleGlazeId;
     }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
+    public void setSampleGlazeId(Integer sampleGlazeId) {
+        this.sampleGlazeId = sampleGlazeId;
     }
 
+    public Integer getContent() {
+        return content;
+    }
 
+    public void setContent(Integer content) {
+        this.content = content;
+    }
 }

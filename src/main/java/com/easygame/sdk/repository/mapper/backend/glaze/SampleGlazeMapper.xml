@@ -123,11 +123,8 @@
 			<if test="name != null">
 				`name`,
 			</if>
-			<if test="water_content != null">
-				water_content,
-			</if>
-			<if test="comment != null">
-				comment,
+			<if test="fineness != null">
+				fineness
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -137,11 +134,8 @@
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
-			<if test="water_content != null">
-				#{water_content,jdbcType=VARCHAR},
-			</if>
-			<if test="comment != null">
-				#{comment,jdbcType=INTEGER},
+			<if test="fineness != null">
+				#{fineness,jdbcType=INTEGER},
 			</if>
 		</trim>
 	</insert>
@@ -149,15 +143,14 @@
 	<resultMap id="SampleGlazeModifyDTO" type="com.easygame.sdk.repository.model.dto.backend.glaze.SampleGlazeModifyDTO">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
-		<result column="water_content" property="water_content" jdbcType="INTEGER" />
-		<result column="comment" property="comment" jdbcType="VARCHAR" />
+		<result column="fineness" property="fineness" jdbcType="INTEGER" />
+		<result column="customer" property="customer" jdbcType="INTEGER" />
 	</resultMap>
 	<select id="selectSampleGlazeByPrimaryKey" resultMap="SampleGlazeModifyDTO" parameterType="java.lang.Integer">
 		SELECT
 		t_sample_glaze.id,
 		t_sample_glaze.`name`,
-		t_sample_glaze.water_content,
-		t_sample_glaze.`comment`
+		t_sample_glaze.fineness
 		FROM
 		(
 		SELECT
@@ -183,12 +176,6 @@
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
-			<if test="water_content != null">
-				water_content = #{water_content,jdbcType=INTEGER},
-			</if>
-			<if test="comment != null">
-				comment = #{comment,jdbcType=INTEGER},
-			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
@@ -197,13 +184,39 @@
 		SELECT
 		t_sample_glaze.id,
 		t_sample_glaze.`name`,
-		t_sample_glaze.water_content,
-		t_sample_glaze.comment
+		t_sample_glaze.fineness,
+		t_sample_glaze.creation_date
 		FROM
 		t_sample_glaze
 		ORDER
 		BY
 		t_sample_glaze.id DESC
 	</select>
+
+	<insert id="buildTonerConnect" parameterType="com.easygame.sdk.repository.model.dto.backend.toner.TonerModifyDTO">
+		insert into t_sample_glaze_toner
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				toner_id,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="sampleGlazeId != null">
+				sample_glaze_id
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=INTEGER},
+			</if>
+			<if test="sampleGlazeId != null">
+				#{sampleGlazeId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
 
 </mapper>

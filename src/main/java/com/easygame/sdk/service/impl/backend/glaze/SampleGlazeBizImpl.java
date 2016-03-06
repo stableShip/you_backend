@@ -1,14 +1,17 @@
 package com.easygame.sdk.service.impl.backend.glaze;
 
+import com.alibaba.fastjson.JSON;
 import com.easygame.sdk.repository.mapper.backend.glaze.SampleGlazeMapper;
 import com.easygame.sdk.repository.model.dto.backend.glaze.SampleGlazeModifyDTO;
 import com.easygame.sdk.repository.model.dto.backend.glaze.SampleGlazeSearchCriteriaDTO;
+import com.easygame.sdk.repository.model.dto.backend.toner.TonerModifyDTO;
 import com.easygame.sdk.repository.model.vo.backend.glaze.SampleGlazeShowVO;
 import com.easygame.sdk.service.api.backend.glaze.ISampleGlazeBiz;
 import com.easygame.sdk.service.impl.BaseBizImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service(value = "sampleGlazeBiz")
@@ -50,7 +53,16 @@ public class SampleGlazeBizImpl extends BaseBizImpl implements ISampleGlazeBiz {
 
     @Override
     public SampleGlazeModifyDTO insertSampleGlaze(SampleGlazeModifyDTO record) {
+        record.setCreation_date(new Date());
         sampleGlazeMapper.insertSampleGlaze(record);
+        List<TonerModifyDTO> toners = record.getToners();
+        for (int i = 0; i < toners.size(); i++) {
+            TonerModifyDTO toner = toners.get(i);
+            if (toner.getId()!= null) {
+                toner.setSampleGlazeId(record.getId());
+                sampleGlazeMapper.buildTonerConnect(toner);
+            }
+        }
         return sampleGlazeMapper.selectSampleGlazeByPrimaryKey(record.getId());
     }
 
@@ -62,6 +74,7 @@ public class SampleGlazeBizImpl extends BaseBizImpl implements ISampleGlazeBiz {
     @Override
     public SampleGlazeModifyDTO updateSampleGlaze(SampleGlazeModifyDTO record) {
         sampleGlazeMapper.updateSampleGlaze(record);
+
         return sampleGlazeMapper.selectSampleGlazeByPrimaryKey(record.getId());
     }
 
