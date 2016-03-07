@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div id="searchDialog">
-		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findBaseGlaze.do" method="post">
+		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findSampleGlaze.do" method="post">
 			<fieldset>
 				<p>
 					<spring:message code="backend.sample_glaze.list.column.name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />

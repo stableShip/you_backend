@@ -1,5 +1,6 @@
 package com.easygame.sdk.repository.mapper.backend.glaze;
 
+import com.easygame.sdk.repository.model.dto.backend.glaze.BaseGlazeModifyDTO;
 import com.easygame.sdk.repository.model.dto.backend.glaze.SampleGlazeModifyDTO;
 import com.easygame.sdk.repository.model.dto.backend.glaze.SampleGlazeSearchCriteriaDTO;
 import com.easygame.sdk.repository.model.dto.backend.toner.TonerModifyDTO;
@@ -38,12 +39,11 @@ public interface SampleGlazeMapper {
 	List<SampleGlazeShowVO> selectAllSampleGlaze();
 
 	/** 建立客户关联 */
-	int buildCustomerConnect(@Param("id") Integer id);
+	int buildCustomerConnect(SampleGlazeModifyDTO record);
 	/** 建立基础釉关联 */
-	int buildBaseGlazeConnect(@Param("id") Integer id);
+	int buildBaseGlazeConnect(BaseGlazeModifyDTO record);
 	/** 建立色料关联 */
 	int buildTonerConnect(TonerModifyDTO record);
-
 
 	/** 删除客户关联 */
 	int deleteCustomerConnect(@Param("id") Integer id);

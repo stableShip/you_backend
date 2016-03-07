@@ -15,6 +15,16 @@ public class SampleGlazeModifyDTO extends SampleGlaze implements Serializable {
 
     private List<TonerModifyDTO> toners;
 
+    private List<BaseGlazeModifyDTO> baseGlazes;
+
+    public List<BaseGlazeModifyDTO> getBaseGlazes() {
+        return baseGlazes;
+    }
+
+    public void setBaseGlazes(List<BaseGlazeModifyDTO> baseGlazes) {
+        this.baseGlazes = baseGlazes;
+    }
+
     public List<TonerModifyDTO> getToners() {
         return toners;
     }

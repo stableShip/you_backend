@@ -14,7 +14,7 @@
 			<fieldset>
 				<p>
 					<strong><spring:message code="backend.sample_glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultglazeName" class="text-input medium-input" readonly="readonly" /><br />
-					<strong><spring:message code="backend.sample_glaze.add.label.fineness" /> </strong><input type="text" id="resultWaterContent" class="text-input medium-input" readonly="readonly" /><br />
+					<strong><spring:message code="backend.sample_glaze.add.label.fineness" /> </strong><input type="text" id="resultFineness" class="text-input medium-input" readonly="readonly" /><br />
 					<strong><spring:message code="backend.glaze.add.label.comment" /> </strong><input type="text" id="resultComment" class="text-input medium-input" readonly="readonly" />
 				</p>
 			</fieldset>
@@ -126,7 +126,7 @@
 									</div>
 									<div style="float: left; width: 45%">
 										<label>含量（%）</label>
-										<input class="text-input small-input" type="text" name="content"
+										<input class="text-input small-input" type="text" id="base_glaze_content"
 											   data-validation="number"  data-validation="required" data-validation-error-msg="<spring:message code="backend.sample_glaze.add.err-message.name" />"/>
 										<input class="button" type="button" onclick="addBaseGlaze()" value="添加" />
 									</div>
@@ -228,6 +228,8 @@
 					} else {
 						$('#resultglazeName').attr('value',
 								data.sampleGlaze.name);
+						$('#resultFineness').attr('value',
+								data.sampleGlaze.fineness);
 						$('#successDialog').dialog('open');
 					}
 				}
@@ -267,6 +269,17 @@
 
 		function addBaseGlaze() {
 			var id = $('#base_glaze_id').val();
+			var content = $('#base_glaze_content').val();
+			if(!$('#base_glaze_content').val()){
+				return;
+			}
+			var tag = "#base_glaze_"+id;
+			if ($(tag).length>0){
+				$("#theErrorMessage").html("不能添加相同的基础釉");
+				$('#failureDialog').dialog('open');
+				return;
+			}
+
 			$.ajax({
 				url:"<%=request.getContextPath()%>/backend/glaze/baseGlazeController/getBaseGlazeById.do",
 				type : "post",
@@ -275,8 +288,10 @@
 				success : function(data) {
 					$('#base_glaze').append(
 							'<tr id="' +"baseGlaze_" + data.id + '">' +
+							'<input type="hidden" name="baseGlazes['+ data.id+'].id" value='+data.id+' />' +
+							'<input type="hidden" name="baseGlazes['+ data.id+'].content" value='+content+' />' +
 							'<td>' + data.name + '</td>' +
-							'<td>' + 1 + '</td>' +
+							'<td>' + content + '</td>' +
 							'<td><a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="removeRecord('+"'"+'baseGlaze_'+ data.id +"'"+ ')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a></td>' +
 							'</tr>'
 					);

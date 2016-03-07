@@ -8,39 +8,23 @@ public class BaseGlazeModifyDTO extends BaseGlaze implements Serializable {
 
     private static final long serialVersionUID = -4124330501835134622L;
 
-    private String name;
+    private Integer content;
 
-    private Integer water_content;
+    private Integer sampleGlazeId;
 
-    private String comment;
-
-    @Override
-    public Integer getWater_content() {
-        return water_content;
+    public Integer getSampleGlazeId() {
+        return sampleGlazeId;
     }
 
-    @Override
-    public void setWater_content(Integer water_content) {
-        this.water_content = water_content;
+    public void setSampleGlazeId(Integer sampleGlazeId) {
+        this.sampleGlazeId = sampleGlazeId;
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public Integer getContent() {
+        return content;
     }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getComment() {
-        return comment;
-    }
-
-    @Override
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setContent(Integer content) {
+        this.content = content;
     }
 }

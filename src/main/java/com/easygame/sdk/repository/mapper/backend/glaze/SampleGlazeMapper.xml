@@ -219,4 +219,50 @@
 		</trim>
 	</insert>
 
+	<insert id="buildBaseGlazeConnect" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.BaseGlazeModifyDTO">
+		insert into t_sample_glaze_base_glaze
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				base_glaze_id,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="sampleGlazeId != null">
+				sample_glaze_id
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=INTEGER},
+			</if>
+			<if test="sampleGlazeId != null">
+				#{sampleGlazeId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+
+	<insert id="buildCustomerConnect" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.SampleGlazeModifyDTO">
+		insert into t_sample_glaze_customer
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				sample_glaze_id,
+			</if>
+			<if test="customer_id != null">
+				company_id
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="customer_id != null">
+				#{customer_id,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
 </mapper>
