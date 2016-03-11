@@ -3,6 +3,7 @@ package com.easygame.sdk.controller.backend.glaze;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.easygame.sdk.common.util.Page;
+import com.easygame.sdk.common.util.TimeUtils;
 import com.easygame.sdk.controller.BaseController;
 import com.easygame.sdk.repository.model.dto.backend.glaze.SampleGlazeModifyDTO;
 import com.easygame.sdk.repository.model.dto.backend.glaze.SampleGlazeSearchCriteriaDTO;
@@ -54,6 +55,12 @@ public class SampleGlazeController extends BaseController {
 			criteria.setPagination(new Page());
 		}
 
+		if (criteria.getSearchStartDay() == null) {
+
+			criteria.setSearchStartDay(TimeUtils.getFirstDayOfThisMonth());
+			criteria.setSearchEndDay(TimeUtils.getNowDate("yyyy-MM-dd"));
+
+		}
 		List<SampleGlazeShowVO> sampleGlazeList = sampleGlazeBiz.selectSampleGlazeListByCriteria(criteria);
 		criteria.getPagination().setTotalCount(sampleGlazeBiz.getSampleGlazeListTotalCountByCriteria(criteria));
 

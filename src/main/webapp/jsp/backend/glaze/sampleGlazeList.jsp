@@ -18,6 +18,12 @@
 
 					<input name="pagination.pageSize" type="hidden" id="pageSize" value="${criteria.pagination.pageSize}" />
 					<input name="pagination.currentPage" type="hidden" id="page" value="${criteria.pagination.currentPage}" />
+					<span id="dayTypeOption1">
+						<spring:message code="backend.promotionStatistics.list.search.date.from" />
+						<input class="text-input small-input" type="text" id="searchStartDay" name="searchStartDay" onclick="WdatePicker()" readonly="readonly" value="${criteria.searchStartDay}" />
+						<spring:message code="backend.promotionStatistics.list.search.date.to" />
+						<input class="text-input small-input" type="text" id="searchEndDay" name="searchEndDay" onclick="WdatePicker()" readonly="readonly" value="${criteria.searchEndDay}" />
+					</span>
 				</p>
 			</fieldset>
 		</form>
@@ -131,6 +137,8 @@
 			<%@include file="../common/footer.jsp"%>
 		</div>
 	</div>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/common/My97DatePicker/WdatePicker.js"></script>
+
 	<script>
 		$(function() {
 			$('#searchDialog').dialog({
