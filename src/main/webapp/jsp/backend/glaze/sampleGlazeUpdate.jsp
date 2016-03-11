@@ -9,7 +9,7 @@
 <jsp:include page="../common/common.jsp" flush="true" />
 </head>
 <body>
-	<div id="successDialog">
+	<div id="successDialog"  style="display: none">
 		<form id="successForm" action="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findBaseGlaze.do" method="post">
 			<fieldset>
 				<p>
@@ -20,7 +20,7 @@
 			</fieldset>
 		</form>
 	</div>
-	<div id="failureDialog">
+	<div id="failureDialog" style="display: none">
 		<form id="failureForm" action="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findbaseGlaze.do" method="post">
 			<fieldset>
 				<p>
@@ -39,7 +39,7 @@
 			<div class="clear"></div>
 			<div class="content-box">
 				<div class="content-box-header">
-					<h3>修改基础釉</h3>
+					<h3>修改样品釉</h3>
 					<div class="clear"></div>
 				</div>
 				<div class="content-box-content">
