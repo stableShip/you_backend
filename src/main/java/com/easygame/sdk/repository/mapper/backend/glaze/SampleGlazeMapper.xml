@@ -124,7 +124,10 @@
 				`name`,
 			</if>
 			<if test="fineness != null">
-				fineness
+				fineness,
+			</if>
+			<if test="creation_date != null">
+				creation_date
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -136,6 +139,9 @@
 			</if>
 			<if test="fineness != null">
 				#{fineness,jdbcType=INTEGER},
+			</if>
+			<if test="creation_date != null">
+				#{creation_date,jdbcType=TIMESTAMP},
 			</if>
 		</trim>
 	</insert>

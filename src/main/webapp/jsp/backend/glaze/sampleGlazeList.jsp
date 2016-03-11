@@ -14,7 +14,7 @@
 			<fieldset>
 				<p>
 					<spring:message code="backend.sample_glaze.list.column.name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
-					<spring:message code="backend.company.add.label.name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
+					<spring:message code="backend.company.add.label.name" /> <input class="text-input small-input" type="text" name="customerName" value="${criteria.customerName}" /><br />
 
 					<input name="pagination.pageSize" type="hidden" id="pageSize" value="${criteria.pagination.pageSize}" />
 					<input name="pagination.currentPage" type="hidden" id="page" value="${criteria.pagination.currentPage}" />

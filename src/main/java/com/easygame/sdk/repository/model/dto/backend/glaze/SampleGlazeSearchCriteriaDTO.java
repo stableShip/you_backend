@@ -9,6 +9,9 @@ public class SampleGlazeSearchCriteriaDTO {
 
 
     private String searchName;
+
+    private String customerName;
+
     /**
      * 分页信息
      */
@@ -27,7 +30,15 @@ public class SampleGlazeSearchCriteriaDTO {
     }
 
     public void setSearchName(String searchName) {
-        this.searchName = (searchName == null || "".endsWith(searchName.trim())) ? null : searchName;
+        this.searchName =(searchName == null || "".endsWith(searchName.trim())) ? null : searchName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public Page getPagination() {
