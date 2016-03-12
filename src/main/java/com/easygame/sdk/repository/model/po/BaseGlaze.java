@@ -1,12 +1,19 @@
 package com.easygame.sdk.repository.model.po;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class BaseGlaze {
     private Integer id;
 
+    @NotBlank(message = "基础釉名称不能为空")
     private String name;
 
+    @NotNull(message = "基础釉含水量不能为空")
+    @Max(value = 100,message="含水量不能超过100%")
     private Integer water_content;
 
     private String comment;
