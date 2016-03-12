@@ -11,13 +11,42 @@
 <body>
 	<div id="successDialog" style="display: none">
 		<form id="successForm" action="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findSampleGlaze.do" method="post">
-			<fieldset>
+			<fieldset style="float: left; width: 30%">
 				<p>
 					<strong><spring:message code="backend.sample_glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultglazeName" class="text-input medium-input" readonly="readonly" /><br />
 					<strong><spring:message code="backend.sample_glaze.add.label.fineness" /> </strong><input type="text" id="resultFineness" class="text-input medium-input" readonly="readonly" /><br />
-					<strong><spring:message code="backend.glaze.add.label.comment" /> </strong><input type="text" id="resultComment" class="text-input medium-input" readonly="readonly" />
+					<strong>客户</strong><input type="text" id="resultCustomer" class="text-input medium-input" readonly="readonly" />
+					<strong>创建日期</strong><input type="text" id="result_creation_date" class="text-input medium-input" readonly="readonly" />
 				</p>
 			</fieldset>
+
+			<fieldset style="float: left; width: 33%;">
+				<p>
+				<table>
+					<thead>
+					<tr>
+						<th>色料</th>
+						<th>配方</th>
+					</tr>
+					</thead>
+					<tbody id="resultToners"></tbody>
+				</table>
+				</p>
+			</fieldset>
+			<fieldset style="float: right; width: 33%;">
+				<p>
+				<table>
+					<thead>
+					<tr>
+						<th>基础釉</th>
+						<th>含量</th>
+					</tr>
+					</thead>
+					<tbody id="result_base_glaze"></tbody>
+				</table>
+				</p>
+			</fieldset>
+
 		</form>
 	</div>
 	<div id="failureDialog" style="display: none">
@@ -68,7 +97,7 @@
 
 								<p>
 									<label><spring:message code="backend.company.list.column.name" /><b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<select name="customer_id" class="small-input">
+									<select name="customer.id" class="small-input">
 										<option value="0">--</option>
 										<c:forEach var="customer" items="${customerList}">
 											<option value="${customer.id}">${customer.name}</option>
@@ -186,9 +215,6 @@
 		        modal: true,
 		        title: '<spring:message code="backend.dialog.title.addFailure" />',
 		        buttons: {
-		            '<spring:message code="backend.dialog.button.backToList" />': function() { 
-		            	$('#failureForm').submit();
-		            },
 		            '<spring:message code="backend.dialog.button.confirm" />': function() {
 		            	$(this).dialog("close"); 
 		            } 
@@ -211,7 +237,6 @@
 		function addSampleGlaze() {
 			var data = $('#form').serialize();
 			var toners = $('#toner:input,:hidden').serialize();
-			console.log(data,toners)
 			$.ajax({
 				url:"<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/sampleGlazeAdd.do",
 				type : "post",
@@ -230,6 +255,33 @@
 								data.sampleGlaze.name);
 						$('#resultFineness').attr('value',
 								data.sampleGlaze.fineness);
+						$('#resultCustomer').attr('value',
+								data.sampleGlaze.customer.name);
+						$('#result_creation_date').attr('value',
+								new Date(data.sampleGlaze.creation_date).toLocaleString());
+
+						var toners = data.sampleGlaze.toners;
+						var baseGlazes = data.sampleGlaze.baseGlazes;
+						for(var i =0; i< toners.length;i++) {
+							if(JSON.stringify(toners[i])!="{}") {
+								$('#resultToners').append(
+										'<tr>' +
+										'<td width="70%">' + toners[i].name + '</td>' +
+										'<td width="30%">' + toners[i].content + '</td>' +
+										'</tr>'
+								);
+							}
+						}
+						for(var i =0; i< baseGlazes.length;i++) {
+							if(JSON.stringify(baseGlazes[i])!="{}") {
+								$('#result_base_glaze').append(
+										'<tr>' +
+										'<td width="70%">' + baseGlazes[i].name + '</td>' +
+										'<td width="30%">' + baseGlazes[i].content + '</td>' +
+										'</tr>'
+								);
+							}
+						}
 						$('#successDialog').dialog('open');
 					}
 				}
@@ -273,7 +325,7 @@
 			if(!$('#base_glaze_content').val()){
 				return;
 			}
-			var tag = "#base_glaze_"+id;
+			var tag = "#baseGlaze_"+id;
 			if ($(tag).length>0){
 				$("#theErrorMessage").html("不能添加相同的基础釉");
 				$('#failureDialog').dialog('open');

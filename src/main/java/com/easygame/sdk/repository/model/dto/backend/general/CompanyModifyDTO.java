@@ -8,4 +8,13 @@ public class CompanyModifyDTO extends Company implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	private Integer sampleGlazeId;
+
+	public Integer getSampleGlazeId() {
+		return sampleGlazeId;
+	}
+
+	public void setSampleGlazeId(Integer sampleGlazeId) {
+		this.sampleGlazeId = sampleGlazeId;
+	}
 }

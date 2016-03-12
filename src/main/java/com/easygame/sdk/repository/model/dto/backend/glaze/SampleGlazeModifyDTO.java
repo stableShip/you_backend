@@ -1,5 +1,6 @@
 package com.easygame.sdk.repository.model.dto.backend.glaze;
 
+import com.easygame.sdk.repository.model.dto.backend.general.CompanyModifyDTO;
 import com.easygame.sdk.repository.model.dto.backend.toner.TonerModifyDTO;
 import com.easygame.sdk.repository.model.po.SampleGlaze;
 
@@ -11,7 +12,7 @@ public class SampleGlazeModifyDTO extends SampleGlaze implements Serializable {
 
     private static final long serialVersionUID = -4124330501835134622L;
 
-    private String customer_id;
+    private CompanyModifyDTO customer;
 
     private List<TonerModifyDTO> toners;
 
@@ -33,12 +34,11 @@ public class SampleGlazeModifyDTO extends SampleGlaze implements Serializable {
         this.toners = toners;
     }
 
-
-    public String getCustomer_id() {
-        return customer_id;
+    public CompanyModifyDTO getCustomer() {
+        return customer;
     }
 
-    public void setCustomer_id(String customer_id) {
-        this.customer_id = customer_id;
+    public void setCustomer(CompanyModifyDTO customer) {
+        this.customer = customer;
     }
 }

@@ -162,13 +162,13 @@
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="fineness" property="fineness" jdbcType="INTEGER" />
-		<result column="customer" property="customer" jdbcType="INTEGER" />
 	</resultMap>
 	<select id="selectSampleGlazeByPrimaryKey" resultMap="SampleGlazeModifyDTO" parameterType="java.lang.Integer">
 		SELECT
 		t_sample_glaze.id,
 		t_sample_glaze.`name`,
-		t_sample_glaze.fineness
+		t_sample_glaze.fineness,
+		t_sample_glaze.creation_date
 		FROM
 		(
 		SELECT
@@ -264,23 +264,63 @@
 	</insert>
 
 
-	<insert id="buildCustomerConnect" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.SampleGlazeModifyDTO">
+	<insert id="buildCustomerConnect" parameterType="com.easygame.sdk.repository.model.dto.backend.general.CompanyModifyDTO">
 		insert into t_sample_glaze_customer
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
-				sample_glaze_id,
+				company_id,
 			</if>
-			<if test="customer_id != null">
-				company_id
+			<if test="sampleGlazeId != null">
+				sample_glaze_id
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				#{id,jdbcType=INTEGER},
 			</if>
-			<if test="customer_id != null">
-				#{customer_id,jdbcType=INTEGER},
+			<if test="sampleGlazeId != null">
+				#{sampleGlazeId,jdbcType=INTEGER},
 			</if>
 		</trim>
 	</insert>
+
+
+	<resultMap id="BaseGlazeModifyDTO" type="com.easygame.sdk.repository.model.dto.backend.glaze.BaseGlazeModifyDTO">
+	</resultMap>
+	<select id="getBaseGlazeConnects" parameterType="java.lang.Integer" resultMap="BaseGlazeModifyDTO">
+		SELECT
+		*
+		FROM
+		t_sample_glaze_base_glaze
+		LEFT JOIN t_base_glaze ON t_base_glaze.id = t_sample_glaze_base_glaze.base_glaze_id
+		WHERE
+		t_sample_glaze_base_glaze.sample_glaze_id =
+		#{id,jdbcType=INTEGER}
+	</select>
+
+	<resultMap id="TonerModifyDTO" type="com.easygame.sdk.repository.model.dto.backend.toner.TonerModifyDTO">
+	</resultMap>
+	<select id="getTonerConnects" parameterType="java.lang.Integer"  resultMap="TonerModifyDTO">
+		SELECT
+		*
+		FROM
+		t_sample_glaze_toner
+		LEFT JOIN t_toner ON t_toner.id = t_sample_glaze_toner.toner_id
+		WHERE
+		t_sample_glaze_toner.sample_glaze_id =
+		#{id,jdbcType=INTEGER}
+	</select>
+
+	<resultMap id="CompanyModifyDTO" type="com.easygame.sdk.repository.model.dto.backend.general.CompanyModifyDTO">
+	</resultMap>
+	<select id="getCustomerConnects" parameterType="java.lang.Integer" resultMap="CompanyModifyDTO">
+		SELECT
+		*
+		FROM
+		t_sample_glaze_customer
+		LEFT JOIN t_companies ON t_companies.id = t_sample_glaze_customer.company_id
+		WHERE
+		t_sample_glaze_customer.sample_glaze_id =
+		#{id,jdbcType=INTEGER}
+	</select>
 </mapper>

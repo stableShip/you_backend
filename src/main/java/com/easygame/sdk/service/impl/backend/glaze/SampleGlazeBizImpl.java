@@ -2,6 +2,7 @@ package com.easygame.sdk.service.impl.backend.glaze;
 
 import com.alibaba.fastjson.JSON;
 import com.easygame.sdk.repository.mapper.backend.glaze.SampleGlazeMapper;
+import com.easygame.sdk.repository.model.dto.backend.general.CompanyModifyDTO;
 import com.easygame.sdk.repository.model.dto.backend.glaze.BaseGlazeModifyDTO;
 import com.easygame.sdk.repository.model.dto.backend.glaze.SampleGlazeModifyDTO;
 import com.easygame.sdk.repository.model.dto.backend.glaze.SampleGlazeSearchCriteriaDTO;
@@ -72,8 +73,19 @@ public class SampleGlazeBizImpl extends BaseBizImpl implements ISampleGlazeBiz {
                 sampleGlazeMapper.buildBaseGlazeConnect(baseGlaze);
             }
         }
-        sampleGlazeMapper.buildCustomerConnect(record);
-        return sampleGlazeMapper.selectSampleGlazeByPrimaryKey(record.getId());
+        CompanyModifyDTO customer = record.getCustomer();
+        if (customer.getId()!= null) {
+            customer.setSampleGlazeId(record.getId());
+            sampleGlazeMapper.buildCustomerConnect(customer);
+        }
+        SampleGlazeModifyDTO sampleGlaze = sampleGlazeMapper.selectSampleGlazeByPrimaryKey(record.getId());
+        List<TonerModifyDTO> resutlToners = sampleGlazeMapper.getTonerConnects(record.getId());
+        List<BaseGlazeModifyDTO> resutlBaseGlaze = sampleGlazeMapper.getBaseGlazeConnects(record.getId());
+        CompanyModifyDTO resutlCustomer = sampleGlazeMapper.getCustomerConnects(record.getId());
+        sampleGlaze.setToners(resutlToners);
+        sampleGlaze.setBaseGlazes(resutlBaseGlaze);
+        sampleGlaze.setCustomer(resutlCustomer);
+        return sampleGlaze;
     }
 
     @Override
