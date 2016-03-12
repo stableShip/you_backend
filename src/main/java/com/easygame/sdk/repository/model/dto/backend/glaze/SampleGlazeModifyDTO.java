@@ -3,8 +3,7 @@ package com.easygame.sdk.repository.model.dto.backend.glaze;
 import com.easygame.sdk.repository.model.dto.backend.general.CompanyModifyDTO;
 import com.easygame.sdk.repository.model.dto.backend.toner.TonerModifyDTO;
 import com.easygame.sdk.repository.model.po.SampleGlaze;
-
-
+import org.hibernate.validator.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,8 +13,9 @@ public class SampleGlazeModifyDTO extends SampleGlaze implements Serializable {
 
     private CompanyModifyDTO customer;
 
+    @NotEmpty(message = "请填写色料信息")
     private List<TonerModifyDTO> toners;
-
+    @NotEmpty(message = "请填写基础釉信息")
     private List<BaseGlazeModifyDTO> baseGlazes;
 
     public List<BaseGlazeModifyDTO> getBaseGlazes() {
