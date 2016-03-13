@@ -37,11 +37,9 @@ public class TonerBizImpl extends BaseBizImpl implements ITonerBiz {
     @Override
     public int deleteToner(int id) {
 
-//		if (tonerMapper.checkTonerDeleteSecurity(id) > 0) {
-//
-//			return 0;
-//
-//		}
+		if (tonerMapper.checkTonerDeleteSecurity(id) > 0) {
+			return 0;
+		}
         return tonerMapper.deleteTonerByPrimaryKey(id);
     }
 

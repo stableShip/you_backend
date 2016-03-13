@@ -182,4 +182,14 @@
 		AND t_accounts_informations.company_id = #{id,jdbcType=INTEGER}
 	</select>
 
+	<select id="checkCompanyUsedBySampleGlaze" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		SELECT
+		count(sample_glaze_id)
+		FROM
+		t_sample_glaze_customer
+		WHERE
+		company_id =
+		#{id,jdbcType=INTEGER}
+	</select>
+
 </mapper>

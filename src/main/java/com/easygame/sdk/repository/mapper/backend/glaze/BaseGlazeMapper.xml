@@ -70,11 +70,12 @@
 
 	<select id="checkBaseGlazeDeleteSecurity" resultType="java.lang.Integer" parameterType="java.lang.Integer">
 		SELECT
-		count(t_promotions.id)
+		count(sample_glaze_id)
 		FROM
-		t_promotions
+		t_sample_glaze_base_glaze
 		WHERE
-		t_promotions.channel_id = #{id,jdbcType=INTEGER}
+		base_glaze_id =
+		#{id,jdbcType=INTEGER}
 	</select>
 
 	<insert id="insertBaseGlaze" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.BaseGlazeModifyDTO">

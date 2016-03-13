@@ -38,11 +38,11 @@ public class BaseGlazeBizImpl extends BaseBizImpl implements IBaseGlazeBiz {
     @Override
     public int deleteBaseGlaze(int id) {
 
-//		if (baseGlazeMapper.checkBaseGlazeDeleteSecurity(id) > 0) {
-//
-//			return 0;
-//
-//		}
+		if (baseGlazeMapper.checkBaseGlazeDeleteSecurity(id) > 0) {
+
+			return 0;
+
+		}
         return baseGlazeMapper.deleteBaseGlazeByPrimaryKey(id);
     }
 

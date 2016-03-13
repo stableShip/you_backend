@@ -36,4 +36,6 @@ public interface CompanyMapper {
 	/** 检测公司是否能删除 */
 	int checkCompanyDeleteSecurity(Integer id);
 
+	int checkCompanyUsedBySampleGlaze(Integer id);
+
 }

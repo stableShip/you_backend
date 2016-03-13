@@ -46,9 +46,11 @@ public class CompanyBizImpl extends BaseBizImpl implements ICompanyBiz {
 	public int deleteCompanyByPrimaryKey(int id) {
 		
 		if (companyMapper.checkCompanyDeleteSecurity(id) > 0) {
-			
 			return 0;
-			
+		}
+
+		if(companyMapper.checkCompanyUsedBySampleGlaze(id)> 0){
+			return 0;
 		}
 		
 		return companyMapper.deleteCompanyByPrimaryKey(id);
