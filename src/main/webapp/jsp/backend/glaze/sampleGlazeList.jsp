@@ -34,7 +34,7 @@
 				<p>
 					<strong><spring:message code="backend.sample_glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultglazeName" class="text-input medium-input" readonly="readonly" /><br />
 					<strong><spring:message code="backend.sample_glaze.add.label.fineness" /> </strong><input type="text" id="resultFineness" class="text-input medium-input" readonly="readonly" /><br />
-					<strong>客户</strong><input type="text" id="resultCustomer" class="text-input medium-input" readonly="readonly" />
+					<strong>客户</strong><input type="text" id="resultCustomer" class="text-input medium-input" readonly="readonly" /><br />
 					<strong>创建日期</strong><input type="text" id="result_creation_date" class="text-input medium-input" readonly="readonly" />
 				</p>
 			</fieldset>
@@ -202,6 +202,8 @@
 				title: '<spring:message code="backend.dialog.title.information" />',
 				buttons: {
 					'<spring:message code="backend.dialog.button.confirm" />':function(){
+						$("#resultToners").html("");
+						$("#result_base_glaze").html("");
 						$(this).dialog("close");
 					}
 				}
