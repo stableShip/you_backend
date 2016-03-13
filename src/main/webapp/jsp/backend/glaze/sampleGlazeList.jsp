@@ -28,6 +28,45 @@
 			</fieldset>
 		</form>
 	</div>
+	<div id="informationDialog" style="display: none">
+		<form>
+			<fieldset style="float: left; width: 30%">
+				<p>
+					<strong><spring:message code="backend.sample_glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultglazeName" class="text-input medium-input" readonly="readonly" /><br />
+					<strong><spring:message code="backend.sample_glaze.add.label.fineness" /> </strong><input type="text" id="resultFineness" class="text-input medium-input" readonly="readonly" /><br />
+					<strong>客户</strong><input type="text" id="resultCustomer" class="text-input medium-input" readonly="readonly" />
+					<strong>创建日期</strong><input type="text" id="result_creation_date" class="text-input medium-input" readonly="readonly" />
+				</p>
+			</fieldset>
+
+			<fieldset style="float: left;; width: 33%;">
+				<p >
+				<table>
+					<thead>
+					<tr>
+						<th>色料</th>
+						<th>配方</th>
+					</tr>
+					</thead>
+					<tbody id="resultToners"></tbody>
+				</table>
+				</p>
+			</fieldset>
+			<fieldset style="float: right; width: 33%;">
+				<p>
+				<table>
+					<thead>
+					<tr>
+						<th>基础釉</th>
+						<th>含量</th>
+					</tr>
+					</thead>
+					<tbody id="result_base_glaze"></tbody>
+				</table>
+				</p>
+			</fieldset>
+		</form>
+	</div>
 	<div id="deleteConfirmDialog" style="display: none">
 		<form>
 			<fieldset>
@@ -122,6 +161,7 @@
 										<td>${sampleGlaze.creation_date}</td>
 										<%--<c:if test="${glazePermission == 2}">--%>
 										<td>
+											<a href="#" title="<spring:message code="backend.operation.button.viewDetail" />" onclick="viewDetail(${sampleGlaze.id})"><img src="<%=request.getContextPath()%>/images/icons/text.png" alt="<spring:message code="backend.operation.button.viewDetail" />" /></a>
 											<a href="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/sampleGlazeUpdatePage.do?id=${sampleGlaze.id}" title="<spring:message code="backend.operation.button.modify" />"><img src="<%=request.getContextPath()%>/images/icons/pencil.png" alt="<spring:message code="backend.operation.button.modify" />" /></a>
 											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${sampleGlaze.sample_glaze_name}', '${sampleGlaze.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
 										</td>
@@ -155,6 +195,17 @@
 	        		}
 		         }
 		      });
+			$('#informationDialog').dialog({
+				width: 700,
+				autoOpen: false,
+				modal: true,
+				title: '<spring:message code="backend.dialog.title.information" />',
+				buttons: {
+					'<spring:message code="backend.dialog.button.confirm" />':function(){
+						$(this).dialog("close");
+					}
+				}
+			});
 			$('#deleteConfirmDialog').dialog({
 		        width: 500,
 		        autoOpen: false,
@@ -214,6 +265,50 @@
 					else {
 						$('#successDeleteDialog').dialog('open');
 					}
+				}
+			});
+		}
+
+		function viewDetail(recordId) {
+			$.ajax({
+				url:"<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/viewDetail.do",
+				type:"post",
+				data:{id:recordId},
+				datatype:"json",
+				success:function(data){
+					$('#resultglazeName').attr('value',
+							data.sampleGlaze.name);
+					$('#resultFineness').attr('value',
+							data.sampleGlaze.fineness);
+					$('#resultCustomer').attr('value',
+							data.sampleGlaze.customer.name);
+					$('#result_creation_date').attr('value',
+							new Date(data.sampleGlaze.creation_date).toLocaleString());
+
+					var toners = data.sampleGlaze.toners;
+					var baseGlazes = data.sampleGlaze.baseGlazes;
+					for(var i =0; i< toners.length;i++) {
+						if(JSON.stringify(toners[i])!="{}") {
+							$('#resultToners').append(
+									'<tr>' +
+									'<td width="65%">' + toners[i].name + '</td>' +
+									'<td >' + toners[i].content + '</td>' +
+									'</tr>'
+							);
+						}
+					}
+					for(var i =0; i< baseGlazes.length;i++) {
+						if(JSON.stringify(baseGlazes[i])!="{}") {
+							console.log(baseGlazes[i])
+							$('#result_base_glaze').append(
+									'<tr>' +
+									'<td width="70%">' + baseGlazes[i].name + '</td>' +
+									'<td>' + baseGlazes[i].content + '</td>' +
+									'</tr>'
+							);
+						}
+					}
+					$('#informationDialog').dialog('open');
 				}
 			});
 		}

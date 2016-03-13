@@ -171,4 +171,13 @@ public class SampleGlazeController extends BaseController {
 
 	}
 
+	/** 查看详细信息 */
+	@RequestMapping(value = "/viewDetail", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+	public @ResponseBody String viewDetail(int id) {
+		SampleGlazeModifyDTO sampleGlaze = sampleGlazeBiz.selectSampleGlazeForUpdate(id);
+		JSONObject result = new JSONObject();
+		result.put("sampleGlaze", sampleGlaze);
+		return JSON.toJSONString(result);
+	}
+
 }

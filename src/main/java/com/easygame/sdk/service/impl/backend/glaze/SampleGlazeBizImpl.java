@@ -90,7 +90,14 @@ public class SampleGlazeBizImpl extends BaseBizImpl implements ISampleGlazeBiz {
 
     @Override
     public SampleGlazeModifyDTO selectSampleGlazeForUpdate(int id) {
-        return sampleGlazeMapper.selectSampleGlazeByPrimaryKey(id);
+        SampleGlazeModifyDTO sampleGlaze = sampleGlazeMapper.selectSampleGlazeByPrimaryKey(id);
+        List<TonerModifyDTO> toners = sampleGlazeMapper.getTonerConnects(id);
+        List<BaseGlazeModifyDTO> baseGlazes = sampleGlazeMapper.getBaseGlazeConnects(id);
+        CompanyModifyDTO customer = sampleGlazeMapper.getCustomerConnects(id);
+        sampleGlaze.setToners(toners);
+        sampleGlaze.setBaseGlazes(baseGlazes);
+        sampleGlaze.setCustomer(customer);
+        return sampleGlaze;
     }
 
     @Override
