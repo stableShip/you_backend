@@ -103,6 +103,38 @@ public class SampleGlazeBizImpl extends BaseBizImpl implements ISampleGlazeBiz {
     @Override
     public SampleGlazeModifyDTO updateSampleGlaze(SampleGlazeModifyDTO record) {
         sampleGlazeMapper.updateSampleGlaze(record);
+        Integer id = record.getId();
+        sampleGlazeMapper.deleteTonerConnect(id);
+        sampleGlazeMapper.deleteBaseGlazeConnect(id);
+        sampleGlazeMapper.deleteCustomerConnect(id);
+        List<TonerModifyDTO> toners = record.getToners();
+        for (int i = 0; toners!=null && i < toners.size(); i++) {
+            TonerModifyDTO toner = toners.get(i);
+            if (toner.getId()!= null) {
+                toner.setSampleGlazeId(record.getId());
+                sampleGlazeMapper.buildTonerConnect(toner);
+            }
+        }
+        List<BaseGlazeModifyDTO> baseGlazes = record.getBaseGlazes();
+        for (int i = 0; baseGlazes!=null && i < baseGlazes.size(); i++) {
+            BaseGlazeModifyDTO baseGlaze = baseGlazes.get(i);
+            if (baseGlaze.getId()!= null) {
+                baseGlaze.setSampleGlazeId(record.getId());
+                sampleGlazeMapper.buildBaseGlazeConnect(baseGlaze);
+            }
+        }
+        CompanyModifyDTO customer = record.getCustomer();
+        if (customer.getId()!= null) {
+            customer.setSampleGlazeId(record.getId());
+            sampleGlazeMapper.buildCustomerConnect(customer);
+        }
+        SampleGlazeModifyDTO sampleGlaze = sampleGlazeMapper.selectSampleGlazeByPrimaryKey(record.getId());
+        List<TonerModifyDTO> resutlToners = sampleGlazeMapper.getTonerConnects(record.getId());
+        List<BaseGlazeModifyDTO> resutlBaseGlaze = sampleGlazeMapper.getBaseGlazeConnects(record.getId());
+        CompanyModifyDTO resutlCustomer = sampleGlazeMapper.getCustomerConnects(record.getId());
+        sampleGlaze.setToners(resutlToners);
+        sampleGlaze.setBaseGlazes(resutlBaseGlaze);
+        sampleGlaze.setCustomer(resutlCustomer);
 
         return sampleGlazeMapper.selectSampleGlazeByPrimaryKey(record.getId());
     }

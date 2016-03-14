@@ -97,7 +97,7 @@
 
 								<p>
 									<label><spring:message code="backend.company.list.column.name" /><b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<select name="customer.id" class="small-input">
+									<select name="customer.id" class="big-input">
 										<option value="0">--</option>
 										<c:forEach var="customer" items="${customerList}">
 											<option value="${customer.id}">${customer.name}</option>

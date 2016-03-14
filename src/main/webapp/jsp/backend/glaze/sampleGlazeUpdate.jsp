@@ -4,169 +4,385 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><spring:message code="backend.login.title" /></title>
-<jsp:include page="../common/common.jsp" flush="true" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><spring:message code="backend.login.title" /></title>
+	<jsp:include page="../common/common.jsp" flush="true" />
 </head>
 <body>
-	<div id="successDialog"  style="display: none">
-		<form id="successForm" action="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findBaseGlaze.do" method="post">
-			<fieldset>
-				<p>
-					<strong><spring:message code="backend.base_glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultName" class="text-input medium-input" readonly="readonly" /><br />
-					<strong><spring:message code="backend.base_glaze.add.label.water_content" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultWaterContent" class="text-input medium-input" readonly="readonly" /><br />
-					<strong><spring:message code="backend.glaze.add.label.comment" /> </strong><input type="text" id="resultComment" class="text-input medium-input" readonly="readonly" />
-				</p>
-			</fieldset>
-		</form>
-	</div>
-	<div id="failureDialog" style="display: none">
-		<form id="failureForm" action="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findbaseGlaze.do" method="post">
-			<fieldset>
-				<p>
-					<strong id="theErrorMessage"></strong>
-				</p>
-			</fieldset>
-		</form>
-	</div>
-	<div id="body-wrapper">
-		<div id="sidebar">
-			<div id="sidebar-wrapper">
-				<%@include file="../common/leftmenu.jsp"%>
-			</div>
+<div id="successDialog" style="display: none">
+	<form id="successForm" action="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findSampleGlaze.do" method="post">
+		<fieldset style="float: left; width: 30%">
+			<p>
+				<strong><spring:message code="backend.sample_glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultglazeName" class="text-input medium-input" readonly="readonly" /><br />
+				<strong><spring:message code="backend.sample_glaze.add.label.fineness" /> </strong><input type="text" id="resultFineness" class="text-input medium-input" readonly="readonly" /><br />
+				<strong>客户</strong><input type="text" id="resultCustomer" class="text-input medium-input" readonly="readonly" />
+				<strong>创建日期</strong><input type="text" id="result_creation_date" class="text-input medium-input" readonly="readonly" />
+			</p>
+		</fieldset>
+
+		<fieldset style="float: left; width: 33%;">
+			<p>
+			<table>
+				<thead>
+				<tr>
+					<th>色料</th>
+					<th>配方</th>
+				</tr>
+				</thead>
+				<tbody id="resultToners"></tbody>
+			</table>
+			</p>
+		</fieldset>
+		<fieldset style="float: right; width: 33%;">
+			<p>
+			<table>
+				<thead>
+				<tr>
+					<th>基础釉</th>
+					<th>含量</th>
+				</tr>
+				</thead>
+				<tbody id="result_base_glaze"></tbody>
+			</table>
+			</p>
+		</fieldset>
+
+	</form>
+</div>
+<div id="failureDialog" style="display: none">
+	<form id="failureForm" action="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findSampleGlaze.do" method="post">
+		<fieldset>
+			<p>
+				<strong id="theErrorMessage"></strong>
+			</p>
+		</fieldset>
+	</form>
+</div>
+<div id="body-wrapper">
+	<div id="sidebar">
+		<div id="sidebar-wrapper">
+			<%@include file="../common/leftmenu.jsp"%>
 		</div>
-		<div id="main-content">
-			<div class="clear"></div>
-			<div class="content-box">
-				<div class="content-box-header">
-					<h3>修改样品釉</h3>
-					<div class="clear"></div>
-				</div>
-				<div class="content-box-content">
-					<div class="tab-content default-tab" id="tab1">
-						<div class="notification attention png_bg">
-							<a href="#" class="close"><img src="<%=request.getContextPath()%>/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-							<div><spring:message code="backend.base_glaze.update.alert" /></div>
-						</div>
-						<c:if test="${errors != null}">
-							<div class="notification error png_bg">
-								<div>
-									<c:forEach var="e" items="${errors}">
-										<c:out value="${e.defaultMessage}" /><br />
-									</c:forEach>
-								</div>
-							</div>
-						</c:if>
-						<form name="baseGlaze" id="form" method="post">
-							<fieldset>
-								<input type="hidden" name="id" value="${baseGlaze.id}" />
-								<p>
-									<label><spring:message code="backend.base_glaze.update.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="name" value="${baseGlaze.name}"
-                                    data-validation="required" data-validation-error-msg="<spring:message code="backend.base_glaze.add.err-message.name" />"/> <br />
-
-                                </p>
-								<p>
-									<label><spring:message code="backend.base_glaze.add.label.water_content" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="water_content" value="${baseGlaze.water_content}"
-                                    data-validation="number" data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.water_content" />"/> <br />
-
-                                </p>
-								<p>
-									<label><spring:message code="backend.glaze.add.label.comment" /> </label>
-									<input class="text-input small-input" type="text" name="comment" value="${baseGlaze.comment}" /> <br />
-								</p>
-
-								<p>
-									<input class="button" type="button" onclick="updateBaseGlaze()" value="<spring:message code="backend.form.button.update" />" />
-								</p>
-							</fieldset>
-						</form>
+	</div>
+	<div id="main-content">
+		<div class="clear"></div>
+		<div class="content-box" style="float: left; width: 100%">
+			<div class="content-box-header">
+				<h3><spring:message code="backend.sample_glaze.add.title" /></h3>
+				<div class="clear"></div>
+			</div>
+			<div class="content-box-content">
+				<div class="tab-content default-tab" id="tab1">
+					<div class="notification attention png_bg">
+						<a href="#" class="close"><img src="<%=request.getContextPath()%>/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+						<div><spring:message code="backend.sample_glaze.add.alert" /></div>
 					</div>
+					<c:if test="${errors != null}">
+						<div class="notification error png_bg">
+							<div>
+								<c:forEach var="e" items="${errors}">
+									<c:out value="${e.defaultMessage}" /><br />
+								</c:forEach>
+							</div>
+						</div>
+					</c:if>
+					<form name="sampleGlaze" id="form" method="post">
+						<fieldset id="base" style="float: left; width: 30%" >
+							<input type="hidden" name="id" value="${sampleGlaze.id}" />
+							<p>
+								<label><spring:message code="backend.sample_glaze.add.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
+								<input class="text-input small-input" type="text" name="name" value="${sampleGlaze.name}"
+									   data-validation="required" data-validation-error-msg="<spring:message code="backend.sample_glaze.add.err-message.name" />"/> <br />
+							</p>
+
+							<p>
+								<label><spring:message code="backend.company.list.column.name" /><b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
+								<select name="customer.id" class="big-input">
+									<option value="0">--</option>
+									<c:forEach var="customer" items="${customerList}">
+										<c:choose>
+											<c:when test="${sampleGlaze.customer.id==customer.id}">
+												<option value="${customer.id}" selected = "selected">${customer.name}</option>
+											</c:when>
+											<c:otherwise>
+											<option value="${customer.id}">${customer.name}</option>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</select> <br />
+							</p>
+							<p>
+								<label><spring:message code="backend.sample_glaze.add.label.fineness" /> </label>
+								<input class="text-input small-input" type="text" name="fineness" value="${sampleGlaze.fineness}"
+									   data-validation="number" data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.fineness" />"/> <br />
+							</p>
+						</fieldset>
+						<fieldset id="toners" style="float: left; width: 33%;">
+							<p>
+							<div style="float: left; width: 55%">
+								<label>色料名称</label>
+
+								<select id="toner_id" style="width: 100%">
+									<option value="0">--</option>
+									<c:forEach var="toner" items="${tonerList}">
+										<option value="${toner.id}">${toner.name}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div style="float: right; width: 45%">
+								<label>配方（%）</label>
+								<input class="text-input small-input" type="text"  id="toner_content"
+									   data-validation="number"  data-validation="required" data-validation-error-msg="<spring:message code="backend.sample_glaze.add.err-message.name" />"/>
+								<input class="button" type="button" onclick="addToner()" value="添加" />
+							</div>
+							</p>
+							<p>
+							<table>
+								<thead>
+								<tr>
+									<th>色料</th>
+									<th>配方</th>
+									<th><spring:message code="backend.channel.list.column.operation" /></th>
+								</tr>
+								</thead>
+								<tbody id="toner">
+								<c:forEach var="toner" items="${sampleGlaze.toners}">
+									<tr id="toner_${toner.id}">
+									<input type="hidden" name="toners[${toner.id}].id" value=${toner.id} />
+									<input type="hidden" name="toners[${toner.id}].content" value="${toner.content}" />
+									<td>${toner.name}</td>
+									<td>${toner.content}</td>
+									<td><a href="#" title="<spring:message code="backend.operation.button.delete" />"
+										   onclick="removeRecord('toner_'+ ${toner.id})"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a></td>
+									</tr>
+								</c:forEach>
+
+								</tbody>
+							</table>
+							</p>
+						</fieldset>
+						<fieldset id="baseGlazes" style="float: right; width: 33%;">
+							<p>
+							<div style="float: left; width: 55%">
+								<label>基础釉名称</label>
+								<select  name="base_glaze_id" id="base_glaze_id" style="width: 100%">
+									<option value="0">--</option>
+									<c:forEach var="baseGlaze" items="${baseGlazeList}">
+										<option value="${baseGlaze.id}">${baseGlaze.name}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div style="float: left; width: 45%">
+								<label>含量（%）</label>
+								<input class="text-input small-input" type="text" id="base_glaze_content"
+									   data-validation="number"  data-validation="required" data-validation-error-msg="<spring:message code="backend.sample_glaze.add.err-message.name" />"/>
+								<input class="button" type="button" onclick="addBaseGlaze()" value="添加" />
+							</div>
+							</p>
+
+							<p>
+							<table>
+								<thead>
+								<tr>
+									<th>基础釉</th>
+									<th>含量</th>
+									<th><spring:message code="backend.channel.list.column.operation" /></th>
+								</tr>
+								</thead>
+								<tbody id="base_glaze">
+								<c:forEach var="baseGlaze" items="${sampleGlaze.baseGlazes}">
+									<tr id="baseGlaze_${baseGlaze.id}">
+									<input type="hidden" name="baseGlazes[${baseGlaze.id}].id" value='${baseGlaze.id}' />
+									<input type="hidden" name="baseGlazes[${baseGlaze.id}].content" value='${baseGlaze.content}' />
+									<td>${baseGlaze.name}</td>
+									<td>${baseGlaze.content}</td>
+									<td><a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="removeRecord('baseGlaze_'+ ${baseGlaze.id})"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a></td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+							</p>
+						</fieldset>
+						<fieldset style="float:left; width: 100%;">
+							<p>
+								<input class="button" type="button" onclick="updateSampleGlaze()" value="<spring:message code="backend.form.button.update" />" />
+							</p>
+						</fieldset>
+					</form>
 				</div>
 			</div>
-			<div class="clear"></div>
-			<%@include file="../common/footer.jsp"%>
 		</div>
+		<div class="clear"></div>
+		<%@include file="../common/footer.jsp"%>
 	</div>
-	<script>
-		$.validationSetup({
-			scrollToTopOnError : true,
-			onError : function() {
-				$("body").scrollTop(0);
-	        },
-			modules : 'date, security'
-		});
-		
-		$(function() {
-			$('#successDialog').dialog({
-		        width: 500,
-		        autoOpen: false,
-		        modal: true,
-		        title: '<spring:message code="backend.dialog.title.updateSuccess" />',
-		        buttons: {
-		            '<spring:message code="backend.dialog.button.backToList" />': function() { 
-		            	$('#successForm').submit();
-		            } 
-		         }
-		      });
-			
-			$('#failureDialog').dialog({
-		        width: 460,
-		        autoOpen: false,
-		        modal: true,
-		        title: '<spring:message code="backend.dialog.title.updateFailure" />',
-		        buttons: {
-		            '<spring:message code="backend.dialog.button.backToList" />': function() { 
-		            	$('#failureForm').submit();
-		            },
-		            '<spring:message code="backend.dialog.button.confirm" />': function() { 
-		            	$(this).dialog("close"); 
-		            } 
-		         }
-		      });
-			
-			$('#nobaseGlazeDialog').dialog({
-		        width: 460,
-		        autoOpen: false,
-		        modal: true,
-		        title: '<spring:message code="backend.dialog.title.no_base_glaze" />',
-		        buttons: {
-		            '<spring:message code="backend.dialog.button.confirm" />': function() { 
-		            	$(this).dialog("close"); 
-		            } 
-		         }
-		      });
-		});
-		
-		function updateBaseGlaze() {
-			var data = $('#form').serialize();
-			$.ajax({
-				url:"<%=request.getContextPath()%>/backend/glaze/baseGlazeController/baseGlazeUpdate.do",
-				type : "post",
-				data : data,
-				datatype : "json",
-				success : function(data) {
-					if (data.errors != null) {
-						var errorMessage = '';
-						for(var i=0; i < data.errors.length; i++) {
-							errorMessage = errorMessage + data.errors[i].defaultMessage + '<br/>';
-						}
-						$("#theErrorMessage").html(errorMessage);
-						$('#failureDialog').dialog('open');
-					} else {
-						$('#resultName').attr('value',
-								data.baseGlaze.name);
-						$('#resultWaterContent').attr('value',
-								data.baseGlaze.water_content);
-						$('#resultComment').attr(
-								'value',
-								data.baseGlaze.comment);
-						$('#successDialog').dialog('open');
-					}
+</div>
+<script>
+	$.validationSetup({
+		scrollToTopOnError : true,
+		onError : function() {
+			$("body").scrollTop(0);
+		},
+		modules : 'date, security'
+	});
+
+	$(function() {
+		$('#successDialog').dialog({
+			width: 500,
+			autoOpen: false,
+			modal: true,
+			title: '<spring:message code="backend.dialog.title.addSuccess" />',
+			buttons: {
+				'<spring:message code="backend.dialog.button.backToList" />': function() {
+					$('#successForm').submit();
 				}
-			})
+			}
+		});
+
+		$('#failureDialog').dialog({
+			width: 460,
+			autoOpen: false,
+			modal: true,
+			title: '<spring:message code="backend.dialog.title.addFailure" />',
+			buttons: {
+				'<spring:message code="backend.dialog.button.confirm" />': function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+
+		$('#noglazeDialog').dialog({
+			width: 460,
+			autoOpen: false,
+			modal: true,
+			title: '<spring:message code="backend.dialog.title.no_sample_glaze" />',
+			buttons: {
+				'<spring:message code="backend.dialog.button.confirm" />': function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+	});
+
+	function updateSampleGlaze() {
+		var data = $('#form').serialize();
+		var toners = $('#toner:input,:hidden').serialize();
+		$.ajax({
+			url:"<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/sampleGlazeUpdate.do",
+			type : "post",
+			data : data,
+			datatype : "json",
+			success : function(data) {
+				if (data.errors != null) {
+					var errorMessage = '';
+					for(var i=0; i< data.errors.length; i++) {
+						errorMessage = errorMessage + data.errors[i].defaultMessage + '<br/>';
+					}
+					$("#theErrorMessage").html(errorMessage);
+					$('#failureDialog').dialog('open');
+				} else {
+					$('#resultglazeName').attr('value',
+							data.sampleGlaze.name);
+					$('#resultFineness').attr('value',
+							data.sampleGlaze.fineness);
+					$('#resultCustomer').attr('value',
+							data.sampleGlaze.customer.name);
+					$('#result_creation_date').attr('value',
+							new Date(data.sampleGlaze.creation_date).toLocaleString());
+
+					var toners = data.sampleGlaze.toners;
+					var baseGlazes = data.sampleGlaze.baseGlazes;
+					for(var i =0; i< toners.length;i++) {
+						if(JSON.stringify(toners[i])!="{}") {
+							$('#resultToners').append(
+									'<tr>' +
+									'<td width="70%">' + toners[i].name + '</td>' +
+									'<td width="30%">' + toners[i].content + '</td>' +
+									'</tr>'
+							);
+						}
+					}
+					for(var i =0; i< baseGlazes.length;i++) {
+						if(JSON.stringify(baseGlazes[i])!="{}") {
+							$('#result_base_glaze').append(
+									'<tr>' +
+									'<td width="70%">' + baseGlazes[i].name + '</td>' +
+									'<td width="30%">' + baseGlazes[i].content + '</td>' +
+									'</tr>'
+							);
+						}
+					}
+					$('#successDialog').dialog('open');
+				}
+			}
+		})
+	}
+
+	function addToner() {
+		var id = $('#toner_id').val();
+		var content = $('#toner_content').val();
+		var tag = "#toner_"+id;
+		if(!$('#toner_content').val()){
+			return;
 		}
-	</script>
+		if ($(tag).length>0){
+			$("#theErrorMessage").html("不能添加相同的色料");
+			$('#failureDialog').dialog('open');
+			return;
+		}
+		$.ajax({
+			url:"<%=request.getContextPath()%>/backend/toner/tonerController/getTonerById.do",
+			type : "post",
+			data : {id:id},
+			datatype : "json",
+			success : function(data) {
+				$('#toner').append(
+						'<tr id="' +"toner_" + data.id + '">' +
+						'<input type="hidden" name="toners['+ data.id+'].id" value='+data.id+' />' +
+						'<input type="hidden" name="toners['+ data.id+'].content" value='+content+' />' +
+						'<td>' + data.name + '</td>' +
+						'<td>' + content + '</td>' +
+						'<td><a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="removeRecord('+"'"+'toner_'+ data.id +"'"+ ')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a></td>' +
+						'</tr>'
+				);
+			}
+		})
+	}
+
+	function addBaseGlaze() {
+		var id = $('#base_glaze_id').val();
+		var content = $('#base_glaze_content').val();
+		if(!$('#base_glaze_content').val()){
+			return;
+		}
+		var tag = "#baseGlaze_"+id;
+		if ($(tag).length>0){
+			$("#theErrorMessage").html("不能添加相同的基础釉");
+			$('#failureDialog').dialog('open');
+			return;
+		}
+
+		$.ajax({
+			url:"<%=request.getContextPath()%>/backend/glaze/baseGlazeController/getBaseGlazeById.do",
+			type : "post",
+			data : {id:id},
+			datatype : "json",
+			success : function(data) {
+				$('#base_glaze').append(
+						'<tr id="' +"baseGlaze_" + data.id + '">' +
+						'<input type="hidden" name="baseGlazes['+ data.id+'].id" value='+data.id+' />' +
+						'<input type="hidden" name="baseGlazes['+ data.id+'].content" value='+content+' />' +
+						'<td>' + data.name + '</td>' +
+						'<td>' + content + '</td>' +
+						'<td><a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="removeRecord('+"'"+'baseGlaze_'+ data.id +"'"+ ')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a></td>' +
+						'</tr>'
+				);
+			}
+		})
+	}
+
+	function removeRecord(id) {
+		$('#'+id).remove();
+	}
+</script>
 </body>
 </html>

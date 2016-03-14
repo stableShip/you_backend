@@ -125,10 +125,15 @@ public class SampleGlazeController extends BaseController {
 	public String sampleGlazeUpdatePage(int id, ModelMap modelMap) {
 
 		SampleGlazeModifyDTO sampleGlaze = sampleGlazeBiz.selectSampleGlazeForUpdate(id);
-		List<SampleGlazeShowVO> sampleGlazeList = sampleGlazeBiz.selectAllSampleGlaze();
 
+		List<CompanyShowVO>  customerList = accountBiz.selectAllCompany();
+		List<BaseGlazeShowVO> baseGlazeList = baseGlazeBiz.selectAllBaseGlaze();
+		List<TonerShowVO> tonerList = tonerBiz.selectAllToner();
+
+		modelMap.addAttribute("customerList", customerList);
+		modelMap.addAttribute("baseGlazeList", baseGlazeList);
+		modelMap.addAttribute("tonerList", tonerList);
 		modelMap.addAttribute("sampleGlaze", sampleGlaze);
-		modelMap.addAttribute("sampleGlazeList", sampleGlazeList);
 
 		return "/backend/glaze/sampleGlazeUpdate";
 
@@ -141,7 +146,7 @@ public class SampleGlazeController extends BaseController {
 
 		if (sampleGlazeBiz.checkSampleGlazeDuplication(sampleGlaze.getName(), sampleGlaze.getId()) > 0) {
 
-			bindingResult.rejectValue("name", null, "该釉已经存在");
+			bindingResult.rejectValue("name", null, "该名称已经被使用");
 
 		}
 
