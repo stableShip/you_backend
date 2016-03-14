@@ -9,7 +9,7 @@
 <jsp:include page="../common/common.jsp" flush="true" />
 </head>
 <body>
-	<div id="informationDialog">
+	<div id="informationDialog" style="display: none">
 		<form>
 			<fieldset>
 				<p>

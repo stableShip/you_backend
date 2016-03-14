@@ -9,7 +9,7 @@
 <jsp:include page="../common/common.jsp" flush="true" />
 </head>
 <body>
-	<div id="searchDialog">
+	<div id="searchDialog" style="display: none">
 		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/general/companyController/companyList.do" method="post">
 			<fieldset>
 				<p>
@@ -20,7 +20,7 @@
 			</fieldset>
 		</form>
 	</div>
-	<div id="informationDialog">
+	<div id="informationDialog" style="display: none">
 		<form>
 			<fieldset>
 				<p>
@@ -33,7 +33,7 @@
 			</fieldset>
 		</form>
 	</div>
-	<div id="deleteConfirmDialog">
+	<div id="deleteConfirmDialog" style="display: none">
 		<form>
 			<fieldset>
 				<p>
@@ -46,7 +46,7 @@
 			</fieldset>
 		</form>
 	</div>
-	<div id="successDeleteDialog">
+	<div id="successDeleteDialog" style="display: none">
 		<form>
 			<fieldset>
 				<p>
@@ -55,7 +55,7 @@
 			</fieldset>
 		</form>
 	</div>
-	<div id="failureDeleteDialog">
+	<div id="failureDeleteDialog" style="display: none">
 		<form>
 			<fieldset>
 				<p>
