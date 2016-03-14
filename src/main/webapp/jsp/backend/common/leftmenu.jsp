@@ -83,13 +83,16 @@
 
 	<c:if test="${glazePermission != 0}">
 		<li>
-			<a href="#" class="nav-top-item <c:if test="${currentPage eq 'glazePermission'}">current</c:if>"><spring:message code="backend.leftmenu.settings.glaze" /></a>
+			<a href="#" class="nav-top-item <c:if test="${currentPage eq 'baseGlazePermission' || currentPage eq 'sampleGlazePermission' || currentPage eq 'productOrderPermission'}">current</c:if>"><spring:message code="backend.leftmenu.settings.glaze" /></a>
 			<ul>
 				<c:if test="${glazePermission != 0}">
-					<li><a href="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findBaseGlaze.do?pagination.currentPage=1" <c:if test="${currentPage eq 'glazePermission'}">class="current"</c:if>><spring:message code="backend.leftmenu.settings.glaze.base_glaze" /></a></li>
+					<li><a href="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/findBaseGlaze.do?pagination.currentPage=1" <c:if test="${currentPage eq 'baseGlazePermission'}">class="current"</c:if>><spring:message code="backend.leftmenu.settings.glaze.base_glaze" /></a></li>
 				</c:if>
 				<c:if test="${glazePermission != 0}">
-					<li><a href="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findSampleGlaze.do?pagination.currentPage=1" <c:if test="${currentPage eq 'glazePermission'}">class="current"</c:if>><spring:message code="backend.leftmenu.settings.glaze.sample_glaze" /></a></li>
+					<li><a href="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findSampleGlaze.do?pagination.currentPage=1" <c:if test="${currentPage eq 'sampleGlazePermission'}">class="current"</c:if>><spring:message code="backend.leftmenu.settings.glaze.sample_glaze" /></a></li>
+				</c:if>
+				<c:if test="${glazePermission != 0}">
+					<li><a href="<%=request.getContextPath()%>/backend/glaze/productOrderController/findProductOrder.do?pagination.currentPage=1" <c:if test="${currentPage eq 'productOrderPermission'}">class="current"</c:if>>投料单管理</a></li>
 				</c:if>
 			</ul>
 		</li>
