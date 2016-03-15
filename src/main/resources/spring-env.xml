@@ -23,7 +23,6 @@
 		<property name="locations">
 			<list>
 				<value>classpath:database.properties</value>
-				<value>classpath:memcached.properties</value>
 			</list>
 		</property>
 	</bean>

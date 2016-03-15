@@ -101,42 +101,6 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>copy-market-resources-</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/classes/com/easygame/sdk/repository/mapper/backend/market</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}/src/main/java/com/easygame/sdk/repository/mapper/backend/market</directory>
-									<includes>
-										<include>*.xml</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-channel-resources</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/classes/com/easygame/sdk/repository/mapper/backend/channel</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}/src/main/java/com/easygame/sdk/repository/mapper/backend/channel</directory>
-									<includes>
-										<include>*.xml</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-					<execution>
 						<id>copy-general-resources</id>
 						<phase>validate</phase>
 						<goals>
@@ -147,24 +111,6 @@
 							<resources>
 								<resource>
 									<directory>${basedir}/src/main/java/com/easygame/sdk/repository/mapper/backend/general</directory>
-									<includes>
-										<include>*.xml</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-webservices-resources</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/classes/com/easygame/sdk/repository/mapper/webservices</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}/src/main/java/com/easygame/sdk/repository/mapper/webservices</directory>
 									<includes>
 										<include>*.xml</include>
 									</includes>

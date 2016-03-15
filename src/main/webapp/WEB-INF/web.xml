@@ -16,7 +16,7 @@
 	<!-- spring -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring-env.xml,classpath:spring-database.xml,classpath:spring-cached.xml</param-value>
+		<param-value>classpath:spring-env.xml,classpath:spring-database.xml</param-value>
 	</context-param>
 	<listener>
 		<description>spring监听器</description>
