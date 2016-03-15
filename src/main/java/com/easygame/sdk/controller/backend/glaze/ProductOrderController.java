@@ -85,7 +85,9 @@ public class ProductOrderController extends BaseController {
 			SampleGlazeModifyDTO sampleGlaze =  sampleGlazeBiz.selectSampleGlazeForUpdate(sampleGlazeId);
 			Integer customerId = sampleGlaze.getCustomer().getId();
 			modelMap.addAttribute("customerId", customerId);
-			modelMap.addAttribute("sampleGlaze", sampleGlaze);
+			modelMap.addAttribute("sampleGlazes", productOrderBiz.getSampleGlazeOptions(customerId));
+			modelMap.addAttribute("sampleGlazeId", sampleGlazeId);
+
 		}
 		modelMap.addAttribute("customerList", customerList);
 		return "/backend/glaze/productOrderAdd";
@@ -130,14 +132,14 @@ public class ProductOrderController extends BaseController {
 	public String productOrderUpdatePage(int id, ModelMap modelMap) {
 
 		ProductOrderModifyDTO productOrder = productOrderBiz.selectProductOrderForUpdate(id);
-
-		List<CompanyShowVO>  customerList = accountBiz.selectAllCompany();
-		List<BaseGlazeShowVO> baseGlazeList = baseGlazeBiz.selectAllBaseGlaze();
-		List<TonerShowVO> tonerList = tonerBiz.selectAllToner();
-
+		Integer sampleGlazeId = productOrder.getSampleGlazeId();
+		List<CompanyShowVO> customerList = productOrderBiz.getCustomerOptions();
+		SampleGlazeModifyDTO sampleGlaze =  sampleGlazeBiz.selectSampleGlazeForUpdate(sampleGlazeId);
+		Integer customerId = sampleGlaze.getCustomer().getId();
+		modelMap.addAttribute("customerId", customerId);
+		modelMap.addAttribute("sampleGlazes", productOrderBiz.getSampleGlazeOptions(customerId));
+		modelMap.addAttribute("sampleGlazeId", sampleGlazeId);
 		modelMap.addAttribute("customerList", customerList);
-		modelMap.addAttribute("baseGlazeList", baseGlazeList);
-		modelMap.addAttribute("tonerList", tonerList);
 		modelMap.addAttribute("productOrder", productOrder);
 
 		return "/backend/glaze/productOrderUpdate";

@@ -170,13 +170,10 @@
 		update t_product_order
 		<set>
 			<if test="sampleGlazeId != null">
-				name = #{sampleGlazeId,jdbcType=VARCHAR},
+				sample_glaze_id = #{sampleGlazeId,jdbcType=VARCHAR},
 			</if>
 			<if test="content != null">
-				content = #{content,jdbcType=INTEGER},
-			</if>
-			<if test="comment != null">
-				comment = #{comment,jdbcType=INTEGER},
+				content = #{content,jdbcType=INTEGER}
 			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}

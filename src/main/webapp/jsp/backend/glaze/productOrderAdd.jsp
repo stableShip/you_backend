@@ -79,14 +79,21 @@
 							<p>
 								<label>样品釉名称 <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
 								<select name="sampleGlazeId" class="big-input" id="sample_glaze_selection" onchange="sample_glaze_change()">
-									<c:choose>
-										<c:when test="${sampleGlaze != null}">
-											<option value="${sampleGlaze.id}" selected = "selected">${sampleGlaze.name}</option>
-										</c:when>
-										<c:otherwise>
-											<option value="0">--</option>
-										</c:otherwise>
-									</c:choose>
+									<c:if test='${sampleGlazes == null}'>
+										<option value="0">--</option>
+									</c:if>
+									<c:if test='${sampleGlazes != null}'>
+										<c:forEach var="sampleGlaze" items="${sampleGlazes}">
+											<c:choose>
+												<c:when test="${sampleGlazeId==sampleGlaze.id}">
+													<option value="${sampleGlaze.id}" selected = "selected">${sampleGlaze.name}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${sampleGlaze.id}">${sampleGlaze.name}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:if>
 								</select>
 							</p>
 							<p>
@@ -185,7 +192,6 @@
 
 	function addProductOrder() {
 		var data = $('#form').serialize();
-		var toners = $('#toner:input,:hidden').serialize();
 		$.ajax({
 			url:"<%=request.getContextPath()%>/backend/glaze/productOrderController/productOrderAdd.do",
 			type : "post",
@@ -244,7 +250,6 @@
 			data : {sampleGlazeId:sampleGlazeId},
 			datatype : "json",
 			success : function(data) {
-				console.log(data,22222222222222222222222)
 				var toners = data.toners;
 				for (var i=0; i<toners.length; i++) {
 					$('#toner').append(
