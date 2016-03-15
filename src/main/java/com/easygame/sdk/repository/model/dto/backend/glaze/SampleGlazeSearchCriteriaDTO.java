@@ -14,9 +14,6 @@ public class SampleGlazeSearchCriteriaDTO {
 
     private String searchEndDay;
 
-    private Integer searchOrderByColumn = 0;
-
-
 
     /**
      * 分页信息
@@ -55,14 +52,6 @@ public class SampleGlazeSearchCriteriaDTO {
 
     public void setPagination(Page pagination) {
         this.pagination = pagination;
-    }
-
-    public Integer getSearchOrderByColumn() {
-        return searchOrderByColumn;
-    }
-
-    public void setSearchOrderByColumn(Integer searchOrderByColumn) {
-        this.searchOrderByColumn = searchOrderByColumn;
     }
 
     public String getSearchStartDay() {

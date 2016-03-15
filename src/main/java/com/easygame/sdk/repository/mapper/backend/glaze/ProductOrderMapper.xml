@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easygame.sdk.repository.mapper.backend.glaze.ProductOrderMapper">
+
+	<resultMap id="ProductOrderShowVO" type="com.easygame.sdk.repository.model.vo.backend.glaze.ProductOrderShowVO">
+	</resultMap>
+	<select id="selectProductOrderListByCriteria" resultMap="ProductOrderShowVO" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.ProductOrderSearchCriteriaDTO">
+		SELECT
+		t_product_order.id,
+		t_sample_glaze.`name` as sample_glaze_name,
+		t_sample_glaze.creation_date,
+		t_companies.`name` AS company_name,
+		t_product_order.creation_date AS product_date
+		FROM
+		(
+		SELECT
+		t_product_order.id
+		FROM
+		t_product_order
+		WHERE
+		1 = 1
+		<if test="searchStartDay != null">
+			AND DATE_FORMAT(t_product_order.creation_date,'%Y-%m-%d') <![CDATA[>=]]>
+			#{searchStartDay,jdbcType=VARCHAR}
+		</if>
+		<if test="searchEndDay != null">
+			AND DATE_FORMAT(t_product_order.creation_date,'%Y-%m-%d') <![CDATA[<=]]>
+			#{searchEndDay,jdbcType=VARCHAR}
+		</if>
+		LIMIT
+		#{pagination.startRow,jdbcType=INTEGER},
+		#{pagination.pageSize,jdbcType=INTEGER}
+		) AS selectedData
+		LEFT JOIN t_product_order ON selectedData.id = t_product_order.id
+		LEFT JOIN t_sample_glaze ON t_product_order.sample_glaze_id = t_sample_glaze.id
+		LEFT JOIN t_sample_glaze_customer ON t_sample_glaze.id = t_sample_glaze_customer.sample_glaze_id
+		LEFT JOIN t_companies ON t_companies.id = t_sample_glaze_customer.company_id
+		where 1=1
+		<if test="sampleGlazeName != null">
+			AND t_sample_glaze.`name` LIKE '%${sampleGlazeName}%'
+		</if>
+		<if test="companyName != null">
+			AND t_companies.`name` LIKE '%${companyName}%'
+		</if>
+		ORDER BY
+		t_product_order.id DESC
+	</select>
+
+	<select id="getProductOrderListTotalCountByCriteria" resultType="int" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.ProductOrderSearchCriteriaDTO">
+		SELECT
+		count(t_product_order.id)
+		FROM
+		t_product_order
+		LEFT JOIN t_sample_glaze ON t_product_order.sample_glaze_id = t_sample_glaze.id
+		LEFT JOIN t_sample_glaze_customer ON t_sample_glaze.id = t_sample_glaze_customer.sample_glaze_id
+		LEFT JOIN t_companies ON t_companies.id = t_sample_glaze_customer.company_id
+		WHERE 1 = 1
+		<if test="searchStartDay != null">
+			AND DATE_FORMAT(t_product_order.creation_date,'%Y-%m-%d') <![CDATA[>=]]>
+			#{searchStartDay,jdbcType=VARCHAR}
+		</if>
+		<if test="searchEndDay != null">
+			AND DATE_FORMAT(t_product_order.creation_date,'%Y-%m-%d') <![CDATA[<=]]>
+			#{searchEndDay,jdbcType=VARCHAR}
+		</if>
+		<if test="sampleGlazeName != null">
+			AND t_sample_glaze.`name` LIKE '%${sampleGlazeName}%'
+		</if>
+		<if test="companyName != null">
+			AND t_companies.`name` LIKE '%${companyName}%'
+		</if>
+	</select>
+
+	<select id="checkIfProductOrderExist" resultType="int">
+		SELECT
+		count(t_product_order.id)
+		FROM
+		t_product_order
+		WHERE
+		t_product_order.`name` =
+		#{name,jdbcType=VARCHAR}
+		<if test="id != null">
+			<if test="id != 0">
+				AND t_product_order.id != #{id,jdbcType=INTEGER}
+			</if>
+		</if>
+	</select>
+
+	<delete id="deleteProductOrderByPrimaryKey" parameterType="java.lang.Integer">
+		delete
+		from
+		t_product_order
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="checkProductOrderDeleteSecurity" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		SELECT
+		count(sample_glaze_id)
+		FROM
+		t_sample_glaze_base_glaze
+		WHERE
+		base_glaze_id =
+		#{id,jdbcType=INTEGER}
+	</select>
+
+	<insert id="insertProductOrder" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.ProductOrderModifyDTO">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT @@IDENTITY
+		</selectKey>
+		insert into t_product_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="content != null">
+				content,
+			</if>
+			<if test="sampleGlazeId != null">
+				sample_glaze_id,
+			</if>
+			<if test="creation_date != null">
+				creation_date
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="content != null">
+				#{content,jdbcType=INTEGER},
+			</if>
+			<if test="sampleGlazeId != null">
+				#{sampleGlazeId,jdbcType=INTEGER},
+			</if>
+			<if test="creation_date != null">
+				#{creation_date,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<resultMap id="ProductOrderModifyDTO" type="com.easygame.sdk.repository.model.dto.backend.glaze.ProductOrderModifyDTO">
+	</resultMap>
+	<select id="selectProductOrderByPrimaryKey" resultMap="ProductOrderModifyDTO" parameterType="java.lang.Integer">
+		SELECT
+		t_product_order.id,
+		t_product_order.`sample_glaze_id` as sampleGlazeId,
+		t_product_order.content,
+		t_product_order.creation_date,
+		t_companies.`name` as companyName,
+		t_sample_glaze.`name` as sampleGlazeName
+		FROM
+		(
+		SELECT
+		t_product_order.id
+		FROM
+		t_product_order
+		WHERE
+		id =  #{id,jdbcType=INTEGER}
+		) AS selectedData
+		LEFT
+		JOIN t_product_order ON selectedData.id = t_product_order.id
+		LEFT JOIN t_sample_glaze on t_sample_glaze.id = t_product_order.sample_glaze_id
+		LEFT JOIN t_sample_glaze_customer on t_sample_glaze_customer.sample_glaze_id =  t_product_order.sample_glaze_id
+		LEFT JOIN t_companies on t_companies.id = t_sample_glaze_customer.company_id
+	</select>
+
+	<select id="selectProductOrderMaxId" resultType="int">
+		SELECT
+		IFNULL(MAX(id),0)
+		FROM t_product_order
+	</select>
+
+	<update id="updateProductOrder" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.ProductOrderModifyDTO">
+		update t_product_order
+		<set>
+			<if test="sampleGlazeId != null">
+				name = #{sampleGlazeId,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=INTEGER},
+			</if>
+			<if test="comment != null">
+				comment = #{comment,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="selectAllProductOrder" resultMap="ProductOrderShowVO">
+		SELECT
+		t_product_order.id,
+		t_product_order.`name`,
+		t_product_order.water_content,
+		t_product_order.comment
+		FROM
+		t_product_order
+		ORDER
+		BY
+		t_product_order.id DESC
+	</select>
+
+	<resultMap id="CompanyShowVO" type="com.easygame.sdk.repository.model.vo.backend.general.CompanyShowVO" >
+	</resultMap>
+	<select id="getSampleGlazeCustomerList" resultMap="CompanyShowVO">
+		SELECT
+		t_companies.id,
+		t_companies.`name`
+		FROM
+		t_companies,
+		t_sample_glaze_customer
+		where t_sample_glaze_customer.company_id = t_companies.id
+		GROUP BY t_sample_glaze_customer.company_id
+		ORDER BY t_sample_glaze_customer.company_id DESC
+	</select>
+
+	<resultMap id="SampleGlazeShowVO" type="com.easygame.sdk.repository.model.vo.backend.glaze.SampleGlazeShowVO" >
+	</resultMap>
+	<select id="getSampleGlazeListByCustomerId" resultMap="SampleGlazeShowVO">
+		SELECT
+		t_sample_glaze.id,
+		t_sample_glaze.`name`
+		FROM
+		t_sample_glaze
+		LEFT JOIN t_sample_glaze_customer ON t_sample_glaze_customer.sample_glaze_id = t_sample_glaze.id
+		where t_sample_glaze_customer.company_id = #{id,jdbcType=INTEGER}
+		ORDER BY t_sample_glaze_customer.sample_glaze_id DESC
+	</select>
+
+</mapper>

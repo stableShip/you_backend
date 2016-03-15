@@ -10,12 +10,11 @@
 </head>
 <body>
 	<div id="searchDialog" style="display: none">
-		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findSampleGlaze.do" method="post">
+		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/glaze/productOrderController/findProductOrder.do" method="post">
 			<fieldset>
 				<p>
-					<spring:message code="backend.sample_glaze.list.column.name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
-					<spring:message code="backend.company.add.label.name" /> <input class="text-input small-input" type="text" name="customerName" value="${criteria.customerName}" /><br />
-
+					客户<input class="text-input small-input" type="text" name="companyName" value="${criteria.companyName}" /><br />
+					样品釉名称 <input class="text-input small-input" type="text" name="sampleGlazeName" value="${criteria.sampleGlazeName}" /><br />
 					<input name="pagination.pageSize" type="hidden" id="pageSize" value="${criteria.pagination.pageSize}" />
 					<input name="pagination.currentPage" type="hidden" id="page" value="${criteria.pagination.currentPage}" />
 					<span id="dayTypeOption1">
@@ -28,50 +27,15 @@
 			</fieldset>
 		</form>
 	</div>
-	<div id="informationDialog" style="display: none">
-		<form>
-			<fieldset style="float: left; width: 30%">
-				<p>
-					<strong><spring:message code="backend.sample_glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultglazeName" class="text-input medium-input" readonly="readonly" /><br />
-					<strong><spring:message code="backend.sample_glaze.add.label.fineness" /> </strong><input type="text" id="resultFineness" class="text-input medium-input" readonly="readonly" /><br />
-					<strong>客户</strong><input type="text" id="resultCustomer" class="text-input medium-input" readonly="readonly" /><br />
-					<strong>创建日期</strong><input type="text" id="result_creation_date" class="text-input medium-input" readonly="readonly" />
-				</p>
-			</fieldset>
-
-			<fieldset style="float: left;; width: 33%;">
-				<p >
-				<table>
-					<thead>
-					<tr>
-						<th>色料</th>
-						<th>配方</th>
-					</tr>
-					</thead>
-					<tbody id="resultToners"></tbody>
-				</table>
-				</p>
-			</fieldset>
-			<fieldset style="float: right; width: 33%;">
-				<p>
-				<table>
-					<thead>
-					<tr>
-						<th>基础釉</th>
-						<th>含量</th>
-					</tr>
-					</thead>
-					<tbody id="result_base_glaze"></tbody>
-				</table>
-				</p>
-			</fieldset>
-		</form>
-	</div>
 	<div id="deleteConfirmDialog" style="display: none">
 		<form>
 			<fieldset>
 				<p>
-					<strong><spring:message code="backend.base_glaze.list.column.name" /></strong>
+					<strong>客户名称</strong>
+					<input class="text-input medium-input" type="text" id="dcustomer" readonly="readonly" /><br />
+				</p>
+				<p>
+					<strong>样品釉名称</strong>
 					<input class="text-input medium-input" type="text" id="dglaze" readonly="readonly" /><br /> 
 				</p>
 				<p>
@@ -108,7 +72,7 @@
 			<div class="clear"></div>
 			<div class="content-box">
 				<div class="content-box-header">
-					<h3><spring:message code="backend.glaze.list.title" /></h3>
+					<h3>投料单管理</h3>
 					<div class="clear"></div>
 				</div>
 				<div class="content-box-content">
@@ -122,7 +86,7 @@
 								<p>
 									<a class="button" href="#" onclick="javascript:$('#searchDialog').dialog('open');">搜索条件</a>
 									<%--<c:if test="${glazePermission == 2}">--%>
-										<a class="button" href="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/sampleGlazeAddPage.do"><spring:message code="backend.sample_glaze.add.title" /></a>
+										<a class="button" href="<%=request.getContextPath()%>/backend/glaze/productOrderController/productOrderAddPage.do">添加投料单</a>
 									<%--</c:if>--%>
 								</p>
 							</fieldset>
@@ -130,12 +94,12 @@
 						<table>
 							<thead>
 								<tr>
-									<th><spring:message code="backend.sample_glaze.list.column.id" /></th>
-									<th><spring:message code="backend.company.add.label.name" /></th>
-									<th><spring:message code="backend.sample_glaze.list.column.name" /></th>
-									<th><spring:message code="backend.sample_glaze.list.column.fineness" /></th>
-									<th><spring:message code="backend.sample_glaze.list.column.creation_date" /></th>
-									<%--<c:if test="${glazePermission == 2}">--%>
+									<th><spring:message code="backend.base_glaze.list.column.id" /></th>
+									<th>样品釉名称</th>
+									<th>客户</th>
+									<th>生产日期</th>
+									<th>样品釉日期</th>
+								<%--<c:if test="${glazePermission == 2}">--%>
 										<th><spring:message code="backend.glaze.list.column.operation" /></th>
 									<%--</c:if>--%>
 								</tr>
@@ -152,19 +116,20 @@
 							</tfoot>
 							<input type="hidden" id="chooseId" value="0"/>
 							<tbody>
-								<c:forEach var="sampleGlaze" items="${sampleGlazeList}">
+								<c:forEach var="productOrder" items="${productOrderList}">
 									<tr>
-										<td>${sampleGlaze.id}</td>
-										<td>${sampleGlaze.customer_name}</td>
-										<td>${sampleGlaze.sample_glaze_name}</td>
-										<td>${sampleGlaze.fineness}</td>
-										<td>${sampleGlaze.creation_date}</td>
-										<%--<c:if test="${glazePermission == 2}">--%>
+										<td>${productOrder.id}</td>
+										<td>${productOrder.sample_glaze_name}</td>
+										<td>${productOrder.company_name}</td>
+										<td>${productOrder.product_date}</td>
+										<td>${productOrder.creation_date}</td>
+
+
+									<%--<c:if test="${glazePermission == 2}">--%>
 										<td>
-											<a href="<%=request.getContextPath()%>/backend/glaze/productOrderController/productOrderAddPage.do?sampleGlazeId=${sampleGlaze.id}" title="投料"><img src="<%=request.getContextPath()%>/images/icons/bullet_black.png" alt="通知栏推荐" /></a>
-											<a href="#" title="<spring:message code="backend.operation.button.viewDetail" />" onclick="viewDetail(${sampleGlaze.id})"><img src="<%=request.getContextPath()%>/images/icons/text.png" alt="<spring:message code="backend.operation.button.viewDetail" />" /></a>
-											<a href="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/sampleGlazeUpdatePage.do?id=${sampleGlaze.id}" title="<spring:message code="backend.operation.button.modify" />"><img src="<%=request.getContextPath()%>/images/icons/pencil.png" alt="<spring:message code="backend.operation.button.modify" />" /></a>
-											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${sampleGlaze.sample_glaze_name}', '${sampleGlaze.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
+											<a href="<%=request.getContextPath()%>/backend/glaze/productOrderController/productOrderUpdatePage.do?id=${productOrder.id}" title="<spring:message code="backend.operation.button.modify" />"><img src="<%=request.getContextPath()%>/images/icons/pencil.png" alt="<spring:message code="backend.operation.button.modify" />" /></a>
+											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${productOrder.company_name}','${productOrder.sample_glaze_name}','${productOrder.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
+
 										</td>
 										<%--</c:if>--%>
 									</tr>
@@ -179,7 +144,6 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/common/My97DatePicker/WdatePicker.js"></script>
-
 	<script>
 		$(function() {
 			$('#searchDialog').dialog({
@@ -196,19 +160,6 @@
 	        		}
 		         }
 		      });
-			$('#informationDialog').dialog({
-				width: 700,
-				autoOpen: false,
-				modal: true,
-				title: '<spring:message code="backend.dialog.title.information" />',
-				buttons: {
-					'<spring:message code="backend.dialog.button.confirm" />':function(){
-						$("#resultToners").html("");
-						$("#result_base_glaze").html("");
-						$(this).dialog("close");
-					}
-				}
-			});
 			$('#deleteConfirmDialog').dialog({
 		        width: 500,
 		        autoOpen: false,
@@ -247,7 +198,8 @@
 		      });
 		});
 	
-		function showDeleteConfirm(glazeName, id) {
+		function showDeleteConfirm(customer,glazeName, id) {
+			$('#dcustomer').attr("value" , customer);
 			$('#dglaze').attr("value" , glazeName);
 			$('#chooseId').attr("value", id);
 			$('#deleteConfirmDialog').dialog('open');
@@ -257,7 +209,7 @@
 			$('#deleteConfirmDialog').dialog('close');
 			var recordId = $('#chooseId').val();
 			$.ajax({
-				url:"<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/sampleGlazeDelete.do",
+				url:"<%=request.getContextPath()%>/backend/glaze/productOrderController/productOrderDelete.do",
 				type:"post",
 				data:{id:recordId},
 				datatype:"json",
@@ -268,50 +220,6 @@
 					else {
 						$('#successDeleteDialog').dialog('open');
 					}
-				}
-			});
-		}
-
-		function viewDetail(recordId) {
-			$.ajax({
-				url:"<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/viewDetail.do",
-				type:"post",
-				data:{id:recordId},
-				datatype:"json",
-				success:function(data){
-					$('#resultglazeName').attr('value',
-							data.sampleGlaze.name);
-					$('#resultFineness').attr('value',
-							data.sampleGlaze.fineness);
-					$('#resultCustomer').attr('value',
-							data.sampleGlaze.customer.name);
-					$('#result_creation_date').attr('value',
-							new Date(data.sampleGlaze.creation_date).toLocaleString());
-
-					var toners = data.sampleGlaze.toners;
-					var baseGlazes = data.sampleGlaze.baseGlazes;
-					for(var i =0; i< toners.length;i++) {
-						if(JSON.stringify(toners[i])!="{}") {
-							$('#resultToners').append(
-									'<tr>' +
-									'<td width="65%">' + toners[i].name + '</td>' +
-									'<td >' + toners[i].content + '</td>' +
-									'</tr>'
-							);
-						}
-					}
-					for(var i =0; i< baseGlazes.length;i++) {
-						if(JSON.stringify(baseGlazes[i])!="{}") {
-							console.log(baseGlazes[i])
-							$('#result_base_glaze').append(
-									'<tr>' +
-									'<td width="70%">' + baseGlazes[i].name + '</td>' +
-									'<td>' + baseGlazes[i].content + '</td>' +
-									'</tr>'
-							);
-						}
-					}
-					$('#informationDialog').dialog('open');
 				}
 			});
 		}
