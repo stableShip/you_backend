@@ -74,9 +74,9 @@
 							<fieldset>
 								<p>
 									<a class="button" href="#" onclick="javascript:$('#searchDialog').dialog('open');">搜索条件</a>
-									<%--<c:if test="${glazePermission == 2}">--%>
+									<c:if test="${baseGlazePermission == 2}">
 										<a class="button" href="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/baseGlazeAddPage.do"><spring:message code="backend.glaze.list.button.add_base_glaze" /></a>
-									<%--</c:if>--%>
+									</c:if>
 								</p>
 							</fieldset>
 						</form>
@@ -87,9 +87,9 @@
 									<th><spring:message code="backend.base_glaze.list.column.name" /></th>
 									<th><spring:message code="backend.base_glaze.list.column.water_content" /></th>
 									<th><spring:message code="backend.base_glaze.list.column.content" /></th>
-									<%--<c:if test="${glazePermission == 2}">--%>
+									<c:if test="${baseGlazePermission == 2}">
 										<th><spring:message code="backend.glaze.list.column.operation" /></th>
-									<%--</c:if>--%>
+									</c:if>
 								</tr>
 							</thead>
 							<tfoot>
@@ -110,12 +110,12 @@
 										<td>${baseGlaze.name}</td>
 										<td>${baseGlaze.water_content}</td>
 										<td>${baseGlaze.comment}</td>
-										<%--<c:if test="${glazePermission == 2}">--%>
+										<c:if test="${baseGlazePermission == 2}">
 										<td>
 											<a href="<%=request.getContextPath()%>/backend/glaze/baseGlazeController/baseGlazeUpdatePage.do?id=${baseGlaze.id}" title="<spring:message code="backend.operation.button.modify" />"><img src="<%=request.getContextPath()%>/images/icons/pencil.png" alt="<spring:message code="backend.operation.button.modify" />" /></a>
 											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${baseGlaze.name}', '${baseGlaze.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
 										</td>
-										<%--</c:if>--%>
+										</c:if>
 									</tr>
 								</c:forEach>
 							</tbody>

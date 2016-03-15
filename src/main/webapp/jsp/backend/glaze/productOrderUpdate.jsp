@@ -123,7 +123,7 @@
 								<thead>
 								<tr>
 									<th>基础釉</th>
-									<th>含量</th>
+									<th>含水量</th>
 									<th>实投数量</th>
 								</tr>
 								</thead>

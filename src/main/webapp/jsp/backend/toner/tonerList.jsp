@@ -74,9 +74,9 @@
 							<fieldset>
 								<p>
 									<a class="button" href="#" onclick="javascript:$('#searchDialog').dialog('open');">搜索条件</a>
-									<%--<c:if test="${tonerPermission == 2}">--%>
+									<c:if test="${tonerPermission == 2}">
 										<a class="button" href="<%=request.getContextPath()%>/backend/toner/tonerController/tonerAddPage.do"><spring:message code="backend.toner.list.button.add_toner" /></a>
-									<%--</c:if>--%>
+									</c:if>
 								</p>
 							</fieldset>
 						</form>
@@ -85,9 +85,9 @@
 								<tr>
 									<th><spring:message code="backend.toner.list.column.id" /></th>
 									<th><spring:message code="backend.toner.list.column.name" /></th>
-									<%--<c:if test="${tonerPermission == 2}">--%>
+									<c:if test="${tonerPermission == 2}">
 										<th><spring:message code="backend.toner.list.column.operation" /></th>
-									<%--</c:if>--%>
+									</c:if>
 								</tr>
 							</thead>
 							<tfoot>
@@ -106,12 +106,12 @@
 									<tr>
 										<td>${toner.id}</td>
 										<td>${toner.name}</td>
-										<%--<c:if test="${tonerPermission == 2}">--%>
+										<c:if test="${tonerPermission == 2}">
 										<td>
 											<a href="<%=request.getContextPath()%>/backend/toner/tonerController/tonerUpdatePage.do?id=${toner.id}" title="<spring:message code="backend.operation.button.modify" />"><img src="<%=request.getContextPath()%>/images/icons/pencil.png" alt="<spring:message code="backend.operation.button.modify" />" /></a>
 											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${toner.name}', '${toner.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
 										</td>
-										<%--</c:if>--%>
+										</c:if>
 									</tr>
 								</c:forEach>
 							</tbody>

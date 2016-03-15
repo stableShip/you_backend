@@ -121,9 +121,9 @@
 							<fieldset>
 								<p>
 									<a class="button" href="#" onclick="javascript:$('#searchDialog').dialog('open');">搜索条件</a>
-									<%--<c:if test="${glazePermission == 2}">--%>
+									<c:if test="${sampleGlazePermission == 2}">
 										<a class="button" href="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/sampleGlazeAddPage.do"><spring:message code="backend.sample_glaze.add.title" /></a>
-									<%--</c:if>--%>
+									</c:if>
 								</p>
 							</fieldset>
 						</form>
@@ -135,9 +135,9 @@
 									<th><spring:message code="backend.sample_glaze.list.column.name" /></th>
 									<th><spring:message code="backend.sample_glaze.list.column.fineness" /></th>
 									<th><spring:message code="backend.sample_glaze.list.column.creation_date" /></th>
-									<%--<c:if test="${glazePermission == 2}">--%>
+									<c:if test="${sampleGlazePermission == 2}">
 										<th><spring:message code="backend.glaze.list.column.operation" /></th>
-									<%--</c:if>--%>
+									</c:if>
 								</tr>
 							</thead>
 							<tfoot>
@@ -159,14 +159,14 @@
 										<td>${sampleGlaze.sample_glaze_name}</td>
 										<td>${sampleGlaze.fineness}</td>
 										<td>${sampleGlaze.creation_date}</td>
-										<%--<c:if test="${glazePermission == 2}">--%>
+										<c:if test="${sampleGlazePermission == 2}">
 										<td>
 											<a href="<%=request.getContextPath()%>/backend/glaze/productOrderController/productOrderAddPage.do?sampleGlazeId=${sampleGlaze.id}" title="投料"><img src="<%=request.getContextPath()%>/images/icons/bullet_black.png" alt="通知栏推荐" /></a>
 											<a href="#" title="<spring:message code="backend.operation.button.viewDetail" />" onclick="viewDetail(${sampleGlaze.id})"><img src="<%=request.getContextPath()%>/images/icons/text.png" alt="<spring:message code="backend.operation.button.viewDetail" />" /></a>
 											<a href="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/sampleGlazeUpdatePage.do?id=${sampleGlaze.id}" title="<spring:message code="backend.operation.button.modify" />"><img src="<%=request.getContextPath()%>/images/icons/pencil.png" alt="<spring:message code="backend.operation.button.modify" />" /></a>
 											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${sampleGlaze.sample_glaze_name}', '${sampleGlaze.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
 										</td>
-										<%--</c:if>--%>
+										</c:if>
 									</tr>
 								</c:forEach>
 							</tbody>

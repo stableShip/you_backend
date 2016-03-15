@@ -26,7 +26,7 @@
 		</ul>
 	</li>
 
-	<c:if test="${glazePermission != 0}">
+	<c:if test="${baseGlazePermission != 0 || sampleGlazePermission != 0 || productOrderPermission != 0 }">
 		<li>
 			<a href="#" class="nav-top-item <c:if test="${currentPage eq 'baseGlazePermission' || currentPage eq 'sampleGlazePermission' || currentPage eq 'productOrderPermission'}">current</c:if>"><spring:message code="backend.leftmenu.settings.glaze" /></a>
 			<ul>
@@ -43,7 +43,7 @@
 		</li>
 	</c:if>
 
-    <c:if test="${glazePermission != 0}">
+    <c:if test="${companyPermission != 0}">
         <li>
             <a href="#" class="nav-top-item <c:if test="${currentPage eq 'companyPermission'}">current</c:if>">客户管理</a>
             <ul>
@@ -54,11 +54,11 @@
         </li>
     </c:if>
 
-	<c:if test="${glazePermission != 0}">
+	<c:if test="${tonerPermission != 0}">
 		<li>
 			<a href="#" class="nav-top-item <c:if test="${currentPage eq 'tonerPermission'}">current</c:if>">色料管理</a>
 			<ul>
-				<c:if test="${companyPermission != 0}">
+				<c:if test="${tonerPermission != 0}">
 					<li><a href="<%=request.getContextPath()%>/backend/toner/tonerController/findToner.do?pagination.currentPage=1" <c:if test="${currentPage eq 'tonerPermission'}">class="current"</c:if>>色料设置</a></li>
 				</c:if>
 			</ul>

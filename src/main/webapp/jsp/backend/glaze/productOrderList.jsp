@@ -85,9 +85,9 @@
 							<fieldset>
 								<p>
 									<a class="button" href="#" onclick="javascript:$('#searchDialog').dialog('open');">搜索条件</a>
-									<%--<c:if test="${glazePermission == 2}">--%>
+									<c:if test="${productOrderPermission == 2}">
 										<a class="button" href="<%=request.getContextPath()%>/backend/glaze/productOrderController/productOrderAddPage.do">添加投料单</a>
-									<%--</c:if>--%>
+									</c:if>
 								</p>
 							</fieldset>
 						</form>
@@ -99,9 +99,9 @@
 									<th>样品釉名称</th>
 									<th>生产日期</th>
 									<th>样品釉日期</th>
-								<%--<c:if test="${glazePermission == 2}">--%>
+								<c:if test="${productOrderPermission == 2}">
 										<th><spring:message code="backend.glaze.list.column.operation" /></th>
-									<%--</c:if>--%>
+									</c:if>
 								</tr>
 							</thead>
 							<tfoot>
@@ -124,14 +124,13 @@
 										<td>${productOrder.product_date}</td>
 										<td>${productOrder.creation_date}</td>
 
-
-									<%--<c:if test="${glazePermission == 2}">--%>
+									<c:if test="${productOrderPermission == 2}">
 										<td>
 											<a href="<%=request.getContextPath()%>/backend/glaze/productOrderController/productOrderUpdatePage.do?id=${productOrder.id}" title="<spring:message code="backend.operation.button.modify" />"><img src="<%=request.getContextPath()%>/images/icons/pencil.png" alt="<spring:message code="backend.operation.button.modify" />" /></a>
 											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${productOrder.company_name}','${productOrder.sample_glaze_name}','${productOrder.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
 
 										</td>
-										<%--</c:if>--%>
+									</c:if>
 									</tr>
 								</c:forEach>
 							</tbody>

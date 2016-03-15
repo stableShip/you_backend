@@ -78,11 +78,11 @@ public class AccountBizImpl extends BaseBizImpl implements IAccountBiz {
 	
 	public int deleteAccount(int id) {
 		
-		if (accountMapper.checkAccountDeleteSecurity(id) > 0) {
-			
-			return 0;
-			
-		}
+//		if (accountMapper.checkAccountDeleteSecurity(id) > 0) {
+//
+//			return 0;
+//
+//		}
 		
 		accountMapper.deleteAccountInformationByAccountId(id);
 		
