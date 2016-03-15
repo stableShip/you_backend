@@ -33,7 +33,7 @@ public class BaseGlazeController extends BaseController {
 	@RequestMapping(value = "/findBaseGlaze", method = { RequestMethod.GET, RequestMethod.POST })
 	public String findBaseGlaze(BaseGlazeSearchCriteriaDTO criteria, HttpServletRequest request, ModelMap modelMap) {
 
-		request.getSession().setAttribute("currentPage", "glazePermission");
+		request.getSession().setAttribute("currentPage", "baseGlazePermission");
 
 		if (criteria.getPagination() == null) {
 			criteria.setPagination(new Page());

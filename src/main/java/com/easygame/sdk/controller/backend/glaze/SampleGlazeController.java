@@ -49,7 +49,7 @@ public class SampleGlazeController extends BaseController {
 	@RequestMapping(value = "/findSampleGlaze", method = { RequestMethod.GET, RequestMethod.POST })
 	public String findSampleGlaze(SampleGlazeSearchCriteriaDTO criteria, HttpServletRequest request, ModelMap modelMap) {
 
-		request.getSession().setAttribute("currentPage", "glazePermission");
+		request.getSession().setAttribute("currentPage", "sampleGlazePermission");
 
 		if (criteria.getPagination() == null) {
 			criteria.setPagination(new Page());
