@@ -41,12 +41,11 @@ public class SampleGlazeBizImpl extends BaseBizImpl implements ISampleGlazeBiz {
 
     @Override
     public int deleteSampleGlaze(int id) {
-        // todo 检测是否有投料单存在
-//		if (sampleGlazeMapper.checkSampleGlazeDeleteSecurity(id) > 0) {
-//
-//			return 0;
-//
-//		}
+		if (sampleGlazeMapper.checkSampleGlazeDeleteSecurity(id) > 0) {
+
+			return 0;
+
+		}
         sampleGlazeMapper.deleteTonerConnect(id);
         sampleGlazeMapper.deleteBaseGlazeConnect(id);
         sampleGlazeMapper.deleteCustomerConnect(id);
