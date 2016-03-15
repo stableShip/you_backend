@@ -95,8 +95,8 @@
 							<thead>
 								<tr>
 									<th><spring:message code="backend.base_glaze.list.column.id" /></th>
-									<th>样品釉名称</th>
 									<th>客户</th>
+									<th>样品釉名称</th>
 									<th>生产日期</th>
 									<th>样品釉日期</th>
 								<%--<c:if test="${glazePermission == 2}">--%>
@@ -119,8 +119,8 @@
 								<c:forEach var="productOrder" items="${productOrderList}">
 									<tr>
 										<td>${productOrder.id}</td>
-										<td>${productOrder.sample_glaze_name}</td>
 										<td>${productOrder.company_name}</td>
+										<td>${productOrder.sample_glaze_name}</td>
 										<td>${productOrder.product_date}</td>
 										<td>${productOrder.creation_date}</td>
 
