@@ -7,6 +7,7 @@
 	<select id="selectProductOrderListByCriteria" resultMap="ProductOrderShowVO" parameterType="com.easygame.sdk.repository.model.dto.backend.glaze.ProductOrderSearchCriteriaDTO">
 		SELECT
 		t_product_order.id,
+		t_product_order.content,
 		t_sample_glaze.`name` as sample_glaze_name,
 		t_sample_glaze.creation_date,
 		t_companies.`name` AS company_name,

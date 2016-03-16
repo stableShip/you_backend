@@ -40,14 +40,14 @@
 		<div class="clear"></div>
 		<div class="content-box" style="float: left; width: 100%">
 			<div class="content-box-header">
-				<h3><spring:message code="backend.sample_glaze.add.title" /></h3>
+				<h3><spring:message code="backend.product_order.add.title" /></h3>
 				<div class="clear"></div>
 			</div>
 			<div class="content-box-content">
 				<div class="tab-content default-tab" id="tab1">
 					<div class="notification attention png_bg">
 						<a href="#" class="close"><img src="<%=request.getContextPath()%>/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-						<div><spring:message code="backend.sample_glaze.add.alert" /></div>
+						<div><spring:message code="backend.product_order.add.alert" /></div>
 					</div>
 					<c:if test="${errors != null}">
 						<div class="notification error png_bg">
@@ -78,7 +78,7 @@
 							</p>
 							<p>
 								<label>样品釉名称 <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-								<select name="sampleGlazeId" class="big-input" id="sample_glaze_selection" onchange="sample_glaze_change()">
+								<select name="sampleGlazeId" class="big-input" id="product_order_selection" onchange="product_order_change()">
 									<c:if test='${sampleGlazes == null}'>
 										<option value="0">--</option>
 									</c:if>
@@ -98,7 +98,7 @@
 							</p>
 							<p>
 								<label>所需基础釉干料数量:(公斤) <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-								<input class="text-input small-input" type="text" name="content" value="0" onkeyup="sample_glaze_change()" id="content"
+								<input class="text-input small-input" type="text" name="content" value="0" onkeyup="product_order_change()" id="content"
 									   data-validation="number" data-validation="required" data-validation-error-msg="干料数量必须为数字并且不能为空"/> <br />
 							</p>
 						</fieldset>
@@ -181,7 +181,7 @@
 			width: 460,
 			autoOpen: false,
 			modal: true,
-			title: '<spring:message code="backend.dialog.title.no_sample_glaze" />',
+			title: '<spring:message code="backend.dialog.title.no_product_order" />',
 			buttons: {
 				'<spring:message code="backend.dialog.button.confirm" />': function() {
 					$(this).dialog("close");
@@ -232,15 +232,15 @@
 				for (var i=0; i<data.length; i++) {
 					str = str + '<option value="' + data[i].id + '">' + data[i].name + '</option>';
 				}
-				$('#sample_glaze_selection').html(str);
-				sample_glaze_change();
+				$('#product_order_selection').html(str);
+				product_order_change();
 			}
 		})
 	}
 
 
-	function sample_glaze_change() {
-		var sampleGlazeId = $('#sample_glaze_selection').val();
+	function product_order_change() {
+		var sampleGlazeId = $('#product_order_selection').val();
 		var content = $("#content").val();
 		$('#toner').html("");
 		$('#base_glaze').html("");

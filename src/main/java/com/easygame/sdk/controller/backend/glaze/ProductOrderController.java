@@ -182,6 +182,9 @@ public class ProductOrderController extends BaseController {
 	public @ResponseBody String viewDetail(int id) {
 		ProductOrderModifyDTO productOrder = productOrderBiz.selectProductOrderForUpdate(id);
 		JSONObject result = new JSONObject();
+		Integer sampleGlazeId = productOrder.getSampleGlazeId();
+		SampleGlazeModifyDTO sampleGlaze =  sampleGlazeBiz.selectSampleGlazeForUpdate(sampleGlazeId);
+		result.put("sampleGlaze", sampleGlaze);
 		result.put("productOrder", productOrder);
 		return JSON.toJSONString(result);
 	}

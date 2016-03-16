@@ -27,6 +27,44 @@
 			</fieldset>
 		</form>
 	</div>
+    <div id="informationDialog" style="display: none">
+        <form name="productOrder"  method="post">
+            <fieldset id="base" style="float: left; width: 30%" >
+                <strong>客户</strong><input type="text" id="resultCustomer" class="text-input medium-input" readonly="readonly" /><br />
+                <strong>样品釉</strong><input type="text" id="resultglazeName" class="text-input medium-input" readonly="readonly" /><br />
+                <strong>干料 </strong><input type="text" id="resultContent" class="text-input medium-input" readonly="readonly" /><br />
+                <strong>创建日期</strong><input type="text" id="result_creation_date" class="text-input medium-input" readonly="readonly" />
+            </fieldset>
+            <fieldset id="toners" style="float: left; width: 33%;">
+                <p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>色料&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>配方&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>实投数量&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody id="toner"></tbody>
+                </table>
+                </p>
+            </fieldset>
+            <fieldset id="baseGlazes" style="float: right; width: 33%;">
+                <p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>基础釉&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>含水量&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>实投数量&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody id="base_glaze"></tbody>
+                </table>
+                </p>
+            </fieldset>
+        </form>
+    </div>
 	<div id="deleteConfirmDialog" style="display: none">
 		<form>
 			<fieldset>
@@ -97,6 +135,7 @@
 									<th><spring:message code="backend.base_glaze.list.column.id" /></th>
 									<th>客户</th>
 									<th>样品釉名称</th>
+									<th>干料(公斤)</th>
 									<th>生产日期</th>
 									<th>样品釉日期</th>
 								<c:if test="${productOrderPermission == 2}">
@@ -121,11 +160,13 @@
 										<td>${productOrder.id}</td>
 										<td>${productOrder.company_name}</td>
 										<td>${productOrder.sample_glaze_name}</td>
+										<td>${productOrder.content}</td>
 										<td>${productOrder.product_date}</td>
 										<td>${productOrder.creation_date}</td>
 
 									<c:if test="${productOrderPermission == 2}">
 										<td>
+											<a href="#" title="<spring:message code="backend.operation.button.viewDetail" />" onclick="viewDetail(${productOrder.id})"><img src="<%=request.getContextPath()%>/images/icons/text.png" alt="<spring:message code="backend.operation.button.viewDetail" />" /></a>
 											<a href="<%=request.getContextPath()%>/backend/glaze/productOrderController/productOrderUpdatePage.do?id=${productOrder.id}" title="<spring:message code="backend.operation.button.modify" />"><img src="<%=request.getContextPath()%>/images/icons/pencil.png" alt="<spring:message code="backend.operation.button.modify" />" /></a>
 											<a href="#" title="<spring:message code="backend.operation.button.delete" />" onclick="showDeleteConfirm('${productOrder.company_name}','${productOrder.sample_glaze_name}','${productOrder.id}')"><img src="<%=request.getContextPath()%>/images/icons/cross.png" alt="<spring:message code="backend.operation.button.delete" />" /></a>
 
@@ -159,6 +200,19 @@
 	        		}
 		         }
 		      });
+            $('#informationDialog').dialog({
+                width: 700,
+                autoOpen: false,
+                modal: true,
+                title: '<spring:message code="backend.dialog.title.information" />',
+                buttons: {
+                    '<spring:message code="backend.dialog.button.confirm" />':function(){
+                        $("#toner").html("");
+                        $("#base_glaze").html("");
+                        $(this).dialog("close");
+                    }
+                }
+            });
 			$('#deleteConfirmDialog').dialog({
 		        width: 500,
 		        autoOpen: false,
@@ -222,6 +276,49 @@
 				}
 			});
 		}
+		function viewDetail(recordId) {
+			$.ajax({
+				url:"<%=request.getContextPath()%>/backend/glaze/productOrderController/viewDetail.do",
+				type:"post",
+				data:{id:recordId},
+				datatype:"json",
+				success:function(data){
+                    $('#resultglazeName').attr('value',
+                            data.productOrder.sampleGlazeName);
+                    $('#resultContent').attr('value',
+                            data.productOrder.content);
+                    $('#resultCustomer').attr('value',
+                            data.productOrder.companyName);
+                    $('#result_creation_date').attr('value',
+                            new Date(data.productOrder.creation_date).toLocaleString());
+                    var content = data.productOrder.content;
+					var toners = data.sampleGlaze.toners;
+					var baseGlazes = data.sampleGlaze.baseGlazes;
+					for(var i =0; i< toners.length;i++) {
+						if(JSON.stringify(toners[i])!="{}") {
+                            $('#toner').append(
+                                    '<tr>' +
+                                    '<td>' + toners[i].name + '</td>' +
+                                    '<td>' + toners[i].content + '</td>' +
+                                    '<td>' + (toners[i].content * content *10) + "克"+'</td>' +
+                                    '</tr>'
+                            );
+						}
+					}
+					for(var i =0; i< baseGlazes.length;i++) {
+						if(JSON.stringify(baseGlazes[i])!="{}") {
+                            $('#base_glaze').append(
+                                    '<tr>' +
+                                    '<td>' + baseGlazes[i].name + '</td>' +
+                                    '<td>' + baseGlazes[i].content + '</td>' +
+                                    '<td>' + (content / (100-baseGlazes[i].content)*100).toFixed(3) + "公斤"+'</td>' +
+                                    '</tr>'
+                            );
+						}
+					}
+					$('#informationDialog').dialog('open');
+				}
+			})}
 	</script>
 </body>
 </html>
