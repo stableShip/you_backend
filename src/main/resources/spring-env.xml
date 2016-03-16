@@ -31,21 +31,13 @@
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">  
         <property name="basenames">  
             <list>  
-                <value>i18n/backend/message/backend-messages</value>  
-                
-                <value>i18n/backend/message/backend-account-messages</value>  
-                <value>i18n/backend/message/backend-role-messages</value>  
+                <value>i18n/backend/message/backend-messages</value>
+				<value>i18n/backend/message/backend-account-messages</value>
+				<value>i18n/backend/message/backend-cpaPromotionStatistics-messages</value>
+				<value>i18n/backend/message/backend-channel-messages</value>
+				<value>i18n/backend/message/backend-role-messages</value>
                 <value>i18n/backend/message/backend-company-messages</value>  
                 <value>i18n/backend/message/backend-editProfile-messages</value>  
-                <value>i18n/backend/message/backend-bannerAd-messages</value>  
-                <value>i18n/backend/message/backend-screenAd-messages</value>  
-                <value>i18n/backend/message/backend-notificationAd-messages</value>  
-                <value>i18n/backend/message/backend-channel-messages</value>  
-                <value>i18n/backend/message/backend-cpaPromotion-messages</value>  
-                <value>i18n/backend/message/backend-cpaPromotionStatistics-messages</value>  
-                <value>i18n/backend/message/backend-cpaPromotionLog-messages</value>  
-                <value>i18n/backend/message/backend-app-messages</value>  
-                <value>i18n/backend/message/backend-gamecenterAd-messages</value>
 				<value>i18n/backend/message/backend-toner-messages</value>
 				<value>i18n/backend/message/backend-glaze-messages</value>
 				<value>i18n/backend/errorMessage/company-errorMessages</value>

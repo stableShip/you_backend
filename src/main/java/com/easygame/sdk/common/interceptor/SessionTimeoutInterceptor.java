@@ -15,7 +15,7 @@ public class SessionTimeoutInterceptor extends HandlerInterceptorAdapter {
 		
 		if (session.getAttribute("account") == null) {
 			
-			response.sendRedirect(request.getContextPath() + "/backend/showmethebackend");
+			response.sendRedirect(request.getContextPath() + "/index");
 			
 			return false;
 			

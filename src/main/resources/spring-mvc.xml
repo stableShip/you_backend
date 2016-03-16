@@ -50,7 +50,6 @@
 			<!--设置拦截的路径 -->
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/index" />
-			<mvc:exclude-mapping path="/backend/showmethebackend" />
 			<mvc:exclude-mapping path="/backend/loginAndLogoutController/login.do" />
 			<mvc:exclude-mapping path="/webserviceController/**.do" />
 			<mvc:exclude-mapping path="/webservice/**/**.do" />
