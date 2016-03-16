@@ -35,7 +35,7 @@
 					<strong><spring:message code="backend.sample_glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultglazeName" class="text-input medium-input" readonly="readonly" /><br />
 					<strong><spring:message code="backend.sample_glaze.add.label.fineness" /> </strong><input type="text" id="resultFineness" class="text-input medium-input" readonly="readonly" /><br />
 					<strong>客户</strong><input type="text" id="resultCustomer" class="text-input medium-input" readonly="readonly" /><br />
-					<strong>创建日期</strong><input type="text" id="result_creation_date" class="text-input medium-input" readonly="readonly" />
+					<strong>创建日期</strong><input type="text" id="result_creation_date" class="text-input max-input" readonly="readonly" />
 				</p>
 			</fieldset>
 
@@ -44,8 +44,8 @@
 				<table>
 					<thead>
 					<tr>
-						<th>色料</th>
-						<th>配方</th>
+						<th>色料&nbsp;&nbsp;&nbsp;&nbsp;</th>
+						<th>配方&nbsp;&nbsp;&nbsp;&nbsp;</th>
 					</tr>
 					</thead>
 					<tbody id="resultToners"></tbody>
@@ -57,8 +57,8 @@
 				<table>
 					<thead>
 					<tr>
-						<th>基础釉</th>
-						<th>含量</th>
+						<th>基础釉&nbsp;&nbsp;&nbsp;&nbsp;</th>
+						<th>含量&nbsp;&nbsp;&nbsp;&nbsp;</th>
 					</tr>
 					</thead>
 					<tbody id="result_base_glaze"></tbody>

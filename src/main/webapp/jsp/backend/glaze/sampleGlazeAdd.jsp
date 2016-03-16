@@ -107,7 +107,7 @@
 								<p>
 									<label><spring:message code="backend.sample_glaze.add.label.fineness" /> </label>
 									<input class="text-input small-input" type="text" name="fineness" value="${glaze.fineness}"
-                                           data-validation="number" data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.fineness" />"/> <br />
+                                           data-validation="number"  data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.fineness" />"/> <br />
 								</p>
 							</fieldset>
 							<fieldset id="toners" style="float: left; width: 33%;">
