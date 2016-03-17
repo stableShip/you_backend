@@ -55,7 +55,7 @@
                     <thead>
                     <tr>
                         <th>基础釉&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                        <th>含水量&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>含量&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         <th>实投数量&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     </tr>
                     </thead>
@@ -311,7 +311,7 @@
                                     '<tr>' +
                                     '<td>' + baseGlazes[i].name + '</td>' +
                                     '<td>' + baseGlazes[i].content + '</td>' +
-                                    '<td>' + (content / (100-baseGlazes[i].content)*100).toFixed(3) + "公斤"+'</td>' +
+                                    '<td>' + ((content * baseGlazes[i].content/100) / ((100-baseGlazes[i].water_content)/100)).toFixed(3) + "公斤"+'</td>' +
                                     '</tr>'
                             );
 						}
