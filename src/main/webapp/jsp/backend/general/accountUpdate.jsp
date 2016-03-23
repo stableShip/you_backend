@@ -42,21 +42,21 @@
 								<input type="hidden" name="id" value="${dto.id}" />
 								<p>
 									<label><spring:message code="backend.admin.update.label.account" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="account" value="${dto.account}" readonly="readonly"/><br />
+									<input class="text-input max-input" type="text" name="account" value="${dto.account}" readonly="readonly"/><br />
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.update.label.password" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="password"/> <br />
+									<input class="text-input max-input" type="text" name="password"/> <br />
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.update.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="name" value="${dto.name}"
+									<input class="text-input max-input" type="text" name="name" value="${dto.name}"
 										data-validation="required" data-validation-error-msg="<spring:message code="backend.admin.update.err-message.name" />" />
 									<br />
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.update.label.type" /></label>
-									<select name="roleId" class="small-input">
+									<select name="roleId" class="max-input">
 										<c:forEach var="r" items="${roleList}">
 											<option value="${r.id}" <c:if test="${r.id == dto.roleId}">selected="selected"</c:if>>${r.name}</option>
 										</c:forEach>
@@ -64,7 +64,7 @@
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.update.label.companyName" /></label>
-									<select name="accountInformation.companyId" class="small-input">
+									<select name="accountInformation.companyId" class="max-input">
 										<option value="0" <c:if test="${dto.accountInformation.companyId == 0}">selected="selected"</c:if>>--</option>
 										<c:forEach var="c" items="${companyList}">
 											<option value="${c.id}"
@@ -73,26 +73,26 @@
 									</select>
 								</p>
 								<p>
-									<label><spring:message code="backend.admin.update.label.email" /></label><input class="text-input small-input"
+									<label><spring:message code="backend.admin.update.label.email" /></label><input class="text-input max-input"
 										type="text" name="accountInformation.email" value="${dto.accountInformation.email}" data-validation-optional="true"
 										data-validation="email" data-validation-error-msg="<spring:message code="backend.admin.update.err-message.email" />" />
 									<br />
 								</p>
 								<p>
-									<label><spring:message code="backend.admin.update.label.qq" /></label><input class="text-input small-input"
+									<label><spring:message code="backend.admin.update.label.qq" /></label><input class="text-input max-input"
 										type="text" name="accountInformation.qqNumber" value="${dto.accountInformation.qqNumber}"
 										data-validation="number" data-validation-optional="true"
 										data-validation-error-msg="<spring:message code="backend.admin.update.err-message.qq" />" /> <br />
 								</p>
 								<p>
-									<label><spring:message code="backend.admin.update.label.mobilePhone" /></label><input class="text-input small-input"
+									<label><spring:message code="backend.admin.update.label.mobilePhone" /></label><input class="text-input max-input"
 										type="text" name="accountInformation.mobilePhone" value="${dto.accountInformation.mobilePhone}"
 										data-validation="number" data-validation-error-msg="<spring:message code="backend.admin.update.err-message.mobilePhone" />"
 										data-validation-optional="true" /> <br />
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.update.label.remarks" /></label>
-									<input class="text-input small-input" type="text" name="accountInformation.remarks" value="${dto.accountInformation.remarks}" /> <br />
+									<input class="text-input max-input" type="text" name="accountInformation.remarks" value="${dto.accountInformation.remarks}" /> <br />
 								</p>
 							</fieldset>
 							<p>

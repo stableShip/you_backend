@@ -13,9 +13,9 @@
 		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/general/accountController/accountList.do" method="post">
 			<fieldset>
 				<p>
-					<spring:message code="backend.admin.list.search.label.account" /> <input class="text-input small-input" type="text" name="searchAccount" value="${criteria.searchAccount}" /><br />
-					<spring:message code="backend.admin.list.search.label.name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /> <br />
-					<spring:message code="backend.admin.list.search.label.company" /> <input class="text-input small-input" type="text" name="searchCompanyName" value="${criteria.searchCompanyName}" /> 
+					<spring:message code="backend.admin.list.search.label.account" /> <input class="text-input max-input" type="text" name="searchAccount" value="${criteria.searchAccount}" /><br />
+					<spring:message code="backend.admin.list.search.label.name" /> <input class="text-input max-input" type="text" name="searchName" value="${criteria.searchName}" /> <br />
+					<spring:message code="backend.admin.list.search.label.company" /> <input class="text-input max-input" type="text" name="searchCompanyName" value="${criteria.searchCompanyName}" />
 					<input name="pagination.pageSize" type="hidden" id="pageSize" value="${criteria.pagination.pageSize}" />
 					<input name="pagination.currentPage" type="hidden" id="page" value="${criteria.pagination.currentPage}" />
 				</p>

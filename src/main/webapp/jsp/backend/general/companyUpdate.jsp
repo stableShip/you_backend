@@ -49,33 +49,33 @@
 								<input type="hidden" name="id" value="${company.id}" />
 								<p>
 									<label><spring:message code="backend.company.update.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input"
+									<input class="text-input max-input"
 										type="text" name="name" value="${company.name}"
 										data-validation="required"
 										data-validation-error-msg="<spring:message code="backend.company.update.err-message.name" />" /> <br />
 								</p>
 								<p>
 									<label><spring:message code="backend.company.update.label.phone" /></label>
-									<input class="text-input small-input"
+									<input class="text-input max-input"
 										type="text" name="telephone" value="${company.telephone}"
 										data-validation="number" data-validation-optional="true"
 										data-validation-error-msg="<spring:message code="backend.company.update.err-message.phone" />" /> <br />
 								</p>
 								<p>
 									<label><spring:message code="backend.company.update.label.fex" /></label>
-									<input class="text-input small-input"
+									<input class="text-input max-input"
 										type="text" name="fax" value="${company.fax}"
 										data-validation="number" data-validation-optional="true"
 										data-validation-error-msg="<spring:message code="backend.company.update.err-message.fex" />" /> <br />
 								</p>
 								<p>
 									<label><spring:message code="backend.company.update.label.address" /></label>
-									<input class="text-input small-input"
+									<input class="text-input max-input"
 										type="text" name="address" value="${company.address}" /> <br />
 								</p>
 								<p>
 									<label><spring:message code="backend.company.update.label.homepage" /></label>
-									<input class="text-input small-input"
+									<input class="text-input max-input"
 										type="text" name="homepage" value="${company.homepage}"
 										data-validation="url" data-validation-optional="true"
 										data-validation-error-msg="<spring:message code="backend.company.add.err-message.homepage" />" /> <br />

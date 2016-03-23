@@ -13,7 +13,7 @@
 		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/general/companyController/companyList.do" method="post">
 			<fieldset>
 				<p>
-					<spring:message code="backend.company.list.search.label.companyName" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /> 
+					<spring:message code="backend.company.list.search.label.companyName" /> <input class="text-input max-input" type="text" name="searchName" value="${criteria.searchName}" />
 					<input name="pagination.pageSize" type="hidden" id="pageSize" value="${criteria.pagination.pageSize}" />
 					<input name="pagination.currentPage" type="hidden" id="page" value="${criteria.pagination.currentPage}" />
 				</p>

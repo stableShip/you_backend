@@ -13,15 +13,15 @@
 		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/glaze/productOrderController/findProductOrder.do" method="post">
 			<fieldset>
 				<p>
-					客户<input class="text-input small-input" type="text" name="companyName" value="${criteria.companyName}" /><br />
-					样品釉名称 <input class="text-input small-input" type="text" name="sampleGlazeName" value="${criteria.sampleGlazeName}" /><br />
+					客户<input class="text-input max-input" type="text" name="companyName" value="${criteria.companyName}" /><br />
+					样品釉名称 <input class="text-input max-input" type="text" name="sampleGlazeName" value="${criteria.sampleGlazeName}" /><br />
 					<input name="pagination.pageSize" type="hidden" id="pageSize" value="${criteria.pagination.pageSize}" />
 					<input name="pagination.currentPage" type="hidden" id="page" value="${criteria.pagination.currentPage}" />
 					<span id="dayTypeOption1">
 						<spring:message code="backend.promotionStatistics.list.search.date.from" />
-						<input class="text-input small-input" type="text" id="searchStartDay" name="searchStartDay" onclick="WdatePicker()" readonly="readonly" value="${criteria.searchStartDay}" />
+						<input class="text-input max-input" type="text" id="searchStartDay" name="searchStartDay" onclick="WdatePicker()" readonly="readonly" value="${criteria.searchStartDay}" />
 						<spring:message code="backend.promotionStatistics.list.search.date.to" />
-						<input class="text-input small-input" type="text" id="searchEndDay" name="searchEndDay" onclick="WdatePicker()" readonly="readonly" value="${criteria.searchEndDay}" />
+						<input class="text-input max-input" type="text" id="searchEndDay" name="searchEndDay" onclick="WdatePicker()" readonly="readonly" value="${criteria.searchEndDay}" />
 					</span>
 				</p>
 			</fieldset>

@@ -60,7 +60,7 @@
 								<input type="hidden" name="id" value="${toner.id}" />
 								<p>
 									<label><spring:message code="backend.toner.add.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="name" value="${toner.name}"
+									<input class="text-input max-input" type="text" name="name" value="${toner.name}"
 										 data-validation="required" data-validation-error-msg="<spring:message code="backend.toner.add.err-message.name" />"/> <br />
 								</p>
 								<p>

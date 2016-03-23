@@ -91,13 +91,13 @@
 							<input type="hidden" name="id" value="${sampleGlaze.id}" />
 							<p>
 								<label><spring:message code="backend.sample_glaze.add.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-								<input class="text-input small-input" type="text" name="name" value="${sampleGlaze.name}"
+								<input class="text-input max-input" type="text" name="name" value="${sampleGlaze.name}"
 									   data-validation="required" data-validation-error-msg="<spring:message code="backend.sample_glaze.add.err-message.name" />"/> <br />
 							</p>
 
 							<p>
 								<label><spring:message code="backend.company.list.column.name" /><b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-								<select name="customer.id" class="big-input">
+								<select name="customer.id" class="max-input">
 									<option value="0">--</option>
 									<c:forEach var="customer" items="${customerList}">
 										<c:choose>
@@ -113,7 +113,7 @@
 							</p>
 							<p>
 								<label><spring:message code="backend.sample_glaze.add.label.fineness" /> </label>
-								<input class="text-input small-input" type="text" name="fineness" value="${sampleGlaze.fineness}"
+								<input class="text-input max-input" type="text" name="fineness" value="${sampleGlaze.fineness}"
 									   data-validation="number" data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.fineness" />"/> <br />
 							</p>
 						</fieldset>
@@ -131,7 +131,7 @@
 							</div>
 							<div style="float: right; width: 45%">
 								<label>配方（%）</label>
-								<input class="text-input small-input" type="text"  id="toner_content"
+								<input class="text-input max-input" type="text"  id="toner_content"
 									   data-validation="number"  data-validation="required" data-validation-error-msg="<spring:message code="backend.sample_glaze.add.err-message.name" />"/>
 								<input class="button" type="button" onclick="addToner()" value="添加" />
 							</div>
@@ -174,7 +174,7 @@
 							</div>
 							<div style="float: left; width: 45%">
 								<label>含量（%）</label>
-								<input class="text-input small-input" type="text" id="base_glaze_content"
+								<input class="text-input max-input" type="text" id="base_glaze_content"
 									   data-validation="number"  data-validation="required" data-validation-error-msg="<spring:message code="backend.sample_glaze.add.err-message.name" />"/>
 								<input class="button" type="button" onclick="addBaseGlaze()" value="添加" />
 							</div>

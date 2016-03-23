@@ -62,17 +62,17 @@
 								<input type="hidden" name="id" value="${glaze.id}" />
 								<p>
 									<label><spring:message code="backend.base_glaze.add.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="name" value="${glaze.name}"
+									<input class="text-input max-input" type="text" name="name" value="${glaze.name}"
 										 data-validation="required" data-validation-error-msg="<spring:message code="backend.base_glaze.add.err-message.name" />"/> <br />
 								</p>
 								<p>
 									<label><spring:message code="backend.base_glaze.add.label.water_content" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="water_content" value="${glaze.water_content}"
+									<input class="text-input max-input" type="text" name="water_content" value="${glaze.water_content}"
                                            data-validation="number" data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.water_content" />"/> <br />
 								</p>
 								<p>
 									<label><spring:message code="backend.glaze.add.label.comment" /></label>
-									<input class="text-input small-input" type="text" name="comment" value="${glaze.comment}"
+									<input class="text-input max-input" type="text" name="comment" value="${glaze.comment}"
 										   <%--data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.water_content" />"--%>
                                     /> <br />
 									 <br />

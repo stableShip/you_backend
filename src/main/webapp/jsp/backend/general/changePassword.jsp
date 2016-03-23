@@ -47,12 +47,12 @@
 							method="post">
 							<fieldset>
 								<p>
-									<label><spring:message code="backend.editProfile.newPassword" /></label><input class="text-input small-input"
+									<label><spring:message code="backend.editProfile.newPassword" /></label><input class="text-input max-input"
 										type="password" name="password" 
 										data-validation-error-msg="新密码不能为空" /> <br />
 								</p>
 								<p>
-									<label><spring:message code="backend.editProfile.confirmPassword" /></label><input class="text-input small-input"
+									<label><spring:message code="backend.editProfile.confirmPassword" /></label><input class="text-input max-input"
 										type="password" name="confirmPassword"
 										
 										data-validation-error-msg="确认密码不能为空" /> <br />

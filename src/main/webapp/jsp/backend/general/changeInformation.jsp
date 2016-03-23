@@ -44,19 +44,19 @@
 							<fieldset>
 								<p>
 									<label><spring:message code="backend.editProfile.email" /></label>
-									<input class="text-input small-input" type="text" name="accountInformation.email" value="${information.accountInformation.email}" data-validation-optional="true"
+									<input class="text-input max-input" type="text" name="accountInformation.email" value="${information.accountInformation.email}" data-validation-optional="true"
 										data-validation="email" data-validation-error-msg="公司邮箱格式不合法" />
 									<br />
 								</p>
 								<p>
 									<label>QQ</label>
-									<input class="text-input small-input" type="text" name="accountInformation.qqNumber"
+									<input class="text-input max-input" type="text" name="accountInformation.qqNumber"
 										value="${information.accountInformation.qqNumber}" data-validation="number"
 										data-validation-optional="true" data-validation-error-msg="请输入数字" /> <br />
 								</p>
 								<p>
 									<label><spring:message code="backend.editProfile.mobilePhone" /></label>
-									<input class="text-input small-input" type="text" name="accountInformation.mobilePhone"
+									<input class="text-input max-input" type="text" name="accountInformation.mobilePhone"
 										value="${information.accountInformation.mobilePhone}" data-validation="number"
 										data-validation-optional="true" data-validation-error-msg="请输入数字" /> <br />
 								</p>

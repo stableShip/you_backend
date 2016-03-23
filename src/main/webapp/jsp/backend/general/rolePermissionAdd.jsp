@@ -28,7 +28,7 @@
 							<fieldset>
 								<p>
 									<label>角色名称 <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input {focusInvalid:false}" type="text" name="name" value="${role.name}" />
+									<input class="text-input max-input {focusInvalid:false}" type="text" name="name" value="${role.name}" />
 									<br />
 								</p>
 								<p>

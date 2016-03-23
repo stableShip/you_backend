@@ -41,27 +41,27 @@
 							<fieldset>
 								<p>
 									<label><spring:message code="backend.company.add.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="name" value="${company.name}" data-validation="required"
+									<input class="text-input max-input" type="text" name="name" value="${company.name}" data-validation="required"
 										data-validation-error-msg="<spring:message code="backend.company.add.err-message.name" />" /> <br />
 								</p>
 								<p>
-									<label><spring:message code="backend.company.add.label.phone" /></label><input class="text-input small-input"
+									<label><spring:message code="backend.company.add.label.phone" /></label><input class="text-input max-input"
 										type="text" name="telephone" value="${company.telephone}"
 										data-validation="number" data-validation-optional="true"
 										data-validation-error-msg="<spring:message code="backend.company.add.err-message.phone" />" /> <br />
 								</p>
 								<p>
-									<label><spring:message code="backend.company.add.label.fex" /></label><input class="text-input small-input"
+									<label><spring:message code="backend.company.add.label.fex" /></label><input class="text-input max-input"
 										type="text" name="fax" value="${company.fax}"
 										data-validation="number" data-validation-optional="true"
 										data-validation-error-msg="<spring:message code="backend.company.add.err-message.fex" />" /> <br />
 								</p>
 								<p>
-									<label><spring:message code="backend.company.add.label.address" /></label><input class="text-input small-input"
+									<label><spring:message code="backend.company.add.label.address" /></label><input class="text-input max-input"
 										type="text" name="address" value="${company.address}" /> <br />
 								</p>
 								<p>
-									<label><spring:message code="backend.company.add.label.homepage" /></label><input class="text-input small-input"
+									<label><spring:message code="backend.company.add.label.homepage" /></label><input class="text-input max-input"
 										type="text" name="homepage" value="${company.homepage}"
 										data-validation="url" data-validation-optional="true"
 										data-validation-error-msg="<spring:message code="backend.company.add.err-message.homepage" />" /> <br />

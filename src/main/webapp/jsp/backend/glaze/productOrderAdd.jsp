@@ -62,7 +62,7 @@
 						<fieldset id="base" style="float: left; width: 30%" >
 							<p>
 								<label>客户名称 <b style="color:#FF0000"><spring:message code="backend.form.label.required" />--请先选择客户</b></label>
-								<select  class="big-input" id="customer_selection" onchange="customer_change()">
+								<select  class="max-input" id="customer_selection" onchange="customer_change()">
 									<option value="0">--</option>
 									<c:forEach var="customer" items="${customerList}">
 										<c:choose>
@@ -78,7 +78,7 @@
 							</p>
 							<p>
 								<label>样品釉名称 <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-								<select name="sampleGlazeId" class="big-input" id="product_order_selection" onchange="product_order_change()">
+								<select name="sampleGlazeId" class="max-input" id="product_order_selection" onchange="product_order_change()">
 									<c:if test='${sampleGlazes == null}'>
 										<option value="0">--</option>
 									</c:if>
@@ -98,7 +98,7 @@
 							</p>
 							<p>
 								<label>所需基础釉干料数量:(公斤) <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-								<input class="text-input small-input" type="text" name="content" value="0" onkeyup="product_order_change()" id="content"
+								<input class="text-input max-input" type="text" name="content" value="0" onkeyup="product_order_change()" id="content"
 									   data-validation="number" data-validation="required" data-validation-error-msg="干料数量必须为数字并且不能为空"/> <br />
 							</p>
 						</fieldset>

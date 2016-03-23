@@ -13,16 +13,16 @@
 		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findSampleGlaze.do" method="post">
 			<fieldset>
 				<p>
-					<spring:message code="backend.sample_glaze.list.column.name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
-					<spring:message code="backend.company.add.label.name" /> <input class="text-input small-input" type="text" name="customerName" value="${criteria.customerName}" /><br />
+					<spring:message code="backend.sample_glaze.list.column.name" /> <input class="text-input max-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
+					<spring:message code="backend.company.add.label.name" /> <input class="text-input max-input" type="text" name="customerName" value="${criteria.customerName}" /><br />
 
 					<input name="pagination.pageSize" type="hidden" id="pageSize" value="${criteria.pagination.pageSize}" />
 					<input name="pagination.currentPage" type="hidden" id="page" value="${criteria.pagination.currentPage}" />
 					<span id="dayTypeOption1">
 						<spring:message code="backend.promotionStatistics.list.search.date.from" />
-						<input class="text-input small-input" type="text" id="searchStartDay" name="searchStartDay" onclick="WdatePicker()" readonly="readonly" value="${criteria.searchStartDay}" />
+						<input class="text-input max-input" type="text" id="searchStartDay" name="searchStartDay" onclick="WdatePicker()" readonly="readonly" value="${criteria.searchStartDay}" />
 						<spring:message code="backend.promotionStatistics.list.search.date.to" />
-						<input class="text-input small-input" type="text" id="searchEndDay" name="searchEndDay" onclick="WdatePicker()" readonly="readonly" value="${criteria.searchEndDay}" />
+						<input class="text-input max-input" type="text" id="searchEndDay" name="searchEndDay" onclick="WdatePicker()" readonly="readonly" value="${criteria.searchEndDay}" />
 					</span>
 				</p>
 			</fieldset>

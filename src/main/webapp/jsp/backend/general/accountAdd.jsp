@@ -41,14 +41,14 @@
 							<fieldset>
 								<p>
 									<label><spring:message code="backend.admin.add.label.account" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input {focusInvalid:false}"
+									<input class="text-input max-input {focusInvalid:false}"
 										type="text" name="account" value="${dto.account}"
 										data-validation="required" data-validation-error-msg="<spring:message code="backend.admin.add.err-message.account" />" />
 									<br />
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.add.label.password" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="password"
+									<input class="text-input max-input" type="text" name="password"
 										<c:if test="${dto.password != null}">value="${dto.password}"</c:if>
 										<c:if test="${dto.password == null}">value="123456"</c:if>
 										data-validation="required" data-validation-error-msg="<spring:message code="backend.admin.add.err-message.password" />" />
@@ -56,13 +56,13 @@
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.add.label.name" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
-									<input class="text-input small-input" type="text" name="name" value="${dto.name}"
+									<input class="text-input max-input" type="text" name="name" value="${dto.name}"
 										data-validation="required" data-validation-error-msg="<spring:message code="backend.admin.add.err-message.name" />"/>
 									<br />
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.add.label.type" /></label>
-									<select name="roleId" class="small-input">
+									<select name="roleId" class="max-input">
 										<c:forEach var="r" items="${roleList}">
 											<option value="${r.id}" <c:if test="${r.id == dto.roleId}">selected="selected"</c:if>>${r.name}</option>
 										</c:forEach>
@@ -70,7 +70,7 @@
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.add.label.companyName" /></label>
-									<select name="accountInformation.companyId" class="small-input">
+									<select name="accountInformation.companyId" class="max-input">
 									<option value="0">--</option>
 										<c:forEach var="c" items="${companyList}">
 											<option value="${c.id}" <c:if test="${c.id == companyId}">selected="selected"</c:if> <c:if test="${c.id == dto.accountInformation.companyId}">selected="selected"</c:if>>${c.name}</option>
@@ -79,25 +79,25 @@
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.add.label.email" /></label>
-									<input class="text-input small-input" type="text" name="accountInformation.email" value="${dto.accountInformation.email}" data-validation-optional="true"
+									<input class="text-input max-input" type="text" name="accountInformation.email" value="${dto.accountInformation.email}" data-validation-optional="true"
 										data-validation="email" data-validation-error-msg="<spring:message code="backend.admin.add.err-message.email" />" />
 									<br />
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.add.label.qq" /></label>
-									<input class="text-input small-input" type="text" name="accountInformation.qqNumber" value="${dto.accountInformation.qqNumber}"
+									<input class="text-input max-input" type="text" name="accountInformation.qqNumber" value="${dto.accountInformation.qqNumber}"
 										data-validation="number" data-validation-optional="true"
 										data-validation-error-msg="<spring:message code="backend.admin.add.err-message.qq" />" /> <br />
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.add.label.mobilePhone" /></label>
-									<input class="text-input small-input" type="text" name="accountInformation.mobilePhone" value="${dto.accountInformation.mobilePhone}"
+									<input class="text-input max-input" type="text" name="accountInformation.mobilePhone" value="${dto.accountInformation.mobilePhone}"
 										data-validation="number" data-validation-error-msg="<spring:message code="backend.admin.add.err-message.mobilePhone" />"
 										data-validation-optional="true" /> <br />
 								</p>
 								<p>
 									<label><spring:message code="backend.admin.add.label.remarks" /></label>
-									<input class="text-input small-input" type="text" name="accountInformation.remarks" value="${dto.accountInformation.remarks}" /> <br />
+									<input class="text-input max-input" type="text" name="accountInformation.remarks" value="${dto.accountInformation.remarks}" /> <br />
 								</p>
 							</fieldset>
 							<p>

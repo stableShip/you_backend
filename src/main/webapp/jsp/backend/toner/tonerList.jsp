@@ -13,7 +13,7 @@
 		<form name="criteria" id="form" action="<%=request.getContextPath()%>/backend/toner/tonerController/findToner.do" method="post">
 			<fieldset>
 				<p>
-					<spring:message code="backend.toner.list.search.label.toner_name" /> <input class="text-input small-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
+					<spring:message code="backend.toner.list.search.label.toner_name" /> <input class="text-input max-input" type="text" name="searchName" value="${criteria.searchName}" /><br />
 					<input name="pagination.pageSize" type="hidden" id="pageSize" value="${criteria.pagination.pageSize}" />
 					<input name="pagination.currentPage" type="hidden" id="page" value="${criteria.pagination.currentPage}" />
 				</p>
