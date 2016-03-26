@@ -13,14 +13,14 @@
 		<form id="successForm" action="<%=request.getContextPath()%>/backend/glaze/sampleGlazeController/findSampleGlaze.do" method="post">
 			<fieldset style="float: left; width: 30%">
 				<p>
-					<strong><spring:message code="backend.sample_glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><input type="text" id="resultglazeName" class="text-input medium-input" readonly="readonly" /><br />
-					<strong><spring:message code="backend.sample_glaze.add.label.fineness" /> </strong><input type="text" id="resultFineness" class="text-input medium-input" readonly="readonly" /><br />
-					<strong>客户</strong><input type="text" id="resultCustomer" class="text-input medium-input" readonly="readonly" />
-					<strong>创建日期</strong><input type="text" id="result_creation_date" class="text-input medium-input" readonly="readonly" />
+					<strong><spring:message code="backend.sample_glaze.add.label.name" />&nbsp;&nbsp;&nbsp; </strong><br /><input type="text" id="resultglazeName" class="text-input big-input" readonly="readonly" /><br />
+					<strong><spring:message code="backend.sample_glaze.add.label.fineness" /> </strong><br /><input type="text" id="resultFineness" class="text-input small-input" readonly="readonly" /><br />
+					<strong>客户</strong><br /><input type="text" id="resultCustomer" class="text-input big-input" readonly="readonly" /><br />
+					<strong>创建日期</strong><br /><input type="text" id="result_creation_date" class="text-input big-input" readonly="readonly" />
 				</p>
 			</fieldset>
 
-			<fieldset style="float: left; width: 33%;">
+			<fieldset style="float: left; width: 30%;">
 				<p>
 				<table>
 					<thead>
@@ -107,7 +107,7 @@
 								<p>
 									<label><spring:message code="backend.sample_glaze.add.label.fineness" /> </label>
 									<input class="text-input max-input" type="text" name="fineness" value="${glaze.fineness}"
-                                           data-validation="number"  data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.fineness" />"/> <br />
+                                           data-validation="number" data-validation-allowing="float,negative" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.fineness" />"/> <br />
 								</p>
 							</fieldset>
 							<fieldset id="toners" style="float: left; width: 33%;">
@@ -124,8 +124,8 @@
 									</div>
 									<div style="float: right; width: 45%">
 									<label>配方（%）</label>
-									<input class="text-input big-input" type="text"  id="toner_content"
-										   data-validation="number"  data-validation="required" data-validation-error-msg="<spring:message code="backend.sample_glaze.add.err-message.name" />"/>
+									<input class="text-input small-input" type="text"  id="toner_content"
+										   data-validation="number"  data-validation-allowing="float,negative"  data-validation="required" data-validation-error-msg="配方必须为数字并且不能为空"/>
 									<input class="button" type="button" onclick="addToner()" value="添加" />
 									</div>
 								</p>
@@ -155,8 +155,8 @@
 									</div>
 									<div style="float: left; width: 45%">
 										<label>含量（%）</label>
-										<input class="text-input big-input" type="text" id="base_glaze_content"
-											   data-validation="number"  data-validation="required" data-validation-error-msg="<spring:message code="backend.sample_glaze.add.err-message.name" />"/>
+										<input class="text-input small-input" type="text" id="base_glaze_content"
+											   data-validation="number" data-validation-allowing="float,negative"  data-validation="required" data-validation-error-msg="含量不能为空并且必须为数字"/>
 										<input class="button" type="button" onclick="addBaseGlaze()" value="添加" />
 									</div>
 								</p>
@@ -198,7 +198,7 @@
 		
 		$(function() {
 			$('#successDialog').dialog({
-		        width: 500,
+		        width: 700,
 		        autoOpen: false,
 		        modal: true,
 		        title: '<spring:message code="backend.dialog.title.addSuccess" />',
@@ -300,6 +300,12 @@
 				$('#failureDialog').dialog('open');
 				return;
 			}
+			if (!parseInt($('#toner_content').val())){
+				$("#theErrorMessage").html("配方必须为数字");
+				$('#failureDialog').dialog('open');
+				return;
+			}
+
 			$.ajax({
 				url:"<%=request.getContextPath()%>/backend/toner/tonerController/getTonerById.do",
 				type : "post",
@@ -331,7 +337,11 @@
 				$('#failureDialog').dialog('open');
 				return;
 			}
-
+			if (!parseInt($('#base_glaze_content').val())){
+				$("#theErrorMessage").html("含量必须为数字");
+				$('#failureDialog').dialog('open');
+				return;
+			}
 			$.ajax({
 				url:"<%=request.getContextPath()%>/backend/glaze/baseGlazeController/getBaseGlazeById.do",
 				type : "post",

@@ -15,7 +15,7 @@ public class SampleGlazeShowVO implements Serializable {
 
     private String sample_glaze_name;
 
-    private Integer fineness;
+    private double fineness;
 
     private String creation_date;
 
@@ -43,11 +43,11 @@ public class SampleGlazeShowVO implements Serializable {
         this.sample_glaze_name = sample_glaze_name;
     }
 
-    public Integer getFineness() {
+    public double getFineness() {
         return fineness;
     }
 
-    public void setFineness(Integer fineness) {
+    public void setFineness(double fineness) {
         this.fineness = fineness;
     }
 

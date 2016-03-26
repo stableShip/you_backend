@@ -8,7 +8,7 @@ public class TonerModifyDTO extends Toner implements Serializable {
 
     private static final long serialVersionUID = -4124330501835134622L;
 
-    private Integer content;
+    private double content;
 
     private Integer sampleGlazeId;
 
@@ -20,11 +20,11 @@ public class TonerModifyDTO extends Toner implements Serializable {
         this.sampleGlazeId = sampleGlazeId;
     }
 
-    public Integer getContent() {
+    public double getContent() {
         return content;
     }
 
-    public void setContent(Integer content) {
+    public void setContent(double content) {
         this.content = content;
     }
 }

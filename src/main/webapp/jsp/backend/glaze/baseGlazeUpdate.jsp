@@ -69,7 +69,7 @@
 								<p>
 									<label><spring:message code="backend.base_glaze.add.label.water_content" /> <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
 									<input class="text-input max-input" type="text" name="water_content" value="${baseGlaze.water_content}"
-                                    data-validation="number" data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.water_content" />"/> <br />
+                                    data-validation="number"  data-validation-allowing="float,negative" data-validation="required" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.water_content" />"/> <br />
 
                                 </p>
 								<p>

@@ -99,7 +99,7 @@
 							<p>
 								<label>所需基础釉干料数量:(公斤) <b style="color:#FF0000"><spring:message code="backend.form.label.required" /></b></label>
 								<input class="text-input max-input" type="text" name="content" value="0" onkeyup="product_order_change()" id="content"
-									   data-validation="number" data-validation="required" data-validation-error-msg="干料数量必须为数字并且不能为空"/> <br />
+									   data-validation="number" data-validation-allowing="float,negative" data-validation="required" data-validation-error-msg="干料数量必须为数字并且不能为空"/> <br />
 							</p>
 						</fieldset>
 						<fieldset id="toners" style="float: left; width: 33%;">

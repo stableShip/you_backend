@@ -94,8 +94,8 @@
 			<if test="water_content != null">
 				water_content,
 			</if>
-			<if test="comment != null">
-				comment,
+			<if test="comment != ''">
+				comment
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -106,10 +106,10 @@
 				#{name,jdbcType=VARCHAR},
 			</if>
 			<if test="water_content != null">
-				#{water_content,jdbcType=VARCHAR},
+				#{water_content,jdbcType=FLOAT},
 			</if>
-			<if test="comment != null">
-				#{comment,jdbcType=INTEGER},
+			<if test="comment != ''">
+				#{comment,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>

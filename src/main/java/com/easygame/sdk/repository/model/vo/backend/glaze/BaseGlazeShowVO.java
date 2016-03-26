@@ -9,7 +9,7 @@ public class BaseGlazeShowVO implements Serializable {
 
     private String name;
 
-    private Integer water_content;
+    private double water_content;
 
     private String comment;
 
@@ -29,7 +29,7 @@ public class BaseGlazeShowVO implements Serializable {
         this.name = name;
     }
 
-    public Integer getWater_content() {
+    public double getWater_content() {
         return water_content;
     }
 
@@ -38,7 +38,7 @@ public class BaseGlazeShowVO implements Serializable {
         return comment;
     }
 
-    public void setWater_content(Integer water_content) {
+    public void setWater_content(double water_content) {
         this.water_content = water_content;
     }
 

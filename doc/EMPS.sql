@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50546
 File Encoding         : 65001
 
-Date: 2016-03-15 19:51:44
+Date: 2016-03-26 14:39:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -67,9 +67,9 @@ CREATE TABLE `t_base_glaze` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `comment` varchar(255) DEFAULT NULL COMMENT '备注',
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
-  `water_content` int(11) DEFAULT NULL,
+  `water_content` double(255,10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COMMENT='基础釉';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COMMENT='基础釉';
 
 -- ----------------------------
 -- Records of t_base_glaze
@@ -93,7 +93,7 @@ CREATE TABLE `t_companies` (
   `creation_date` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `index` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='公司信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='公司信息表';
 
 -- ----------------------------
 -- Records of t_companies
@@ -126,7 +126,7 @@ CREATE TABLE `t_permissions` (
   `show_index` int(11) NOT NULL COMMENT '显示顺序',
   `isUsed` tinyint(1) NOT NULL COMMENT '是否生效',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='界面权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='界面权限表';
 
 -- ----------------------------
 -- Records of t_permissions
@@ -149,7 +149,7 @@ CREATE TABLE `t_product_order` (
   `creation_date` datetime DEFAULT NULL,
   `content` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_product_order
@@ -218,7 +218,7 @@ CREATE TABLE `t_sample_glaze` (
   `fineness` int(11) DEFAULT NULL,
   `creation_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_sample_glaze
@@ -231,7 +231,7 @@ DROP TABLE IF EXISTS `t_sample_glaze_base_glaze`;
 CREATE TABLE `t_sample_glaze_base_glaze` (
   `sample_glaze_id` int(11) NOT NULL,
   `base_glaze_id` int(11) DEFAULT NULL,
-  `content` int(255) DEFAULT NULL
+  `content` double(255,10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
@@ -258,7 +258,7 @@ DROP TABLE IF EXISTS `t_sample_glaze_toner`;
 CREATE TABLE `t_sample_glaze_toner` (
   `sample_glaze_id` int(11) DEFAULT NULL,
   `toner_id` int(11) DEFAULT NULL,
-  `content` int(11) DEFAULT '0'
+  `content` double(255,10) DEFAULT '0.0000000000'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
@@ -273,7 +273,7 @@ CREATE TABLE `t_toner` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_toner

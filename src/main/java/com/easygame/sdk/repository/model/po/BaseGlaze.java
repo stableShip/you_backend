@@ -14,7 +14,7 @@ public class BaseGlaze {
 
     @NotNull(message = "基础釉含水量不能为空")
     @Max(value = 100,message="含水量不能超过100%")
-    private Integer water_content;
+    private double water_content;
 
     private String comment;
 
@@ -34,11 +34,11 @@ public class BaseGlaze {
         this.name = name;
     }
 
-    public Integer getWater_content() {
+    public double getWater_content() {
         return water_content;
     }
 
-    public void setWater_content(Integer water_content) {
+    public void setWater_content(double water_content) {
         this.water_content = water_content;
     }
 
@@ -47,6 +47,6 @@ public class BaseGlaze {
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+        this.comment = comment == null ? null : comment.trim();
     }
 }

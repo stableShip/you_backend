@@ -9,7 +9,7 @@ public class ProductOrderShowVO implements Serializable {
     private static final long serialVersionUID = 7255426281146869404L;
     private Integer id;
 
-    private Integer content;
+    private double content;
 
     private String sample_glaze_name;
 
@@ -27,11 +27,11 @@ public class ProductOrderShowVO implements Serializable {
         this.id = id;
     }
 
-    public Integer getContent() {
+    public double getContent() {
         return content;
     }
 
-    public void setContent(Integer content) {
+    public void setContent(double content) {
         this.content = content;
     }
 
