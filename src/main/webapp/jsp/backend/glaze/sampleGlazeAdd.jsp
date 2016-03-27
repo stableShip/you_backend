@@ -300,7 +300,7 @@
 				$('#failureDialog').dialog('open');
 				return;
 			}
-			if (!parseInt($('#toner_content').val())){
+			if (!parseInt($('#toner_content').val()) && parseInt($('#toner_content').val())!=0){
 				$("#theErrorMessage").html("配方必须为数字");
 				$('#failureDialog').dialog('open');
 				return;
@@ -337,7 +337,7 @@
 				$('#failureDialog').dialog('open');
 				return;
 			}
-			if (!parseInt($('#base_glaze_content').val())){
+			if (!parseInt($('#base_glaze_content').val())  && parseInt($('#toner_content').val())!=0){
 				$("#theErrorMessage").html("含量必须为数字");
 				$('#failureDialog').dialog('open');
 				return;
