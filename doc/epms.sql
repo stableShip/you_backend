@@ -1,22 +1,22 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : LOCALHOST
-Source Server Version : 50546
+Source Server         : localhost
+Source Server Version : 50525
 Source Host           : localhost:3306
 Source Database       : epms
 
 Target Server Type    : MYSQL
-Target Server Version : 50546
+Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2016-03-26 14:39:35
+Date: 2016-03-27 22:30:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for t_accounts
+-- Table structure for `t_accounts`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_accounts`;
 CREATE TABLE `t_accounts` (
@@ -39,7 +39,7 @@ INSERT INTO `t_accounts` VALUES ('1', 'qingsong', '8d7e182a707ddaf0cc55455fc7ff4
 INSERT INTO `t_accounts` VALUES ('5', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '管理员', '8', '2016-03-15 19:48:46', '2016-03-15 19:48:46', '2016-03-15 19:48:46');
 
 -- ----------------------------
--- Table structure for t_accounts_informations
+-- Table structure for `t_accounts_informations`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_accounts_informations`;
 CREATE TABLE `t_accounts_informations` (
@@ -60,7 +60,7 @@ INSERT INTO `t_accounts_informations` VALUES ('1', '1', '', '', '', '0', null);
 INSERT INTO `t_accounts_informations` VALUES ('5', '5', '', '', '', '0', '');
 
 -- ----------------------------
--- Table structure for t_base_glaze
+-- Table structure for `t_base_glaze`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_base_glaze`;
 CREATE TABLE `t_base_glaze` (
@@ -69,14 +69,14 @@ CREATE TABLE `t_base_glaze` (
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
   `water_content` double(255,10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COMMENT='基础釉';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='基础釉';
 
 -- ----------------------------
 -- Records of t_base_glaze
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_companies
+-- Table structure for `t_companies`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_companies`;
 CREATE TABLE `t_companies` (
@@ -93,14 +93,15 @@ CREATE TABLE `t_companies` (
   `creation_date` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `index` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='公司信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='公司信息表';
 
 -- ----------------------------
 -- Records of t_companies
 -- ----------------------------
+INSERT INTO `t_companies` VALUES ('3', '阿斯蒂芬', '', '', '', null, '', '', null, '2016-03-27 22:23:35', '2016-03-27 22:23:35');
 
 -- ----------------------------
--- Table structure for t_language
+-- Table structure for `t_language`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_language`;
 CREATE TABLE `t_language` (
@@ -116,7 +117,7 @@ INSERT INTO `t_language` VALUES ('1', '中文');
 INSERT INTO `t_language` VALUES ('2', '英文');
 
 -- ----------------------------
--- Table structure for t_permissions
+-- Table structure for `t_permissions`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_permissions`;
 CREATE TABLE `t_permissions` (
@@ -140,7 +141,7 @@ INSERT INTO `t_permissions` VALUES ('6', 'productOrderPermission', '投料单权
 INSERT INTO `t_permissions` VALUES ('7', 'tonerPermission', '色料权限', '7', '1');
 
 -- ----------------------------
--- Table structure for t_product_order
+-- Table structure for `t_product_order`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_product_order`;
 CREATE TABLE `t_product_order` (
@@ -156,7 +157,7 @@ CREATE TABLE `t_product_order` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_roles
+-- Table structure for `t_roles`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_roles`;
 CREATE TABLE `t_roles` (
@@ -173,7 +174,7 @@ INSERT INTO `t_roles` VALUES ('1', '系统管理员', '1');
 INSERT INTO `t_roles` VALUES ('8', '管理员', '1');
 
 -- ----------------------------
--- Table structure for t_roles_permissions
+-- Table structure for `t_roles_permissions`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_roles_permissions`;
 CREATE TABLE `t_roles_permissions` (
@@ -209,23 +210,23 @@ INSERT INTO `t_roles_permissions` VALUES ('8', '6', '2');
 INSERT INTO `t_roles_permissions` VALUES ('8', '7', '2');
 
 -- ----------------------------
--- Table structure for t_sample_glaze
+-- Table structure for `t_sample_glaze`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sample_glaze`;
 CREATE TABLE `t_sample_glaze` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `fineness` int(11) DEFAULT NULL,
+  `fineness` double(255,10) DEFAULT NULL,
   `creation_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_sample_glaze
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_sample_glaze_base_glaze
+-- Table structure for `t_sample_glaze_base_glaze`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sample_glaze_base_glaze`;
 CREATE TABLE `t_sample_glaze_base_glaze` (
@@ -239,7 +240,7 @@ CREATE TABLE `t_sample_glaze_base_glaze` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_sample_glaze_customer
+-- Table structure for `t_sample_glaze_customer`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sample_glaze_customer`;
 CREATE TABLE `t_sample_glaze_customer` (
@@ -252,7 +253,7 @@ CREATE TABLE `t_sample_glaze_customer` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_sample_glaze_toner
+-- Table structure for `t_sample_glaze_toner`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sample_glaze_toner`;
 CREATE TABLE `t_sample_glaze_toner` (
@@ -266,14 +267,14 @@ CREATE TABLE `t_sample_glaze_toner` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_toner
+-- Table structure for `t_toner`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_toner`;
 CREATE TABLE `t_toner` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_toner
