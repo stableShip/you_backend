@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2016-03-27 22:30:16
+Date: 2016-03-27 23:30:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -69,7 +69,7 @@ CREATE TABLE `t_base_glaze` (
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
   `water_content` double(255,10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='基础釉';
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='基础釉';
 
 -- ----------------------------
 -- Records of t_base_glaze
@@ -98,7 +98,6 @@ CREATE TABLE `t_companies` (
 -- ----------------------------
 -- Records of t_companies
 -- ----------------------------
-INSERT INTO `t_companies` VALUES ('3', '阿斯蒂芬', '', '', '', null, '', '', null, '2016-03-27 22:23:35', '2016-03-27 22:23:35');
 
 -- ----------------------------
 -- Table structure for `t_language`
@@ -148,9 +147,9 @@ CREATE TABLE `t_product_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sample_glaze_id` int(11) DEFAULT NULL,
   `creation_date` datetime DEFAULT NULL,
-  `content` int(11) DEFAULT NULL,
+  `content` double(255,10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_product_order
@@ -219,7 +218,7 @@ CREATE TABLE `t_sample_glaze` (
   `fineness` double(255,10) DEFAULT NULL,
   `creation_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_sample_glaze
@@ -274,7 +273,7 @@ CREATE TABLE `t_toner` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_toner

@@ -300,7 +300,7 @@
                                     '<tr>' +
                                     '<td>' + toners[i].name + '</td>' +
                                     '<td>' + toners[i].content + '</td>' +
-                                    '<td>' + (toners[i].content * content *10) + "克"+'</td>' +
+                                    '<td>' + (toners[i].content * content *10).toFixed(3) + "克"+'</td>' +
                                     '</tr>'
                             );
 						}

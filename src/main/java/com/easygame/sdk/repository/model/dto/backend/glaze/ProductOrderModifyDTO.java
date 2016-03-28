@@ -12,7 +12,6 @@ public class ProductOrderModifyDTO extends ProductOrder implements Serializable 
     private static final long serialVersionUID = -4124330501835134622L;
 
     @NotNull(message = "请选择样品釉")
-    @Min(value=1, message = "请选择样品釉")
     private Integer sampleGlazeId;
 
     private String companyName;

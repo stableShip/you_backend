@@ -11,8 +11,7 @@ public class ProductOrder {
     private Integer id;
 
     @NotNull(message = "干料数量不能为空")
-    @Min(value = 1,message="干料数量不能为0")
-    private Integer content;
+    private double content;
 
     private Date creation_date;
 
@@ -24,11 +23,11 @@ public class ProductOrder {
         this.id = id;
     }
 
-    public Integer getContent() {
+    public double getContent() {
         return content;
     }
 
-    public void setContent(Integer content) {
+    public void setContent(double content) {
         this.content = content;
     }
 
