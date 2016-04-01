@@ -57,10 +57,34 @@
 		SELECT
 		count(t_sample_glaze.id)
 		FROM
+		(
+		SELECT
+		t_sample_glaze.id
+		FROM
 		t_sample_glaze
-		WHERE 1 = 1
+		WHERE
+		1 = 1
 		<if test="searchName != null">
 			AND t_sample_glaze.`name` LIKE '%${searchName}%'
+		</if>
+		<if test="searchStartDay != null">
+			AND DATE_FORMAT(t_sample_glaze.creation_date,'%Y-%m-%d') <![CDATA[>=]]>
+			#{searchStartDay,jdbcType=VARCHAR}
+		</if>
+		<if test="searchEndDay != null">
+			AND DATE_FORMAT(t_sample_glaze.creation_date,'%Y-%m-%d') <![CDATA[<=]]>
+			#{searchEndDay,jdbcType=VARCHAR}
+		</if>
+		) AS selectedData
+		LEFT JOIN
+		t_sample_glaze ON selectedData.id = t_sample_glaze.id
+		LEFT JOIN t_sample_glaze_customer ON
+		t_sample_glaze_customer.sample_glaze_id =  t_sample_glaze.id
+		LEFT JOIN t_companies ON
+		t_companies.id = t_sample_glaze_customer.company_id
+		where 1=1
+		<if test="customerName != null">
+			AND t_companies.`name` LIKE '%${customerName}%'
 		</if>
 	</select>
 
@@ -135,7 +159,7 @@
 			<if test="name != null">
 				`name`,
 			</if>
-			<if test="fineness != null">
+			<if test="fineness != ''">
 				fineness,
 			</if>
 			<if test="creation_date != null">
@@ -150,7 +174,7 @@
 				#{name,jdbcType=VARCHAR},
 			</if>
 			<if test="fineness != null">
-				#{fineness,jdbcType=INTEGER},
+				#{fineness,jdbcType=FLOAT},
 			</if>
 			<if test="creation_date != null">
 				#{creation_date,jdbcType=TIMESTAMP},

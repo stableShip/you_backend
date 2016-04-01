@@ -106,7 +106,7 @@
 								</p>
 								<p>
 									<label><spring:message code="backend.sample_glaze.add.label.fineness" /> </label>
-									<input class="text-input max-input" type="text" name="fineness" value="${glaze.fineness}"
+									<input class="text-input max-input" type="text" name="fineness" value="0"
                                            data-validation="number" data-validation-allowing="float,negative" data-validation-error-msg="<spring:message code="backend.glaze.add.err-message.fineness" />"/> <br />
 								</p>
 							</fieldset>
