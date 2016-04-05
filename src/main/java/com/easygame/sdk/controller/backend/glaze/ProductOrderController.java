@@ -63,7 +63,7 @@ public class ProductOrderController extends BaseController {
 
 		if (criteria.getSearchStartDay() == null) {
 
-			criteria.setSearchStartDay(TimeUtils.getFirstDayOfThisMonth());
+			criteria.setSearchStartDay("1999-11-11");
 			criteria.setSearchEndDay(TimeUtils.getNowDate("yyyy-MM-dd"));
 
 		}

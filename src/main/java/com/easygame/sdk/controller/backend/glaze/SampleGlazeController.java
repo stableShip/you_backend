@@ -56,8 +56,9 @@ public class SampleGlazeController extends BaseController {
 		}
 
 		if (criteria.getSearchStartDay() == null) {
+			criteria.setSearchStartDay("1999-11-11");
 
-			criteria.setSearchStartDay(TimeUtils.getFirstDayOfThisMonth());
+//			criteria.setSearchStartDay(TimeUtils.getFirstDayOfThisMonth());
 			criteria.setSearchEndDay(TimeUtils.getNowDate("yyyy-MM-dd"));
 
 		}
